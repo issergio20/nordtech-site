@@ -1,0 +1,6 @@
+[
+  { "slug": "lizing", "title": "Лизинг", "icon": "percent", "text": "Аванс от 10%, срок от 1 до 5 лет, документы в банк готовим сами.", "url": "/uslug/servisnye-uslugi/lizing/" },
+  { "slug": "garantiya", "title": "Гарантия производителя", "icon": "shield", "text": "Гарантийный ремонт и оригинальные запчасти через нас, без переписки с заводом.", "url": "/uslug/servisnye-uslugi/garantiya/" },
+  { "slug": "vyezdnoj-servis", "title": "Выездной сервис", "icon": "wrench", "text": "Обслуживание и ремонт на вашем объекте, в том числе в отдалённых районах.", "url": "/uslug/servisnye-uslugi/vyezdnoj-servis/" },
+  { "slug": "dostavka", "title": "Доставка", "icon": "truck", "text": "Привозим технику автотранспортом с наших площадок или напрямую из Китая.", "url": "/logistika/" }
+]

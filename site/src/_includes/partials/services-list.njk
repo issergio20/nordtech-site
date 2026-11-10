@@ -1,0 +1,9 @@
+<ul class="services">
+  {% for s in services %}
+  <li class="service">
+    <svg class="icon"><use href="#i-{{ s.icon }}"/></svg>
+    <h3 class="h4"><a href="{{ s.url }}">{{ s.title }}</a></h3>
+    <p class="muted">{{ s.text }}</p>
+  </li>
+  {% endfor %}
+</ul>

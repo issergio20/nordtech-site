@@ -1,0 +1,6 @@
+<nav class="tabbar" aria-label="Быстрые разделы">
+  <a href="/katalog/"{% if page.url.startsWith("/katalog/") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-grid"/></svg>Каталог</a>
+  <a href="/rezultaty-poiska/"{% if page.url.startsWith("/rezultaty-poiska/") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-search"/></svg>Поиск</a>
+  <a href="/uslug/servisnye-uslugi/lizing/"{% if page.url.includes("lizing") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-percent"/></svg>Лизинг</a>
+  <a href="/uslug/"{% if page.url.startsWith("/uslug/") and not page.url.includes("lizing") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-wrench"/></svg>Услуги</a>
+</nav>

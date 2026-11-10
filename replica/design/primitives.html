@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>НОРД — примитивы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-sans);font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--c-text);background:var(--c-bg);padding-bottom:var(--tabbar-h)}
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+:focus-visible{outline:2px solid var(--c-focus);outline-offset:2px}
+.on-brand :focus-visible{outline-color:var(--c-focus-on-brand)}
+.icon{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.h1{font-size:var(--fs-h1);line-height:var(--lh-h1);font-weight:var(--fw-h1);text-transform:uppercase;margin:0}
+.h2{font-size:var(--fs-h2);line-height:var(--lh-h2);font-weight:var(--fw-h2);text-transform:uppercase;margin:0 0 var(--sp-7)}
+.h3{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:var(--fw-h3);margin:0}
+.h4{font-size:var(--fs-h4);line-height:var(--lh-h4);font-weight:var(--fw-h4);text-transform:uppercase;margin:0}
+.lead{font-size:var(--fs-lead);line-height:var(--lh-lead);font-weight:var(--fw-lead)}
+.muted{color:var(--c-text-muted)}
+.caption{font-size:var(--fs-caption);line-height:var(--lh-caption);font-weight:var(--fw-caption)}
+.section{padding-block:var(--section);border-bottom:1px solid var(--c-border)}
+.row{display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:center}
+.grid{display:grid;gap:var(--sp-6);grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.label{font-size:var(--fs-caption);font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+.note{font-size:var(--fs-caption);color:var(--c-text-muted);margin:var(--sp-2) 0 0}
+
+/* Button */
+.btn{--h:var(--ctl-md);display:inline-flex;align-items:center;gap:var(--sp-4);height:var(--h);padding:0 var(--sp-6);border:1px solid transparent;border-radius:var(--r-none);font:inherit;font-size:var(--fs-caption);font-weight:700;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background-color var(--m-base) var(--m-ease),color var(--m-base),transform var(--m-fast)}
+.btn:active{transform:translateY(1px)}
+.btn--sm{--h:var(--ctl-sm)}.btn--lg{--h:var(--ctl-lg)}
+.btn--primary{background:var(--c-accent);color:var(--c-on-accent)}
+.btn--primary:hover{background:var(--c-accent-hover)}
+.btn--brand{background:var(--c-surface-brand);color:var(--c-on-brand)}
+.btn--brand:hover{background:var(--c-accent-hover)}
+.btn--outline{background:transparent;color:currentColor;border-color:currentColor}
+.btn--outline:hover{background:rgba(255,255,255,.08)}
+.btn--light{background:var(--c-bg);color:var(--c-text-brand)}
+.btn--ghost{background:transparent;color:var(--c-accent);padding:0 var(--sp-2)}
+.btn--ghost:hover{color:var(--c-accent-hover);text-decoration:underline}
+.btn--block{width:100%;justify-content:space-between}
+.btn--icon{width:var(--h);padding:0;justify-content:center}
+.btn__sep{align-self:stretch;width:1px;background:currentColor;opacity:.3}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.btn[aria-busy=true] .icon{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Surfaces */
+.on-brand{background:var(--c-surface-brand);color:var(--c-on-brand);padding:var(--sp-8)}
+.on-brand .muted{color:var(--c-on-brand-muted)}
+
+/* Badge */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:var(--r-sm);font-size:var(--fs-caption);font-weight:500;line-height:1.3}
+.badge::before{content:"";width:8px;height:8px;border-radius:var(--r-pill);background:var(--dot)}
+.badge--in{background:var(--c-success-bg);color:var(--c-success);--dot:var(--c-success-line)}
+.badge--order{background:var(--c-warning-bg);color:var(--c-warning);--dot:var(--c-warning-line)}
+
+/* Product card */
+.card{position:relative;display:flex;flex-direction:column;background:var(--c-bg);border:1px solid var(--c-border);transition:box-shadow var(--m-base) var(--m-ease)}
+.card:hover{box-shadow:var(--sh-card-hover)}
+.card__media{aspect-ratio:4/3;background:var(--c-surface);display:grid;place-items:center;overflow:hidden;color:var(--c-border-strong)}
+.card__media svg{width:45%;height:auto}
+.card__body{display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-4);flex:1}
+.card__tag{align-self:flex-start;background:var(--c-surface);color:var(--c-text-brand);font-size:var(--fs-caption);font-weight:500;padding:2px 6px}
+.card__title{font-size:var(--fs-h4);line-height:var(--lh-h4);font-weight:700;text-transform:uppercase;margin:0}
+.card__title a{color:inherit;text-decoration:none}
+.card__title a::after{content:"";position:absolute;inset:0}
+.card__title a:focus-visible{outline:none}
+.card:has(.card__title a:focus-visible){outline:2px solid var(--c-focus);outline-offset:2px}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:4px var(--sp-3);margin:0;font-size:var(--fs-sm)}
+.specs dt{color:var(--c-text-muted)}.specs dd{margin:0;text-align:right}
+.card .btn{position:relative;z-index:1;margin-top:auto}
+
+/* Category tile */
+.tile{position:relative;display:block;aspect-ratio:4/3;background:var(--c-surface);overflow:hidden;text-decoration:none;color:var(--c-text)}
+.tile__img{position:absolute;inset:0;display:grid;place-items:center;color:var(--c-border-strong);transition:transform var(--m-slow) var(--m-ease)}
+.tile:hover .tile__img{transform:scale(1.04)}
+.tile__label{position:absolute;top:var(--sp-3);left:var(--sp-3);display:flex;align-items:center;background:var(--c-bg);font-weight:500;transition:background var(--m-base)}
+.tile__label span{padding:0 var(--sp-3)}
+.tile__label i{display:grid;place-items:center;width:32px;height:32px;background:var(--c-surface-brand);color:var(--c-on-brand)}
+.tile:hover .tile__label{background:var(--c-accent);color:var(--c-on-accent)}
+
+/* Fields */
+.field{display:grid;gap:6px;max-width:360px}
+.field label{font-weight:500}
+.input{height:var(--ctl-lg);padding:0 var(--sp-4);border:1px solid var(--c-border-input);border-radius:var(--r-none);font:inherit;font-size:var(--fs-base);color:var(--c-text);background:var(--c-bg);width:100%}
+.input:hover{border-color:var(--c-text-muted)}
+.input:focus{outline:none;border-color:var(--c-accent);box-shadow:0 0 0 1px var(--c-accent)}
+.input[aria-invalid=true]{border-color:var(--c-danger)}
+.input[readonly]{background:var(--c-surface)}
+.input:disabled{background:var(--c-surface);color:var(--c-text-muted);cursor:not-allowed}
+.field__error{color:var(--c-danger);font-size:var(--fs-caption)}
+.check{display:flex;gap:var(--sp-3);align-items:flex-start;font-size:var(--fs-caption);cursor:pointer;max-width:360px}
+.check input{width:20px;height:20px;margin:0;accent-color:var(--c-accent);flex:none}
+.check a{color:var(--c-accent)}
+
+/* Misc */
+.crumbs ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0;font-size:var(--fs-caption)}
+.crumbs li+li::before{content:"/";color:var(--c-border-strong);margin-right:6px}
+.crumbs a{color:var(--c-text-muted);text-decoration:none}.crumbs a:hover{color:var(--c-accent)}
+.crumbs [aria-current]{color:var(--c-accent)}
+.tabs{display:flex;gap:2px;overflow-x:auto}
+.tabs a{flex:none;padding:var(--sp-4) var(--sp-5);border:1px solid rgba(255,255,255,.3);color:var(--c-on-brand);text-decoration:none;font-weight:700;font-size:var(--fs-caption);text-transform:uppercase}
+.tabs a[aria-current]{background:var(--c-bg);color:var(--c-text-brand)}
+.chips{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.chips legend{font-weight:500;margin-bottom:var(--sp-2)}
+.chip{position:relative}.chip input{position:absolute;opacity:0}
+.chip span{display:inline-block;padding:6px 12px;border:1px solid var(--c-border-input);cursor:pointer}
+.chip input:checked+span{background:var(--c-surface-brand);border-color:var(--c-surface-brand);color:var(--c-on-brand)}
+.chip input:focus-visible+span{outline:2px solid var(--c-focus);outline-offset:2px}
+.empty{text-align:center;padding:var(--sp-9) var(--sp-4);background:var(--c-surface);display:grid;justify-items:center;gap:var(--sp-3)}
+.empty .icon{width:48px;height:48px;color:var(--c-accent)}
+.stat b{display:block;font-size:var(--fs-stat);line-height:var(--lh-stat);font-weight:900;color:var(--c-accent)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-6);grid-template-columns:repeat(auto-fit,minmax(200px,1fr));counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--c-text-brand);padding-top:var(--sp-4)}
+.steps li::before{content:"0" counter(s);display:block;font-size:var(--fs-h2);font-weight:900;color:var(--c-accent);line-height:1;margin-bottom:var(--sp-3)}
+details{border-bottom:1px solid var(--c-border)}
+summary{display:flex;justify-content:space-between;gap:var(--sp-4);padding:var(--sp-5) 0;cursor:pointer;list-style:none;font-weight:700;text-transform:uppercase}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--c-accent)}
+details[open] summary::after{content:"−"}
+details p{margin:0 0 var(--sp-5);font-size:var(--fs-base);line-height:var(--lh-base)}
+.toast{display:flex;gap:var(--sp-3);align-items:flex-start;max-width:360px;padding:var(--sp-4);background:var(--c-bg);box-shadow:var(--sh-pop);border-left:4px solid var(--c-success)}
+.toast--error{border-left-color:var(--c-danger)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--sp-3)}
+.sw{border:1px solid var(--c-border);font-size:var(--fs-caption)}
+.sw i{display:block;height:56px}
+.sw div{padding:var(--sp-2)}
+dialog.drawer{margin:0 0 0 auto;height:100%;max-height:none;max-width:none;width:min(var(--drawer-w),100%);border:0;padding:var(--sp-8);background:var(--c-bg);color:var(--c-text);box-shadow:var(--sh-pop)}
+dialog.drawer::backdrop{background:var(--c-overlay);opacity:.65}
+dialog.drawer[open]{animation:slide var(--m-slow) var(--m-ease)}
+@keyframes slide{from{transform:translateX(100%)}}
+.drawer__close{position:absolute;top:0;right:0}
+.drawer form{display:grid;gap:var(--sp-5);margin-top:var(--sp-6)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-tabbar);display:grid;grid-template-columns:repeat(4,1fr);height:var(--tabbar-h);background:var(--c-bg);border-top:1px solid var(--c-border);padding-bottom:env(safe-area-inset-bottom)}
+.tabbar a{display:grid;justify-items:center;align-content:center;gap:2px;color:var(--c-text-muted);text-decoration:none;font-size:var(--fs-caption);font-weight:500;border-top:2px solid transparent;min-height:44px}
+.tabbar a[aria-current]{color:var(--c-accent);border-top-color:var(--c-accent)}
+@media (min-width:1024px){.tabbar{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-loader" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8-1.3-1.3a4 4 0 0 1-5-5z"/></symbol>
+  <symbol id="i-machine" viewBox="0 0 64 40"><path d="M6 30h30l4-12h10l8 12M14 30V16h16v14M36 18 30 8h-8" /><circle cx="14" cy="32" r="6"/><circle cx="48" cy="32" r="6"/></symbol>
+</svg>
+
+<header class="container section">
+  <p class="label muted">НОРД · дизайн-система · примитивы</p>
+  <h1 class="h1">Примитивы интерфейса</h1>
+  <p class="lead muted">Всё на токенах из tokens.css. Шрифт Onest, иконки Lucide.</p>
+</header>
+
+<section class="container section" aria-labelledby="t-colors">
+  <h2 class="h2" id="t-colors">Цвета</h2>
+  <div class="swatches" id="swatches"></div>
+</section>
+
+<section class="container section" aria-labelledby="t-type">
+  <h2 class="h2" id="t-type">Типографика</h2>
+  <p class="h1">H1 Надёжная спецтехника</p>
+  <p class="h2" style="margin:var(--sp-5) 0">H2 Каталог техники</p>
+  <p class="h3">H3 Фронтальные погрузчики</p>
+  <p class="h4" style="margin:var(--sp-4) 0">H4 Экскаватор-погрузчик 388-II</p>
+  <p class="lead">Lead — подзаголовок первого экрана, 20/500</p>
+  <p style="font-size:var(--fs-base)">Base 16/24 — основной текст страниц услуг и описаний товаров.</p>
+  <p>Sm 14/20 — карточки, характеристики, подписи полей.</p>
+  <p class="caption">Caption 12/16 — крошки, плашки, подсказки.</p>
+  <p class="label">Label 12/700 — кнопки</p>
+</section>
+
+<section class="container section" aria-labelledby="t-btn">
+  <h2 class="h2" id="t-btn">Кнопки</h2>
+  <div class="row">
+    <button class="btn btn--primary btn--lg">Узнать стоимость <span class="btn__sep"></span><svg class="icon"><use href="#i-arrow"/></svg></button>
+    <button class="btn btn--primary btn--lg" style="background:var(--c-accent-hover)">Hover</button>
+    <button class="btn btn--primary btn--lg" aria-busy="true" disabled><svg class="icon"><use href="#i-loader"/></svg> Отправляем…</button>
+    <button class="btn btn--primary btn--lg" disabled>Недоступно</button>
+  </div>
+  <div class="row" style="margin-top:var(--sp-4)">
+    <button class="btn btn--brand"><svg class="icon"><use href="#i-grid"/></svg> Каталог</button>
+    <button class="btn btn--brand btn--icon" aria-label="Поиск"><svg class="icon"><use href="#i-search"/></svg></button>
+    <button class="btn btn--primary btn--sm">Маленькая</button>
+    <button class="btn btn--ghost">Показать ещё 4</button>
+    <button class="btn btn--primary" style="background:var(--c-surface-brand)">Задать вопрос <span class="btn__sep"></span><svg class="icon"><use href="#i-send"/></svg></button>
+  </div>
+  <div class="on-brand row" style="margin-top:var(--sp-4)">
+    <button class="btn btn--outline btn--lg">Получить консультацию</button>
+    <a class="btn btn--light btn--lg" href="#">Перейти в каталог</a>
+    <span class="muted">outline и light — на тёмном фоне и фото</span>
+  </div>
+</section>
+
+<section class="container section" aria-labelledby="t-cards">
+  <h2 class="h2" id="t-cards">Карточки и плашки</h2>
+  <div class="row" style="margin-bottom:var(--sp-6)">
+    <span class="badge badge--in">В наличии</span>
+    <span class="badge badge--order">Под заказ</span>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="card__media"><svg viewBox="0 0 64 40" class="icon" style="stroke-width:1.5"><use href="#i-machine"/></svg></div>
+      <div class="card__body">
+        <span class="badge badge--in" style="align-self:flex-start">В наличии</span>
+        <h3 class="card__title"><a href="#">Экскаватор-погрузчик 388-II</a></h3>
+        <dl class="specs"><dt>Мощность</dt><dd>95,2 л.с.</dd><dt>Масса</dt><dd>11&nbsp;200 кг</dd><dt>Привод</dt><dd>Полный</dd></dl>
+        <button class="btn btn--primary btn--block" aria-label="Узнать стоимость: Экскаватор-погрузчик 388-II">Узнать стоимость <svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg viewBox="0 0 64 40" class="icon" style="stroke-width:1.5"><use href="#i-machine"/></svg></div>
+      <div class="card__body">
+        <span class="badge badge--order" style="align-self:flex-start">Под заказ</span>
+        <span class="card__tag">Максимальная комплектация</span>
+        <h3 class="card__title"><a href="#">Фронтальный погрузчик ZL50GC</a></h3>
+        <button class="btn btn--primary btn--block">Узнать стоимость <svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+    </article>
+    <div>
+      <a class="tile" href="#"><span class="tile__img"><svg viewBox="0 0 64 40" class="icon" style="width:50%;height:auto;stroke-width:1.5"><use href="#i-machine"/></svg></span><span class="tile__label"><span>Спецтехника</span><i><svg class="icon"><use href="#i-arrow"/></svg></i></span></a>
+      <p class="note">Плитка раздела, наведите курсор</p>
+    </div>
+  </div>
+  <p class="note">Вторая карточка — без характеристик: блок не выводится, кнопка прижата вниз.</p>
+</section>
+
+<section class="container section" aria-labelledby="t-nav">
+  <h2 class="h2" id="t-nav">Навигация и списки</h2>
+  <nav class="crumbs" aria-label="Хлебные крошки"><ol><li><a href="#">Главная</a></li><li><a href="#">Каталог</a></li><li><a href="#">Спецтехника</a></li><li><span aria-current="page">Экскаватор-погрузчик</span></li></ol></nav>
+  <div class="on-brand" style="margin:var(--sp-5) 0"><nav class="tabs" aria-label="Подразделы"><a href="#" aria-current="page">Экскаватор-погрузчик</a><a href="#">Фронтальный погрузчик</a><a href="#">Бетоносмеситель</a><a href="#">Минипогрузчик</a><a href="#">Вилочный погрузчик</a></nav></div>
+  <fieldset class="chips"><legend>Бренд</legend>
+    <label class="chip"><input type="checkbox" checked><span>SHANMON</span></label>
+    <label class="chip"><input type="checkbox"><span>Lonking</span></label>
+    <label class="chip"><input type="checkbox"><span>CATch</span></label>
+  </fieldset>
+  <p aria-live="polite" class="muted">6 товаров</p>
+</section>
+
+<section class="container section" aria-labelledby="t-form">
+  <h2 class="h2" id="t-form">Поля формы</h2>
+  <div class="grid">
+    <div class="field"><label for="f1">Имя</label><input class="input" id="f1" autocomplete="name" placeholder="Иван"></div>
+    <div class="field"><label for="f2">Телефон</label><input class="input" id="f2" type="tel" inputmode="tel" value="+7 (914" aria-invalid="true" aria-describedby="f2e"><span class="field__error" id="f2e">Введите телефон полностью</span></div>
+    <div class="field"><label for="f3">Название товара</label><input class="input" id="f3" readonly value="Экскаватор-погрузчик 388-II"></div>
+    <div class="field"><label for="f4">Недоступно</label><input class="input" id="f4" disabled value="—"></div>
+  </div>
+  <label class="check" style="margin-top:var(--sp-5)"><input type="checkbox" required> <span>Нажимая «Оставить заявку», я соглашаюсь с <a href="#">условиями обработки персональных данных</a></span></label>
+</section>
+
+<section class="container section" aria-labelledby="t-blocks">
+  <h2 class="h2" id="t-blocks">Блоки</h2>
+  <div class="grid" style="margin-bottom:var(--sp-8)">
+    <div class="stat"><b>2019</b><span class="muted">официальный дилер SHANMON</span></div>
+    <div class="stat"><b>1 500 м²</b><span class="muted">ангаров с техникой и комплектующими</span></div>
+    <div class="stat"><b>2 ч</b><span class="muted">предварительное решение по лизингу</span></div>
+  </div>
+  <ol class="steps">
+    <li><p class="h4">Заявка</p><p class="muted">На сайте или в мессенджере</p></li>
+    <li><p class="h4">Подбор</p><p class="muted">Под задачу и условия работы</p></li>
+    <li><p class="h4">Договор</p><p class="muted">Гарантии прописаны в договоре</p></li>
+    <li><p class="h4">Доставка</p><p class="muted">На объект в согласованный срок</p></li>
+  </ol>
+  <div style="margin-top:var(--sp-8)">
+    <details open><summary>Можно ли взять технику в лизинг без авансового платежа?</summary><p>Пример ответа. Аккордеон на &lt;details&gt; работает без JavaScript.</p></details>
+    <details><summary>Сколько идёт доставка до Магадана?</summary><p>Пример ответа.</p></details>
+  </div>
+  <div class="empty" style="margin-top:var(--sp-8)">
+    <svg class="icon"><use href="#i-box"/></svg>
+    <p class="h3">Скоро здесь появится техника</p>
+    <p class="muted">Раздел пополняется. Подберём нужную модель под вашу задачу.</p>
+    <button class="btn btn--primary" data-open="drawer">Подобрать технику</button>
+  </div>
+</section>
+
+<section class="container section" aria-labelledby="t-fb">
+  <h2 class="h2" id="t-fb">Обратная связь</h2>
+  <div class="row">
+    <div class="toast" role="status"><svg class="icon" style="color:var(--c-success)"><use href="#i-check"/></svg><div><b>Заявка отправлена</b><p class="muted" style="margin:4px 0 0">Менеджер перезвонит в течение 15 минут в рабочее время.</p></div></div>
+    <div class="toast toast--error" role="alert"><svg class="icon" style="color:var(--c-danger)"><use href="#i-alert"/></svg><div><b>Не удалось отправить</b><p class="muted" style="margin:4px 0 0">Проверьте соединение или позвоните 8 800 101-65-54.</p></div></div>
+  </div>
+  <div class="row" style="margin-top:var(--sp-6)">
+    <button class="btn btn--primary btn--lg" data-open="drawer" aria-haspopup="dialog" aria-controls="drawer">Открыть окно заявки <svg class="icon"><use href="#i-arrow"/></svg></button>
+  </div>
+</section>
+
+<dialog class="drawer" id="drawer" aria-labelledby="drawer-t">
+  <button class="btn btn--brand btn--icon btn--lg drawer__close" aria-label="Закрыть" data-close><svg class="icon"><use href="#i-x"/></svg></button>
+  <h2 class="h3" id="drawer-t" style="text-transform:uppercase;font-weight:900">Узнать стоимость</h2>
+  <p class="muted">Менеджер перезвонит и назовёт цену с доставкой.</p>
+  <form method="dialog">
+    <div class="field"><label for="d1">Имя</label><input class="input" id="d1" autocomplete="name" required autofocus></div>
+    <div class="field"><label for="d2">Телефон</label><input class="input" id="d2" type="tel" inputmode="tel" autocomplete="tel" required></div>
+    <div class="field"><label for="d3">Техника</label><input class="input" id="d3" readonly value="Экскаватор-погрузчик 388-II"></div>
+    <label class="check"><input type="checkbox" required> <span>Согласен с <a href="#">условиями обработки персональных данных</a></span></label>
+    <button class="btn btn--primary btn--lg btn--block">Оставить заявку <svg class="icon"><use href="#i-arrow"/></svg></button>
+  </form>
+</dialog>
+
+<nav class="tabbar" aria-label="Быстрые разделы">
+  <a href="#" aria-current="page"><svg class="icon"><use href="#i-grid"/></svg>Каталог</a>
+  <a href="#"><svg class="icon"><use href="#i-search"/></svg>Поиск</a>
+  <a href="#"><svg class="icon"><use href="#i-percent"/></svg>Лизинг</a>
+  <a href="#"><svg class="icon"><use href="#i-wrench"/></svg>Услуги</a>
+</nav>
+
+<script>
+const colors = ["bg","surface","surface-brand","border","border-strong","border-input","text","text-muted","text-brand","on-brand-muted","accent","accent-hover","accent-on-brand","success","success-line","success-bg","warning","warning-line","warning-bg","danger","danger-bg"];
+const cs = getComputedStyle(document.documentElement);
+document.getElementById('swatches').innerHTML = colors.map(c => `<div class="sw"><i style="background:var(--c-${c})"></i><div><b>${c}</b><br>${cs.getPropertyValue('--c-'+c).trim()}</div></div>`).join('');
+const dlg = document.getElementById('drawer');
+let opener = null;
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => { opener = b; dlg.showModal(); }));
+dlg.querySelector('[data-close]').addEventListener('click', () => dlg.close());
+dlg.addEventListener('close', () => opener && opener.focus());
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+</script>
+</body>
+</html>

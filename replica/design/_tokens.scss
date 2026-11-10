@@ -1,0 +1,13 @@
+// Сгенерировано build_tokens.py из tokens.json — руками не править
+// Значения берите через var(--...); здесь только то, что нельзя в CSS-переменных: брейкпоинты.
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+@mixin up($bp) {
+  @media (min-width: $bp) { @content; }
+}
+@mixin down($bp) {
+  @media (max-width: $bp - 0.02px) { @content; }
+}

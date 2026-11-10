@@ -1,0 +1,40 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + var(--sp-4)); }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-sm);
+  color: var(--c-text);
+  background: var(--c-bg);
+  padding-bottom: var(--tabbar-h);
+  -webkit-tap-highlight-color: transparent;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--c-accent); }
+a:hover { color: var(--c-accent-hover); }
+:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+main:focus { outline: none; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+h1, h2, h3, h4 { margin: 0; }
+
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: var(--section); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip-link { position: absolute; left: var(--sp-4); top: -100px; z-index: 200; background: var(--c-bg); padding: var(--sp-3) var(--sp-4); }
+.skip-link:focus { top: var(--sp-4); }
+
+.icon { width: 20px; height: 20px; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); font-weight: var(--fw-h1); text-transform: uppercase; overflow-wrap: anywhere; text-wrap: balance; }
+.h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: var(--fw-h2); text-transform: uppercase; margin-bottom: var(--sp-7); }
+.h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); font-weight: var(--fw-h3); }
+.h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); font-weight: var(--fw-h4); text-transform: uppercase; }
+.lead { font-size: var(--fs-lead); line-height: var(--lh-lead); font-weight: var(--fw-lead); }
+.caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.muted { color: var(--c-text-muted); }
+.prose { font-size: var(--fs-base); line-height: var(--lh-base); max-width: 72ch; }
+.prose > * + * { margin-top: var(--sp-4); }
+.prose h2 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-top: var(--sp-8); }
+.prose ul { padding-left: var(--sp-6); }

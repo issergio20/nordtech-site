@@ -1,0 +1,60 @@
+---
+layout: layouts/base.njk
+title: Лизинг спецтехники
+permalink: /uslug/servisnye-uslugi/lizing/
+---
+{% import "ui/ui.njk" as ui %}
+{# S10 — лизинг. Противоречие «2 часа» / «3–5 дней» разведено: 2 часа — предварительное решение, 3–5 дней — одобрение лизинговой компанией (подтвердить у клиента) #}
+{{ ui.pageHero("Лизинг спецтехники", "Аванс от 10%, срок от 12 до 60 месяцев. Подбираем лизинговую компанию и сами подаём документы.", [{title: "Услуги", url: "/uslug/"}, {title: "Сервисные услуги", url: "/uslug/servisnye-uslugi/"}], "Лизинг", "Рассчитать лизинг", "leasing") }}
+
+<section class="section" aria-labelledby="l-how">
+  <div class="container">
+    <h2 class="h2" id="l-how">Как это работает</h2>
+    <ol class="steps">
+      <li><p class="h4">Выбор и заявка</p><p class="muted">Выбираете технику и оставляете заявку на лизинг</p></li>
+      <li><p class="h4">2 часа</p><p class="muted">Даём предварительное решение и расчёт платежа</p></li>
+      <li><p class="h4">3–5 рабочих дней</p><p class="muted">Лизинговая компания рассматривает документы, мы ведём процесс</p></li>
+      <li><p class="h4">Подписание</p><p class="muted">Подписываете договор, вносите аванс — техника едет к вам</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--surface" aria-labelledby="l-terms">
+  <div class="container">
+    <h2 class="h2" id="l-terms">Условия</h2>
+    <ul class="terms">
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Срок</span><b>12–60 месяцев</b><p>Зависит от типа техники и ваших задач</p></li>
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Аванс</span><b>от 10% до 30%</b><p>Определяется по финансовому положению компании и типу техники</p></li>
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Ставка</span><b>от 6% до 12% годовых</b><p>Зависит от срока, техники и кредитной истории</p></li>
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Платежи</span><b>Равные или убывающие</b><p>Возможен сезонный график под вашу загрузку</p></li>
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Валюта</span><b>Рубли или валюта</b><p>Выбор валюты снижает риск курсовых колебаний</p></li>
+      <li class="term" style="background:var(--c-bg)"><span class="muted">Выкуп</span><b>По остаточной стоимости</b><p>Сумма выкупа фиксируется в договоре заранее</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="l-docs">
+  <div class="container promo" style="align-items:start">
+    <div>
+      <h2 class="h2" id="l-docs">Документы</h2>
+      <p class="lead muted">Список типовой — лизинговая компания может запросить дополнительные.</p>
+      <button class="btn btn--primary btn--lg" style="margin-top:var(--sp-6)" type="button" data-lead="leasing">Оформить лизинг <svg class="icon"><use href="#i-arrow"/></svg></button>
+    </div>
+    <ol class="docs">
+      <li>Заявка на лизинг — образец пришлёт менеджер</li>
+      <li>Копии учредительных документов</li>
+      <li>Бухгалтерская отчётность за 2 года: баланс и отчёт о финансовых результатах</li>
+      <li>Паспорт и ИНН руководителя</li>
+      <li>Договоры с заказчиками, подтверждающие выручку, — если есть</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section section--surface faq" aria-labelledby="l-faq">
+  <div class="container">
+    <h2 class="h2" id="l-faq">Вопросы о лизинге</h2>
+    <details><summary>Можно ли оформить лизинг на ИП?</summary><p>[Ответ уточнить у клиента.]</p></details>
+    <details><summary>Что будет с техникой после окончания договора?</summary><p>Вы выкупаете её по остаточной стоимости, которая записана в договоре, и техника переходит в вашу собственность.</p></details>
+    <details><summary>Входит ли обслуживание в лизинговый платёж?</summary><p>Может входить: техническое обслуживание и ремонт можно включить в договор. Условия рассчитывает менеджер.</p></details>
+  </div>
+</section>

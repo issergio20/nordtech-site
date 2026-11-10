@@ -1,0 +1,6 @@
+# crontab -e под пользователем сайта. SITE — корень сайта MODX. Время сервера — UTC.
+SITE=/var/www/nordtech.su
+*/5 * * * *  php $SITE/cron/leads.php renotify >> /var/log/nord/leads.log 2>&1
+0 19 * * *   php $SITE/cron/leads.php purge    >> /var/log/nord/leads.log 2>&1    # 03:00 по Иркутску
+0 20 * * *   bash $SITE/cron/backup.sh          >> /var/log/nord/backup.log 2>&1   # 04:00 по Иркутску
+# cron/ закрыть от веба в nginx: location ^~ /cron/ { deny all; }

@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+title: Поиск по каталогу
+permalink: /rezultaty-poiska/
+noindex: true
+---
+{% import "ui/ui.njk" as ui %}
+{# S06 — в MODX: mSearch2 (mSearchForm + mSearch2). Здесь — поиск по встроенному индексу #}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__crumbs">{{ ui.breadcrumbs([], "Поиск") }}</div>
+    <h1 class="h1">Поиск</h1>
+    <form class="search-form" action="/rezultaty-poiska/" role="search">
+      <label class="visually-hidden" for="q-page">Что ищем</label>
+      <input class="input" id="q-page" name="query" type="search" placeholder="Например: Lonking или погрузчик" minlength="2" required>
+      <button class="btn btn--primary btn--lg" type="submit">Найти</button>
+    </form>
+  </div>
+</section>
+<div class="container section">
+  <p class="search-status" data-search-status aria-live="polite"></p>
+  <div class="cards" data-search-results>
+    {% for p in catalog.products %}<div data-search-card="{{ p.slug }}" hidden>{{ ui.productCard(p, 2) }}</div>{% endfor %}
+  </div>
+  <div data-search-empty hidden>
+    {{ ui.emptyState("Ничего не нашли", "Проверьте написание или опишите задачу — подберём технику, даже если её нет в каталоге.", "Подобрать технику") }}
+    <span data-search-empty-q hidden></span>
+  </div>
+</div>
+<script type="application/json" id="search-index">{{ catalog.products | searchIndex | safe }}</script>

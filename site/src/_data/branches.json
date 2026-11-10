@@ -1,0 +1,6 @@
+[
+  { "code": "chita", "city": "Чита", "office": "ул. Трактовая, 7а, каб. 12–14", "yard": "ул. Трактовая, 50", "phone": "+7 914 350-41-41", "phoneHref": "tel:+79143504141", "email": "user_nord@mail.ru", "tz": "UTC+9", "kind": "branch" },
+  { "code": "irkutsk", "city": "Иркутск", "office": "ул. Сурикова, 2, каб. 36", "yard": "ул. Трактовая, 14/20", "phone": "+7 924 812-22-18", "phoneHref": "tel:+79248122218", "email": "user_nord@mail.ru", "tz": "UTC+8", "kind": "branch" },
+  { "code": "magadan", "city": "Магадан", "office": null, "yard": "Мерчиканский пер., 36", "phone": "+7 996 025-54-55", "phoneHref": "tel:+79960255455", "email": "user_nord@mail.ru", "tz": "UTC+11", "kind": "branch" },
+  { "code": "china", "city": "Маньчжурия, Китай", "kind": "agent", "companyZh": "满洲里欧陆达货运代理有限公司", "companyEn": "Manzhouli Ouluda Transfer Agent Co., Ltd", "personZh": "文财", "personEn": "Wen Cai", "phone": "+86 131 3493 3773", "phoneHref": "tel:+8613134933773", "email": "wencaimzl@qq.com" }
+]

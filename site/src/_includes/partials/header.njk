@@ -1,0 +1,84 @@
+{# Чанк header.tpl. heroHeader: true — прозрачная шапка поверх первого экрана #}
+<header class="header{% if heroHeader %} header--over{% endif %}" data-header>
+  <div class="header__bar">
+    <a class="header__logo" href="/" aria-label="{{ site.name }} — на главную">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11"/><circle cx="20" cy="20" r="4"/><path d="M20 2v7M20 31v7M2 20h7M31 20h7"/></svg>
+      <span class="header__logo-text"><b>{{ site.name }}</b><small>{{ site.tagline }}</small></span>
+    </a>
+    <button class="btn btn--primary header__catalog" type="button" aria-expanded="false" aria-controls="catalog-menu" data-menu-toggle="catalog-menu">
+      <svg class="icon"><use href="#i-grid"/></svg><span>Каталог</span>
+    </button>
+    <nav class="header__nav" aria-label="Основное меню">
+      <ul>
+        {% for item in site.nav %}
+        <li><a href="{{ item.url }}"{% if page.url.startsWith(item.url) %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <form class="header__search" action="/rezultaty-poiska/" role="search">
+        <label class="visually-hidden" for="q-header">Поиск по каталогу</label>
+        <input class="header__search-input" id="q-header" name="query" type="search" placeholder="Модель или тип техники" autocomplete="off" minlength="2">
+        <button class="btn btn--brand btn--icon" type="submit" aria-label="Найти"><svg class="icon"><use href="#i-search"/></svg></button>
+      </form>
+      <a class="header__phone" href="{{ site.phoneHref }}" aria-label="Позвонить {{ site.phone }}">
+        <svg class="icon"><use href="#i-phone"/></svg><span>{{ site.phone }}</span>
+      </a>
+      <ul class="header__socials" aria-label="Мы в соцсетях">
+        {% for s in site.socials %}
+        <li><a class="social social--{{ s.icon }}" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.name }}">{{ s.icon | upper }}</a></li>
+        {% endfor %}
+      </ul>
+      <button class="btn btn--brand btn--icon header__burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Меню" data-menu-toggle="site-menu">
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+
+  {# M04 — меню каталога: панель на десктопе, полноэкранная на мобильном #}
+  <div class="megamenu" id="catalog-menu" hidden data-menu>
+    <div class="container megamenu__inner">
+      <div class="megamenu__head">
+        <p class="h4">Каталог</p>
+        <button class="btn btn--brand btn--icon" type="button" aria-label="Закрыть каталог" data-menu-close><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <ul class="megamenu__cols">
+        {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}
+        <li>
+          <a class="megamenu__root" href="{{ root.url }}">
+            <svg class="megamenu__icon" aria-hidden="true"><use href="#m-{{ root.icon }}"/></svg>
+            <span>{{ root.title }}</span>
+            {% if root.count %}<small>{{ root.count }}</small>{% endif %}
+          </a>
+          <ul>
+            {% for ch in root.children %}{% if ch.count or not site.hideEmptyCategories %}
+            <li><a href="{{ ch.url }}">{{ ch.title }}{% if ch.count %} <small>{{ ch.count }}</small>{% endif %}</a></li>
+            {% endif %}{% endfor %}
+          </ul>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {# Мобильное меню сайта #}
+  <div class="sitemenu" id="site-menu" hidden data-menu>
+    <div class="sitemenu__head">
+      <p class="h4">Меню</p>
+      <button class="btn btn--brand btn--icon" type="button" aria-label="Закрыть меню" data-menu-close><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+    <nav aria-label="Меню сайта">
+      <ul class="sitemenu__list">
+        <li><a href="/katalog/">Каталог</a></li>
+        {% for item in site.nav %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{% endfor %}
+      </ul>
+    </nav>
+    <div class="sitemenu__contacts">
+      <a class="h3" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+      <p class="muted">{{ site.phoneNote }}</p>
+      <ul class="header__socials header__socials--show">
+        {% for s in site.socials %}<li><a class="social" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.name }}">{{ s.icon | upper }}</a></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+</header>

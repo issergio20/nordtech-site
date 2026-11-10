@@ -1,0 +1,9 @@
+// Точка входа стилей. Токены — из replica/design (npm run tokens), значения только через var(--...).
+@use "tokens-vars";
+@use "bp" as *;
+@use "base";
+@use "ui/buttons";
+@use "ui/layout";
+@use "ui/catalog";
+@use "ui/forms";
+@use "ui/blocks";

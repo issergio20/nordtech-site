@@ -1,0 +1,53 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: catalog.flat
+  size: 1
+  alias: c
+permalink: "{{ c.url }}"
+eleventyComputed:
+  title: "{{ c.title }}"
+  description: "{{ c.title }} от официального дилера НОРД: наличие, характеристики, цены по запросу, лизинг и доставка."
+---
+{% import "ui/ui.njk" as ui %}
+{# S03 / S04 — раздел и подраздел. Шаблон MODX: catalog-category.tpl (mFilter2 + msProducts) #}
+{% set crumbs = [{title: "Каталог", url: "/katalog/"}] %}
+{% if c.parent %}{% set crumbs = [{title: "Каталог", url: "/katalog/"}, c.parent] %}{% endif %}
+
+<section class="page-hero page-hero--catalog">
+  <div class="container">
+    <div class="page-hero__crumbs">{{ ui.breadcrumbs(crumbs, c.title) }}</div>
+    <h1 class="h1">{{ c.title }}</h1>
+    {% if c.lead or c.root.lead %}<p class="lead page-hero__lead">{{ c.lead or c.root.lead }}</p>{% endif %}
+    {% if c.tabs.length %}
+    <nav class="tabs" aria-label="Подразделы">
+      <a href="{{ c.root.url }}"{% if not c.parent %} aria-current="page"{% endif %}>Все</a>
+      {% for t in c.tabs %}{% if t.count or not site.hideEmptyCategories %}
+      <a href="{{ t.url }}"{% if t.current %} aria-current="page"{% endif %}>{{ t.title }}{% if t.count %} <small>{{ t.count }}</small>{% endif %}</a>
+      {% endif %}{% endfor %}
+    </nav>
+    {% endif %}
+  </div>
+</section>
+
+<div class="container catalog" data-catalog data-page-size="8">
+  {% if c.count %}
+  <div class="catalog__bar">
+    {% if c.vendors.length > 1 %}
+    <fieldset class="chips" data-filter="vendor">
+      <legend>Бренд</legend>
+      {% for v in c.vendors %}<label class="chip"><input type="checkbox" name="vendor" value="{{ v }}"><span>{{ v }}</span></label>{% endfor %}
+    </fieldset>
+    {% endif %}
+    <p class="catalog__count" aria-live="polite" data-count data-total="{{ c.count }}">{{ c.count | plural("модель", "модели", "моделей") }}</p>
+  </div>
+  <div class="cards" data-cards>
+    {% for p in c.products %}{{ ui.productCard(p, 2) }}{% endfor %}
+  </div>
+  <div class="catalog__more">
+    <button class="btn btn--ghost btn--lg btn--block" type="button" data-more hidden>Показать ещё</button>
+  </div>
+  {% else %}
+  {{ ui.emptyState("Скоро здесь появится техника", "Раздел пополняется. Расскажите, что нужно, — подберём модель у производителя и привезём под заказ.") }}
+  {% endif %}
+</div>

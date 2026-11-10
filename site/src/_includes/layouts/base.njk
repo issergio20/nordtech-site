@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% if isHome %}{{ site.name }} — спецтехника от официального дилера{% else %}{{ metaTitle or title }} — {{ site.name }}{% endif %}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
+<meta name="theme-color" content="#002a5d">
+{# В проде — Onest локально (woff2 + preload), здесь — Google Fonts для превью #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<script type="module" src="/js/main.js"></script>
+</head>
+<body class="{{ bodyClass }}">
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+{% include "partials/sprite.njk" %}
+{% include "partials/header.njk" %}
+<main id="main" tabindex="-1">
+{{ content | safe }}
+</main>
+{% include "partials/footer.njk" %}
+{% include "partials/tabbar.njk" %}
+{% include "partials/lead-dialog.njk" %}
+<div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

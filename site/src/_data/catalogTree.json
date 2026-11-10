@@ -1,0 +1,54 @@
+[
+  {
+    "path": "spectehnika", "title": "Спецтехника", "icon": "loader",
+    "lead": "Погрузчики, экскаваторы-погрузчики и техника для стройки, карьеров и складов.",
+    "children": [
+      { "path": "spectehnika/ekskavator-pogruzchik", "title": "Экскаваторы-погрузчики", "icon": "backhoe" },
+      { "path": "spectehnika/frontalnyj-pogruzchik", "title": "Фронтальные погрузчики", "icon": "loader", "isNew": true },
+      { "path": "spectehnika/betonosmesitel", "title": "Бетоносмесители", "icon": "mixer" },
+      { "path": "spectehnika/minipogruzchik", "title": "Минипогрузчики", "icon": "loader" },
+      { "path": "spectehnika/vilochnyjpogruzchik", "title": "Вилочные погрузчики", "icon": "forklift" }
+    ]
+  },
+  {
+    "path": "dizel-generatornaya-ustanovka", "title": "Дизель-генераторы", "icon": "generator",
+    "lead": "Резервное и основное электроснабжение объектов без сети.",
+    "children": [
+      { "path": "dizel-generatornaya-ustanovka/ricardo", "title": "Ricardo", "icon": "generator" },
+      { "path": "dizel-generatornaya-ustanovka/weichai", "title": "Weichai", "icon": "generator" },
+      { "path": "dizel-generatornaya-ustanovka/minskie-dgu", "title": "Минские ДГУ", "icon": "generator" }
+    ]
+  },
+  {
+    "path": "nasosy", "title": "Насосы", "icon": "pump",
+    "lead": "Откачка воды и пульпы на объектах, в котлованах и карьерах.",
+    "children": [
+      { "path": "nasosy/elektricheskie", "title": "Электрические", "icon": "pump" },
+      { "path": "nasosy/dizelnye", "title": "Дизельные", "icon": "pump" }
+    ]
+  },
+  {
+    "path": "kolyosa", "title": "Колёса", "icon": "tire",
+    "lead": "Шины для карьерной и дорожной техники.",
+    "children": [
+      { "path": "kolyosa/karernye", "title": "Карьерные", "icon": "tire" },
+      { "path": "kolyosa/shossejnye", "title": "Шоссейные", "icon": "tire" }
+    ]
+  },
+  {
+    "path": "aksessuary", "title": "Аксессуары", "icon": "chain",
+    "lead": "Диски и цепи для работы зимой и на скальных грунтах.",
+    "children": [
+      { "path": "aksessuary/diski", "title": "Диски", "icon": "tire" },
+      { "path": "aksessuary/cepi-protivoskolzheniya", "title": "Цепи противоскольжения", "icon": "chain" },
+      { "path": "aksessuary/cepi-zaschitnye", "title": "Цепи защитные", "icon": "chain" }
+    ]
+  },
+  {
+    "path": "drugoe", "title": "Другое", "icon": "hangar",
+    "lead": "Быстровозводимые ангары и сопутствующее оборудование.",
+    "children": [
+      { "path": "drugoe/angary", "title": "Ангары", "icon": "hangar" }
+    ]
+  }
+]

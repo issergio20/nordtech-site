@@ -1,0 +1,115 @@
+---
+layout: layouts/base.njk
+title: Главная
+isHome: true
+heroHeader: true
+permalink: /
+---
+{% import "ui/ui.njk" as ui %}
+{# S01 — главная. Шаблон MODX: home.tpl; блоки — MIGX-поля ресурса #}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <svg class="hero__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11"/><circle cx="20" cy="20" r="4"/><path d="M20 2v7M20 31v7M2 20h7M31 20h7"/></svg>
+  <div class="container hero__grid">
+    <div>
+      <h1 class="h1" id="hero-title">Спецтехника, которая выдерживает Север</h1>
+      <p class="lead hero__lead" style="margin-top:var(--sp-5)">Погрузчики и техника SHANMON и Lonking от официального дилера. Площадки в Чите, Иркутске и Магадане, лизинг и сервис на объекте.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--light btn--lg" href="/katalog/">Перейти в каталог <svg class="icon"><use href="#i-arrow"/></svg></a>
+        <button class="btn btn--outline btn--lg" type="button" data-lead="consultation" aria-haspopup="dialog">Подобрать технику</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why" aria-labelledby="why-title">
+  <div class="container">
+    <h2 class="h2" id="why-title">Почему НОРД</h2>
+    <ul class="stats">
+      <li class="stat"><b><span data-count-to="2019">2019</span></b><span class="muted">С этого года — официальный дилер SHANMON</span></li>
+      <li class="stat"><b><span data-count-to="1500">1 500</span> м²</b><span class="muted">Ангаров с техникой и запчастями на наших площадках</span></li>
+      <li class="stat"><b><span data-count-to="3">3</span> филиала</b><span class="muted">Чита, Иркутск и Магадан плюс представитель в Китае</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--surface" id="catalog" aria-labelledby="cat-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="h2" id="cat-title">Каталог</h2>
+      <a class="btn btn--ghost" href="/katalog/">Весь каталог <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>
+    <ul class="tiles">
+      {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}
+      <li><a class="tile" href="{{ root.url }}">
+        {{ ui.media(root.icon, "", "4/3", "tile__img") }}
+        <span class="tile__label"><span>{{ root.title }}</span><i><svg class="icon"><use href="#i-arrow"/></svg></i></span>
+        <span class="tile__count">{% if root.count %}{{ root.count | plural("модель", "модели", "моделей") }}{% else %}Под заказ{% endif %}</span>
+      </a></li>
+      {% endif %}{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="popular" aria-labelledby="pop-title">
+  <div class="container" data-carousel>
+    <div class="section-head">
+      <div>
+        <h2 class="h2" id="pop-title">Чаще всего берут</h2>
+        <p class="muted">Модели, которые клиенты покупают у нас чаще других</p>
+      </div>
+      <div class="carousel__nav">
+        <button class="btn btn--brand btn--icon" type="button" data-prev aria-label="Предыдущие модели"><svg class="icon"><use href="#i-chevron-left"/></svg></button>
+        <button class="btn btn--brand btn--icon" type="button" data-next aria-label="Следующие модели"><svg class="icon"><use href="#i-chevron-right"/></svg></button>
+      </div>
+    </div>
+    <div class="carousel__track" data-track role="region" aria-roledescription="карусель" aria-label="Популярные модели" tabindex="0">
+      {% for p in catalog.popular %}
+      <div role="group" aria-roledescription="слайд" aria-label="{{ loop.index }} из {{ loop.length }}">{{ ui.productCard(p) }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--brand" id="how" aria-labelledby="how-title">
+  <div class="container">
+    <h2 class="h2" id="how-title">Как мы работаем</h2>
+    <ol class="steps">
+      <li><p class="h4">Заявка</p><p class="muted">Оставляете заявку на сайте, звоните или пишете в мессенджер</p></li>
+      <li><p class="h4">Подбор</p><p class="muted">Подбираем модель под объём работ, грунт и климат</p></li>
+      <li><p class="h4">Договор</p><p class="muted">Фиксируем цену, сроки и гарантии в договоре</p></li>
+      <li><p class="h4">Доставка</p><p class="muted">Привозим на объект в срок, который записан в договоре</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="services" aria-labelledby="srv-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="h2" id="srv-title">Сервис</h2>
+      <a class="btn btn--ghost" href="/uslug/servisnye-uslugi/">Все услуги <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>
+    {% include "partials/services-list.njk" %}
+  </div>
+</section>
+
+<section class="section section--brand" id="leasing" aria-labelledby="leasing-title">
+  <div class="container promo">
+    <div>
+      <h2 class="h2" id="leasing-title">Техника в лизинг</h2>
+      <p class="lead muted">Аванс от 10%, срок до 5 лет. Подбираем лизинговую компанию и сами готовим документы.</p>
+    </div>
+    <div style="display:grid;gap:var(--sp-6)">
+      <ul class="promo__list">
+        <li><svg class="icon"><use href="#i-check"/></svg>Выбираете технику и оставляете заявку</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Предварительное решение — в течение 2 часов</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Пакет документов в лизинговую компанию собираем мы</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Вы приезжаете подписать договор и внести аванс</li>
+      </ul>
+      <div class="hero__ctas" style="margin:0">
+        <button class="btn btn--light btn--lg" type="button" data-lead="leasing" aria-haspopup="dialog">Рассчитать лизинг <svg class="icon"><use href="#i-arrow"/></svg></button>
+        <a class="btn btn--outline btn--lg" href="/uslug/servisnye-uslugi/lizing/">Условия</a>
+      </div>
+    </div>
+  </div>
+</section>

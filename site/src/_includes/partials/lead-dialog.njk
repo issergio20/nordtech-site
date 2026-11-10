@@ -1,0 +1,59 @@
+{# M01–M03 + «Задать вопрос»: одно окно, тип заявки задаёт кнопка через data-lead="price|consultation|leasing|question".
+   В MODX — чанк формы FetchIt (snippet FetchIt, hooks: nordLead). Поля и имена совпадают с modx_nord_leads. #}
+<dialog class="drawer" id="lead-dialog" aria-labelledby="lead-title" aria-describedby="lead-sub">
+  <button class="btn btn--brand btn--icon btn--lg drawer__close" type="button" aria-label="Закрыть" data-dialog-close><svg class="icon"><use href="#i-x"/></svg></button>
+  <div class="drawer__body" data-lead-body>
+    <h2 class="drawer__title" id="lead-title" data-lead-title>Узнать стоимость</h2>
+    <p class="muted" id="lead-sub" data-lead-sub>Менеджер перезвонит и назовёт цену с доставкой до вашего объекта.</p>
+    <form class="lead-form" novalidate data-lead-form>
+      <input type="hidden" name="type" value="price">
+      <input type="hidden" name="product_id" value="">
+      <input type="hidden" name="submit_token" value="">
+      <input type="hidden" name="page_url" value="">
+      <div class="hp" aria-hidden="true"><label>Не заполняйте это поле <input name="website" tabindex="-1" autocomplete="off"></label></div>
+
+      <div class="field">
+        <label for="lead-name">Как к вам обращаться</label>
+        <input class="input" id="lead-name" name="name" autocomplete="name" required maxlength="128" aria-describedby="lead-name-err">
+        <p class="field__error" id="lead-name-err" hidden></p>
+      </div>
+      <div class="field">
+        <label for="lead-phone">Телефон</label>
+        <input class="input" id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" aria-describedby="lead-phone-err">
+        <p class="field__error" id="lead-phone-err" hidden></p>
+      </div>
+      <div class="field" data-field="product">
+        <label for="lead-product">Техника</label>
+        <input class="input" id="lead-product" name="product_title" readonly>
+      </div>
+      <div class="field" data-field="city">
+        <label for="lead-city">Ближайший филиал</label>
+        <select class="input" id="lead-city" name="city">
+          <option value="">Не важно</option>
+          {% for b in branches %}{% if b.kind == "branch" %}<option value="{{ b.code }}">{{ b.city }}</option>{% endif %}{% endfor %}
+        </select>
+      </div>
+      <div class="field" data-field="comment">
+        <label for="lead-comment">Комментарий <span class="muted">— необязательно</span></label>
+        <textarea class="input" id="lead-comment" name="comment" rows="3" maxlength="2000"></textarea>
+      </div>
+      <div class="field">
+        <label class="check">
+          <input type="checkbox" name="consent" value="1" required aria-describedby="lead-consent-err">
+          <span>Согласен с <a href="/obrabotka-dannyh/" target="_blank">условиями обработки персональных данных</a></span>
+        </label>
+        <p class="field__error" id="lead-consent-err" hidden></p>
+      </div>
+      <button class="btn btn--primary btn--lg btn--block" type="submit">
+        <span data-submit-label>Отправить заявку</span><svg class="icon"><use href="#i-arrow"/></svg>
+      </button>
+      <p class="caption muted">Перезваниваем в рабочее время в течение 15 минут.</p>
+    </form>
+  </div>
+  <div class="drawer__body drawer__done" data-lead-done hidden tabindex="-1">
+    <svg class="icon drawer__done-icon"><use href="#i-check"/></svg>
+    <h2 class="drawer__title">Заявка принята</h2>
+    <p class="muted" data-done-text>Менеджер свяжется с вами в ближайшее рабочее время.</p>
+    <button class="btn btn--primary btn--lg" type="button" data-dialog-close>Хорошо</button>
+  </div>
+</dialog>

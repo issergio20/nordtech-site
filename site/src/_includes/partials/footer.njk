@@ -1,0 +1,36 @@
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="header__logo" href="/" aria-label="{{ site.name }} — на главную">
+        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11"/><circle cx="20" cy="20" r="4"/><path d="M20 2v7M20 31v7M2 20h7M31 20h7"/></svg>
+        <span class="header__logo-text"><b>{{ site.name }}</b><small>{{ site.tagline }}</small></span>
+      </a>
+      <p>Официальный дилер спецтехники SHANMON. Продажа, лизинг, доставка и сервис в Забайкалье, Приангарье и на Колыме.</p>
+    </div>
+    <nav aria-label="Каталог в подвале">
+      <p class="footer__title">Каталог</p>
+      <ul>{% for root in catalog.roots %}<li><a href="{{ root.url }}">{{ root.title }}</a></li>{% endfor %}</ul>
+    </nav>
+    <nav aria-label="Компания">
+      <p class="footer__title">Компания</p>
+      <ul>
+        {% for item in site.nav %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{% endfor %}
+      </ul>
+    </nav>
+    <div>
+      <p class="footer__title">Связаться</p>
+      <a class="footer__phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+      <p class="footer__muted">{{ site.phoneNote }}</p>
+      <ul class="header__socials header__socials--show">
+        {% for s in site.socials %}<li><a class="social social--light" href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.name }}">{{ s.icon | upper }}</a></li>{% endfor %}
+      </ul>
+      <button class="btn btn--outline" type="button" data-lead="consultation">Получить консультацию</button>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© {{ site.foundedYear }}–{{ "" | year }} {{ site.name }}</p>
+    <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a>
+    <a href="/obrabotka-dannyh/">Согласие на обработку персональных данных</a>
+    <a href="https://vostokweb.ru/" target="_blank" rel="noopener">Разработка сайта — ВостокВеб</a>
+  </div>
+</footer>

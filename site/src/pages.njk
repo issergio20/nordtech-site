@@ -1,0 +1,21 @@
+---
+# Простые текстовые страницы-заглушки (S08 частично, S11, S14, S15, новые услуги). Наполнение — после copywriter и согласования с клиентом.
+layout: layouts/base.njk
+pagination:
+  data: stubs
+  size: 1
+  alias: s
+permalink: "{{ s.url }}"
+eleventyComputed:
+  title: "{{ s.title }}"
+---
+{% import "ui/ui.njk" as ui %}
+{{ ui.pageHero(s.title, s.lead, s.crumbs, s.title) }}
+<div class="container section">
+  <div class="prose">
+    {% for para in s.body %}<p>{{ para }}</p>{% endfor %}
+  </div>
+  {% if s.cta %}
+  <p style="margin-top:var(--sp-8)"><button class="btn btn--primary btn--lg" type="button" data-lead="{{ s.ctaLead or 'consultation' }}">{{ s.cta }} <svg class="icon"><use href="#i-arrow"/></svg></button></p>
+  {% endif %}
+</div>

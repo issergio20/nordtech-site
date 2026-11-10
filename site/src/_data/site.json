@@ -1,0 +1,25 @@
+{
+  "name": "НОРД",
+  "tagline": "группа компаний",
+  "url": "https://nordtech.su",
+  "description": "Спецтехника SHANMON и Lonking от официального дилера: продажа, лизинг, доставка и сервис в Чите, Иркутске и Магадане.",
+  "phone": "8 800 101-65-54",
+  "phoneHref": "tel:+78001016554",
+  "phoneNote": "Звонок по России бесплатный",
+  "socials": [
+    { "name": "ВКонтакте", "icon": "vk", "url": "https://vk.com/nordtechgroup" },
+    { "name": "Telegram", "icon": "tg", "url": "https://t.me/nordtechgroup" },
+    { "name": "Одноклассники", "icon": "ok", "url": "https://ok.ru/group/70000036933413" }
+  ],
+  "telegramManager": "https://t.me/nordtechgroup",
+  "foundedYear": 2019,
+  "hideEmptyCategories": false,
+  "consentDocVersion": "2026-11",
+  "nav": [
+    { "title": "О компании", "url": "/o-kompanii/" },
+    { "title": "Услуги", "url": "/uslug/" },
+    { "title": "Лизинг", "url": "/uslug/servisnye-uslugi/lizing/" },
+    { "title": "Логистика", "url": "/logistika/" },
+    { "title": "Контакты", "url": "/kontakty/" }
+  ]
+}
