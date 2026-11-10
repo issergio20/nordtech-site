@@ -1,0 +1,128 @@
+{
+  "mode": "layout",
+  "original": {
+    "width": 390,
+    "height": 2077
+  },
+  "clone": {
+    "width": 390,
+    "height": 2984
+  },
+  "compared_at": {
+    "width": 390,
+    "height": 2077
+  },
+  "height_delta_pct": 43.7,
+  "score": 20.3,
+  "verdict": "different",
+  "regions": [
+    {
+      "x": 0,
+      "y": 0,
+      "w": 384,
+      "h": 1760,
+      "cells": 376,
+      "where": "middle centre"
+    },
+    {
+      "x": 0,
+      "y": 1792,
+      "w": 384,
+      "h": 285,
+      "cells": 33,
+      "where": "bottom centre"
+    },
+    {
+      "x": 0,
+      "y": 1760,
+      "w": 256,
+      "h": 160,
+      "cells": 25,
+      "where": "bottom left"
+    },
+    {
+      "x": 224,
+      "y": 1760,
+      "w": 128,
+      "h": 32,
+      "cells": 4,
+      "where": "bottom right"
+    },
+    {
+      "x": 64,
+      "y": 768,
+      "w": 64,
+      "h": 64,
+      "cells": 3,
+      "where": "middle left"
+    },
+    {
+      "x": 352,
+      "y": 64,
+      "w": 32,
+      "h": 64,
+      "cells": 2,
+      "where": "top right"
+    },
+    {
+      "x": 0,
+      "y": 1952,
+      "w": 64,
+      "h": 32,
+      "cells": 2,
+      "where": "bottom left"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "top left"
+    },
+    {
+      "x": 320,
+      "y": 0,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "top right"
+    },
+    {
+      "x": 0,
+      "y": 224,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "top left"
+    },
+    {
+      "x": 0,
+      "y": 768,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "middle left"
+    },
+    {
+      "x": 352,
+      "y": 800,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "middle right"
+    },
+    {
+      "x": 32,
+      "y": 1184,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "middle left"
+    }
+  ],
+  "files": {
+    "original": "replica/screens/S13-mobile.png",
+    "clone": "replica/clone-screens/S13-mobile.png"
+  }
+}

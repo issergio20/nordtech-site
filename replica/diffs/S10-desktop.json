@@ -1,0 +1,56 @@
+{
+  "mode": "layout",
+  "original": {
+    "width": 1440,
+    "height": 4996
+  },
+  "clone": {
+    "width": 1440,
+    "height": 2918
+  },
+  "compared_at": {
+    "width": 480,
+    "height": 973
+  },
+  "height_delta_pct": -41.6,
+  "score": 25.8,
+  "verdict": "different",
+  "regions": [
+    {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 3000,
+      "cells": 207,
+      "where": "middle centre"
+    },
+    {
+      "x": 240,
+      "y": 120,
+      "w": 120,
+      "h": 120,
+      "cells": 1,
+      "where": "top left"
+    },
+    {
+      "x": 1080,
+      "y": 840,
+      "w": 120,
+      "h": 120,
+      "cells": 1,
+      "where": "top right"
+    },
+    {
+      "x": 840,
+      "y": 2520,
+      "w": 120,
+      "h": 120,
+      "cells": 1,
+      "where": "bottom centre"
+    }
+  ],
+  "files": {
+    "original": "replica/screens/S10-desktop.png",
+    "clone": "replica/clone-screens/S10-desktop.png"
+  }
+}
