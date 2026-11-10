@@ -9,3 +9,6 @@ Thumbs.db
 # генерируются из replica/design (npm run tokens)
 site/src/scss/_tokens-vars.scss
 site/src/scss/_bp.scss
+# Playwright
+site/test-results/
+site/playwright-report/

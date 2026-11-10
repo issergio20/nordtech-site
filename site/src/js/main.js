@@ -132,12 +132,23 @@ const form = $("[data-lead-form]");
 if (form) {
   // Маска телефона: +7 (XXX) XXX-XX-XX
   form.phone.addEventListener("input", () => {
-    let d = form.phone.value.replace(/\D/g, "");
+    const el = form.phone;
+    const raw = el.value;
+    const caret = el.selectionStart ?? raw.length;
+    // Сколько цифр стояло перед курсором — после форматирования курсор ставим после того же числа цифр (BUG-001)
+    let before = raw.slice(0, caret).replace(/\D/g, "").length;
+    let d = raw.replace(/\D/g, "");
     if (d[0] === "8") d = "7" + d.slice(1);
-    if (d && d[0] !== "7") d = "7" + d;
+    if (d && d[0] !== "7") { d = "7" + d; before += 1; }
     d = d.slice(0, 11);
     const p = [d.slice(1, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)];
-    form.phone.value = d ? `+7${p[0] ? " (" + p[0] : ""}${p[1] ? ") " + p[1] : ""}${p[2] ? "-" + p[2] : ""}${p[3] ? "-" + p[3] : ""}` : "";
+    const out = d ? `+7${p[0] ? " (" + p[0] : ""}${p[1] ? ") " + p[1] : ""}${p[2] ? "-" + p[2] : ""}${p[3] ? "-" + p[3] : ""}` : "";
+    el.value = out;
+    if (document.activeElement !== el) return;
+    before = Math.min(Math.max(before, 1), d.length);
+    let pos = 0;
+    for (let seen = 0; pos < out.length && seen < before; pos++) if (/\d/.test(out[pos])) seen++;
+    el.setSelectionRange(pos, pos);
   });
   form.phone.addEventListener("blur", () => {
     if (form.phone.value && !normalizePhone(form.phone.value)) showErrors(form, { phone: "Введите номер полностью: +7 и 10 цифр" });
