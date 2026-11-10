@@ -1,0 +1,3 @@
+.is-invalid { border:1px solid #f10000 !important; }
+.msearch2 .ui-autocomplete-loading { display:none !important; }
+.mse2_pagination { display: flex; flex-direction: column-reverse; }

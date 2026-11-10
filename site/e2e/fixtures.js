@@ -14,6 +14,8 @@ export const test = base.extend({
     page.on("response", (r) => { if (r.status() >= 500) problems.push(`${r.status()} ${r.url()}`); });
     // Внешние шрифты в тестах не нужны: обрываем, чтобы не зависеть от сети
     await page.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.fulfill({ status: 200, contentType: "text/css", body: "" }));
+    // Внешняя карта в тестах не нужна (и сети может не быть)
+    await page.route(/yandex\.ru\/map-widget/, (r) => r.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>map</title>" }));
     const g = { leads, ignore: [] };
     await use(g);
     const real = problems.filter((p) => !g.ignore.some((re) => re.test(p)));
@@ -23,8 +25,11 @@ export const test = base.extend({
 
 export { expect };
 
-export async function axe(page, exclude = []) {
+// Контраст проверяется отдельно (e2e/contrast.spec.js): палитра оригинала nordtech.su не проходит AA,
+// и менять её или нет — решение заказчика. Остальные правила WCAG 2.2 AA — в каждом тесте.
+export async function axe(page, exclude = [], { contrast = false } = {}) {
   let b = new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]);
+  if (!contrast) b = b.disableRules(["color-contrast"]);
   for (const sel of exclude) b = b.exclude(sel);
   const res = await b.analyze();
   return res.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.slice(0, 3).map((n) => n.target.join(" ")).join(" | ")}`);
@@ -35,8 +40,9 @@ export const THIN_PRODUCT = "/katalog/spectehnika/frontalnyj-pogruzchik/frontaln
 
 export async function fillLead(page, { name = "Сергей Тестов", phone = "9143504141", consent = true } = {}) {
   const dlg = page.getByRole("dialog");
-  await dlg.getByLabel("Как к вам обращаться").fill(name);
+  await dlg.getByLabel("Имя").fill(name);
   await dlg.getByLabel("Телефон").pressSequentially(phone, { delay: 5 });
-  if (consent) await dlg.getByRole("checkbox", { name: /Согласен/ }).check();
+  // Как пользователь: клик по квадратику подписи (input у оригинала скрыт через opacity и pointer-events)
+  if (consent) await dlg.locator('label[for="lead-consent"]').click({ position: { x: 11, y: 11 } });
   return dlg;
 }

@@ -1,0 +1,89 @@
+---
+layout: layouts/base.njk
+title: UI kit
+permalink: /ui-kit/
+noindex: true
+---
+{% import "ui/ui.njk" as ui %}
+{# Живой UI kit: компоненты оригинала nordtech.su на настоящем CSS (nord.min.css) + правки main.scss. Описание — replica/design/components.md #}
+<section class="leasing-service section">
+  <div class="container-secondary">
+    {{ ui.serviceHeader("UI kit НОРД", "Компоненты сайта на исходном CSS nordtech.su. Классы, цвета и шрифт — как на сайте", [], "Открыть окно заявки") }}
+
+    <div class="block block--indent">
+      <h2 class="section-title">Цвета</h2>
+      <div class="ui-kit__swatches">
+        {% for c in [["--color-accent-dark","#002a5d","фирменный тёмно-синий"],["--color-accent","#217bc5","акцент, кнопки"],["--color-dark","#1a1a1a","текст"],["--color-gray","#f8f7fa","фон страниц"],["--color-light","#ffffff","карточки"],["—","#2cae8a","В наличии"],["—","#e1a13e","Под заказ"],["—","#c9c9c9","рамки"]] %}
+        <div class="ui-kit__swatch"><i style="background:{{ c[1] }}"></i><b>{{ c[1] }}</b><span>{{ c[0] }}</span><span>{{ c[2] }}</span></div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="block block--indent">
+      <h2 class="section-title">Типографика — Onest</h2>
+      <p class="section__title">section__title</p>
+      <p class="section-title" style="margin-top:30px">section-title</p>
+      <p class="card-product__title" style="margin-top:30px">card-product__title</p>
+      <p style="margin-top:20px;font-size:16px;line-height:1.5">Основной текст: clamp(14px, 0.83vw, 16px). Экскаватор-погрузчик GROS (SHANMON) 388-II — прочная и производительная машина.</p>
+    </div>
+
+    <div class="block block--indent">
+      <h2 class="section-title">Кнопки и ссылки</h2>
+      <div class="ui-kit__row">
+        <button class="product-button" type="button">Узнать стоимость <span>{{ ui.icon("arrow-right") }}</span></button>
+        <button class="product-button product-button--accent" type="button">Задать вопрос <span>{{ ui.icon("tg") }}</span></button>
+      </div>
+      <div class="ui-kit__row">
+        {{ ui.leasingLink("заявка на лизинг", 'data-lead="leasing"') }}
+        {{ ui.leasingLink("подробнее", "", "/uslug/servisnye-uslugi/") }}
+        <button class="button button--blue" type="button" style="padding:25px 40px">Оставить заявку</button>
+      </div>
+      <div class="ui-kit__row ui-kit__dark">
+        <button class="about__btn modal-btn" type="button" data-lead="consultation">Получить консультацию</button>
+        <a class="about__link" href="/katalog/">Перейти в каталог</a>
+      </div>
+      <div class="ui-kit__row">
+        <button class="pagination__more" type="button"><span>Показать еще 2 из 2</span>{{ ui.icon("refresh-cw") }}</button>
+      </div>
+      <nav aria-label="Пример пагинации"><ul class="pagination">
+        <li class="pagination__item pagination__item--prev"><button class="pagination__link" type="button" disabled>Назад</button></li>
+        <li class="pagination__item"><button class="pagination__link" type="button" aria-current="page">1</button></li>
+        <li class="pagination__item"><button class="pagination__link" type="button">2</button></li>
+        <li class="pagination__item pagination__item--next"><button class="pagination__link" type="button">Вперёд</button></li>
+      </ul></nav>
+    </div>
+
+    <div class="block block--indent">
+      <h2 class="section-title">Карточки</h2>
+      <div class="categories__list">
+        {% for p in catalog.products %}{% if loop.index <= 3 %}{{ ui.productCard(p, 3, false) }}{% endif %}{% endfor %}
+      </div>
+      <div class="catalog__slider" style="margin-top:40px"><div class="catalog__slider-wrapper">{{ ui.catalogSlide(catalog.roots[4]) }}</div></div>
+    </div>
+
+    <div class="block block--indent">
+      <h2 class="section-title">Состояния</h2>
+      {{ ui.emptyState("Скоро здесь появится техника", "Пустой раздел или поиск без результатов: объясняем и предлагаем действие.") }}
+      <div class="product__no-specs" style="margin-top:30px">
+        <p>Карточка без характеристик: предлагаем запросить их у менеджера.</p>
+        {{ ui.leasingLink("Запросить характеристики", 'data-lead="question"') }}
+      </div>
+    </div>
+
+    <div class="block block--indent ui-kit__dark" style="padding:40px">
+      <h2 class="section-title section-title--white">Подразделы и фильтр</h2>
+      <div class="categories-header__inner" style="margin-top:30px">
+        <nav class="categories-header__links" aria-label="Пример подразделов">
+          <a class="categories-header__link active" href="#" aria-current="page">Экскаватор-погрузчик{{ ui.icon("arrow-up-right", 22, 22) }}</a>
+          <a class="categories-header__link" href="#">Фронтальный погрузчик{{ ui.icon("arrow-up-right", 22, 22) }}</a>
+        </nav>
+        <fieldset class="brand-filter"><legend>Бренд</legend><label class="brand-filter__item"><input type="checkbox" checked><span>SHANMON</span></label><label class="brand-filter__item"><input type="checkbox"><span>Lonking</span></label></fieldset>
+      </div>
+    </div>
+
+    <div class="block block--indent">
+      <h2 class="section-title">Поля формы</h2>
+      <p>Поля, ошибки и согласие — в окне заявки (кнопка вверху). Плавающая подпись `.ui-input--active`, ошибка `.ui-input--error` + текст под полем.</p>
+    </div>
+  </div>
+</section>

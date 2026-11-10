@@ -6,71 +6,39 @@
   },
   "clone": {
     "width": 390,
-    "height": 3671
+    "height": 2323
   },
   "compared_at": {
     "width": 390,
     "height": 2323
   },
-  "height_delta_pct": 58.0,
-  "score": 13.3,
-  "verdict": "different",
+  "height_delta_pct": 0.0,
+  "score": 97.4,
+  "verdict": "matches",
   "regions": [
     {
       "x": 0,
-      "y": 0,
-      "w": 384,
-      "h": 1856,
-      "cells": 415,
-      "where": "middle centre"
-    },
-    {
-      "x": 0,
-      "y": 1888,
-      "w": 384,
-      "h": 416,
-      "cells": 87,
-      "where": "bottom centre"
-    },
-    {
-      "x": 352,
-      "y": 64,
-      "w": 32,
-      "h": 64,
-      "cells": 2,
-      "where": "top right"
+      "y": 1408,
+      "w": 192,
+      "h": 32,
+      "cells": 6,
+      "where": "middle left"
     },
     {
       "x": 192,
-      "y": 1536,
-      "w": 64,
-      "h": 32,
+      "y": 1984,
+      "w": 32,
+      "h": 64,
       "cells": 2,
       "where": "bottom centre"
     },
     {
-      "x": 0,
-      "y": 0,
+      "x": 64,
+      "y": 1184,
       "w": 32,
       "h": 32,
       "cells": 1,
-      "where": "top left"
-    },
-    {
-      "x": 320,
-      "y": 0,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
-      "where": "top right"
-    },
-    {
-      "x": 224,
-      "y": 2272,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
-      "where": "bottom centre"
+      "where": "middle left"
     }
   ],
   "files": {

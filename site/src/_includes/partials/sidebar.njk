@@ -1,0 +1,6 @@
+{% set S = "/assets/template/img/sprites/sprite.svg" %}
+<nav class="sidebar" aria-label="Разделы главной">
+  {% for a in [["#about","О компании"],["#why-we","Почему мы"],["#catalog","Каталог"],["#special-equipment","Топ-10 видов спецтехники"],["#stages-work","Как мы работаем"],["#escort","Обслуживание"],["#leasing","Спецтехника в лизинг"],["#partners","Партнеры"]] %}
+  <a class="sidebar__link" href="{{ a[0] }}">{{ a[1] }}<svg width="7" height="7" aria-hidden="true"><use href="{{ S }}#arrow-sidebar"></use></svg></a>
+  {% endfor %}
+</nav>

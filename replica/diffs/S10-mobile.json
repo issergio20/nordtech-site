@@ -6,159 +6,87 @@
   },
   "clone": {
     "width": 390,
-    "height": 4822
+    "height": 5132
   },
   "compared_at": {
     "width": 390,
-    "height": 4822
+    "height": 5112
   },
-  "height_delta_pct": -5.7,
-  "score": 21.1,
-  "verdict": "different",
+  "height_delta_pct": 0.4,
+  "score": 88.5,
+  "verdict": "close",
   "regions": [
     {
-      "x": 0,
-      "y": 3264,
-      "w": 384,
-      "h": 1472,
-      "cells": 377,
+      "x": 32,
+      "y": 4192,
+      "w": 320,
+      "h": 352,
+      "cells": 68,
       "where": "bottom centre"
     },
     {
       "x": 0,
-      "y": 0,
+      "y": 4896,
       "w": 384,
-      "h": 1184,
-      "cells": 292,
-      "where": "top centre"
-    },
-    {
-      "x": 32,
-      "y": 1216,
-      "w": 320,
-      "h": 1088,
-      "cells": 248,
-      "where": "middle centre"
-    },
-    {
-      "x": 0,
-      "y": 2368,
-      "w": 384,
-      "h": 480,
-      "cells": 126,
-      "where": "middle centre"
-    },
-    {
-      "x": 0,
-      "y": 2912,
-      "w": 384,
-      "h": 352,
-      "cells": 79,
-      "where": "middle centre"
-    },
-    {
-      "x": 224,
-      "y": 2880,
-      "w": 160,
       "h": 192,
-      "cells": 14,
-      "where": "middle right"
+      "cells": 49,
+      "where": "bottom centre"
     },
     {
       "x": 0,
+      "y": 4576,
+      "w": 384,
+      "h": 128,
+      "cells": 33,
+      "where": "bottom centre"
+    },
+    {
+      "x": 128,
       "y": 4800,
-      "w": 224,
-      "h": 32,
-      "cells": 7,
-      "where": "bottom left"
+      "w": 96,
+      "h": 64,
+      "cells": 4,
+      "where": "bottom centre"
     },
     {
       "x": 192,
-      "y": 0,
+      "y": 256,
       "w": 96,
       "h": 32,
       "cells": 3,
       "where": "top centre"
     },
     {
-      "x": 64,
+      "x": 320,
       "y": 256,
-      "w": 64,
-      "h": 32,
-      "cells": 2,
-      "where": "top left"
-    },
-    {
-      "x": 0,
-      "y": 448,
-      "w": 64,
-      "h": 32,
-      "cells": 2,
-      "where": "top left"
-    },
-    {
-      "x": 0,
-      "y": 1248,
       "w": 32,
       "h": 64,
       "cells": 2,
-      "where": "top left"
-    },
-    {
-      "x": 320,
-      "y": 3616,
-      "w": 64,
-      "h": 32,
-      "cells": 2,
-      "where": "bottom right"
-    },
-    {
-      "x": 0,
-      "y": 4576,
-      "w": 32,
-      "h": 64,
-      "cells": 2,
-      "where": "bottom left"
-    },
-    {
-      "x": 352,
-      "y": 4768,
-      "w": 32,
-      "h": 64,
-      "cells": 2,
-      "where": "bottom right"
-    },
-    {
-      "x": 320,
-      "y": 0,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
       "where": "top right"
     },
     {
       "x": 32,
-      "y": 3264,
+      "y": 4800,
+      "w": 64,
+      "h": 32,
+      "cells": 2,
+      "where": "bottom left"
+    },
+    {
+      "x": 32,
+      "y": 4448,
       "w": 32,
       "h": 32,
       "cells": 1,
       "where": "bottom left"
     },
     {
-      "x": 352,
-      "y": 3360,
+      "x": 96,
+      "y": 4448,
       "w": 32,
       "h": 32,
       "cells": 1,
-      "where": "bottom right"
-    },
-    {
-      "x": 352,
-      "y": 3424,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
-      "where": "bottom right"
+      "where": "bottom left"
     }
   ],
   "files": {

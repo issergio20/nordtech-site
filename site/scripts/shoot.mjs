@@ -24,7 +24,7 @@ for (const [vp, size] of [["desktop", { width: 1440, height: 900 }], ["mobile", 
   const page = await ctx.newPage();
   for (const [id, [orig, clone]] of Object.entries(SCREENS)) {
     await page.goto(base + (which === "original" ? orig : clone), { waitUntil: "networkidle", timeout: 45000 });
-    await page.addStyleTag({ content: "*{animation:none!important;transition:none!important}" });
+    await page.addStyleTag({ content: "*{animation:none!important;transition:none!important} .about__video{visibility:hidden!important} .preloader{display:none!important} .header-menu{display:none!important} .nav-tab{display:none!important} .contacts__map{visibility:hidden!important}" });
     await page.waitForTimeout(800);
     const file = fileURLToPath(new URL(`${id}-${vp}.png`, outDir));
     await page.screenshot({ path: file, fullPage: true });

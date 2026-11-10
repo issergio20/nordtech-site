@@ -1,51 +1,130 @@
+// Поведение сайта НОРД поверх разметки и CSS оригинала. Swiper и Fancybox подключены в base.njk (те же библиотеки, что на nordtech.su).
 import { submitLead, normalizePhone } from "./lead-api.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const ready = (fn) => (document.readyState === "loading" ? addEventListener("DOMContentLoaded", fn) : fn());
 
-/* ---------- Шапка: состояние при прокрутке ---------- */
-const header = $("[data-header]");
+/* ---------- --header-height: от неё в CSS оригинала считаются отступы крошек и меню ---------- */
+const headerEl = $("[data-header]");
+const setHeaderHeight = () => headerEl && document.documentElement.style.setProperty("--header-height", `${headerEl.offsetHeight}px`);
+setHeaderHeight();
+addEventListener("resize", setHeaderHeight);
+
+/* ---------- Шапка главной: белая при прокрутке (header--move оригинала) ---------- */
+const header = $("[data-header-home]");
 if (header) {
-  const onScroll = () => header.classList.toggle("is-scrolled", scrollY > 80);
+  const onScroll = () => header.classList.toggle("header--move", scrollY > 10);
   addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 }
+const video = $("[data-hero-video]");
+if (video && reduced) { video.removeAttribute("autoplay"); video.pause(); }
 
-/* ---------- Поиск в шапке: первый клик раскрывает поле, второй — ищет ---------- */
-$$(".header__search").forEach((f) => f.addEventListener("submit", (e) => {
-  const input = $("input", f);
-  if (input.value.trim().length < 2) { e.preventDefault(); input.focus(); }
-}));
-
-/* ---------- Меню (каталог, мобильное меню) ---------- */
-let openMenu = null;
-function closeMenu(returnFocus = true) {
-  if (!openMenu) return;
-  const { panel, btn } = openMenu;
-  panel.hidden = true;
-  $$(`[aria-controls="${panel.id}"]`).forEach((b) => b.setAttribute("aria-expanded", "false"));
-  document.body.classList.remove("menu-open");
-  if (returnFocus) btn.focus();
-  openMenu = null;
+/* ---------- Мобильное меню (.header-menu.show, .hamburger.open) ---------- */
+const burger = $("[data-menu-toggle]");
+const menu = $("[data-menu]");
+function setMenu(open, focusBack = true) {
+  if (!burger || !menu) return;
+  menu.classList.toggle("show", open);
+  burger.classList.toggle("open", open);
+  burger.setAttribute("aria-expanded", String(open));
+  if (open) $("a", menu)?.focus();
+  else if (focusBack) burger.focus();
 }
-$$("[data-menu-toggle]").forEach((btn) =>
-  btn.addEventListener("click", () => {
-    const panel = document.getElementById(btn.dataset.menuToggle);
-    const wasOpen = openMenu?.panel === panel;
-    closeMenu(false);
-    if (wasOpen) return;
-    panel.hidden = false;
-    btn.setAttribute("aria-expanded", "true");
-    document.body.classList.add("menu-open");
-    openMenu = { panel, btn };
-    $("a, button", panel)?.focus();
-  })
-);
-$$("[data-menu-close]").forEach((b) => b.addEventListener("click", () => closeMenu()));
-addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
-addEventListener("click", (e) => {
-  if (openMenu && !openMenu.panel.contains(e.target) && !openMenu.btn.contains(e.target)) closeMenu(false);
+burger?.addEventListener("click", () => setMenu(!menu.classList.contains("show")));
+
+/* ---------- Поиск: оверлей оригинала (.search.show) + подсказки ---------- */
+const search = $("[data-search]");
+const index = JSON.parse($("#search-index")?.textContent || "[]");
+const SYN = { "лонкинг": "lonking", "шанмон": "shanmon", "фронтальник": "фронтальный", "дгу": "дизель-генератор" };
+const norm = (s) => s.toLowerCase().replace(/ё/g, "е");
+const matchProducts = (q) => {
+  const terms = norm(q).split(/\s+/).filter(Boolean).map((t) => SYN[t] || t);
+  return index.filter((p) => terms.every((t) => norm(p.text).includes(t.slice(0, Math.max(4, t.length - 2)))));
+};
+let searchOpener = null;
+function setSearch(open) {
+  if (!search) return;
+  search.classList.toggle("show", open);
+  $$("[data-search-open]").forEach((b) => b.setAttribute("aria-expanded", String(open)));
+  if (open) setTimeout(() => $("#search-input")?.focus(), 50);
+  else searchOpener?.focus();
+}
+$$("[data-search-open]").forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); searchOpener = b; setSearch(true); }));
+$("[data-search-close]")?.addEventListener("click", () => setSearch(false));
+$("#search-input")?.addEventListener("input", (e) => {
+  const q = e.target.value.trim();
+  const box = $("[data-search-suggest]"), list = $("[data-search-suggest-list]");
+  if (q.length < 2) { box.hidden = true; return; }
+  const hits = matchProducts(q).slice(0, 5);
+  list.innerHTML = "";
+  for (const h of hits) {
+    const a = document.createElement("a");
+    a.className = "search-results__item";
+    a.href = h.url;
+    a.innerHTML = `<img alt="" width="64" height="48"><span></span>`;
+    a.querySelector("img").src = h.thumb;
+    a.querySelector("span").textContent = h.title;
+    list.append(a);
+  }
+  if (!hits.length) list.innerHTML = '<p class="search-results__item">Ничего не нашли — нажмите Enter, чтобы искать по всему каталогу</p>';
+  $("[data-search-all]").href = `/rezultaty-poiska/?query=${encodeURIComponent(q)}`;
+  box.hidden = false;
+});
+
+addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (search?.classList.contains("show")) setSearch(false);
+  if (menu?.classList.contains("show")) setMenu(false);
+});
+
+/* ---------- Слайдеры (Swiper, как на оригинале) ---------- */
+ready(() => {
+  if (!window.Swiper) return;
+  const nav = (name) => ({ prevEl: `.${name}__button--prev`, nextEl: `.${name}__button--next` });
+  const common = { keyboard: { enabled: true, onlyInViewport: true }, a11y: { prevSlideMessage: "Назад", nextSlideMessage: "Вперёд", slideLabelMessage: "{{index}} из {{slidesLength}}" }, speed: reduced ? 0 : 500, watchOverflow: true };
+  // Параметры слайдеров сняты с nordtech.su (swiper.params на 1440 px), чтобы раскладка совпадала
+  const opts = {
+    "why-we": { slidesPerView: 1.3, spaceBetween: 15, rewind: true, breakpoints: { 400: { slidesPerView: 2.2, spaceBetween: 15 }, 575: { slidesPerView: 2.7, spaceBetween: 20 }, 992: { slidesPerView: 3.5, spaceBetween: 20 }, 1300: { slidesPerView: 3.5, spaceBetween: 40 } } },
+    catalog: { slidesPerView: "auto", spaceBetween: 20 },
+    "special-equipment": { slidesPerView: 1.3, spaceBetween: 0, breakpoints: { 575: { slidesPerView: 2 }, 768: { slidesPerView: 3 }, 1200: { slidesPerView: 4 } } },
+    escort: { slidesPerView: 1.3, spaceBetween: 15, breakpoints: { 575: { slidesPerView: 2.3, spaceBetween: 15 }, 992: { slidesPerView: 3.5, spaceBetween: 40 } } },
+    partners: { slidesPerView: 1.5, spaceBetween: 15, rewind: true, autoplay: reduced ? false : { delay: 3000, disableOnInteraction: true, pauseOnMouseEnter: true }, breakpoints: { 450: { slidesPerView: 2.2, spaceBetween: 15 }, 575: { slidesPerView: 2.5, spaceBetween: 15 }, 768: { slidesPerView: 3.3, spaceBetween: 15 }, 992: { slidesPerView: 4, spaceBetween: 20 } } },
+  };
+
+  $$(".partners__slider:not([data-swiper])").forEach((el) => (el.dataset.swiper = "partners")); // «О компании»
+  $$("[data-swiper]").forEach((el) => {
+    const name = el.dataset.swiper;
+    const scope = el.closest("section") || document;
+    const prev = $(`.${name}__button--prev`, scope), next = $(`.${name}__button--next`, scope);
+    new window.Swiper(el, { ...common, ...opts[name], navigation: prev && next ? { prevEl: prev, nextEl: next } : false });
+  });
+
+  // Галерея товара: основной слайдер + миниатюры + полноэкранный просмотр
+  const g = $("[data-gallery]");
+  if (g) {
+    const thumbsEl = $(".product-slider__thumb", g);
+    const thumbs = thumbsEl ? new window.Swiper(thumbsEl, { slidesPerView: 4, spaceBetween: 10, watchSlidesProgress: true, breakpoints: { 768: { slidesPerView: 5 } } }) : null;
+    new window.Swiper($(".product-slider__main", g), { spaceBetween: 10, keyboard: { enabled: true }, thumbs: thumbs ? { swiper: thumbs } : undefined, a11y: { slideLabelMessage: "Фото {{index}} из {{slidesLength}}" } });
+  }
+  window.Fancybox?.bind('[data-fancybox="gallery"]', { Hash: false });
+  window.Fancybox?.bind('[data-fancybox="certificate"]', { Hash: false });
+});
+
+/* ---------- FAQ оригинала (.faq__item.active) — с клавиатурой и aria-expanded ---------- */
+$$(".faq__item").forEach((item, i) => {
+  const btn = $(".faq__item-button", item), panel = $(".faq__item-content", item);
+  if (!btn || !panel) return;
+  panel.id ||= `faq-panel-${i}`;
+  Object.assign(btn, { tabIndex: 0 });
+  btn.setAttribute("role", "button");
+  btn.setAttribute("aria-controls", panel.id);
+  btn.setAttribute("aria-expanded", String(item.classList.contains("active")));
+  const toggle = () => btn.setAttribute("aria-expanded", String(item.classList.toggle("active")));
+  btn.addEventListener("click", toggle);
+  btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
 });
 
 /* ---------- Уведомления ---------- */
@@ -55,8 +134,7 @@ function toast(kind, title, text) {
   const el = document.createElement("div");
   el.className = `toast toast--${kind}`;
   el.setAttribute("role", kind === "error" ? "alert" : "status");
-  el.innerHTML = `<svg class="icon"><use href="#i-${kind === "error" ? "alert" : "check"}"/></svg><div><b></b><p></p></div>
-    <button class="toast__close" type="button" aria-label="Закрыть уведомление"><svg class="icon"><use href="#i-x"/></svg></button>`;
+  el.innerHTML = `<div><b></b><p></p></div><button class="toast__close" type="button" aria-label="Закрыть уведомление">✕</button>`;
   $("b", el).textContent = title;
   $("p", el).textContent = text;
   $(".toast__close", el).onclick = () => el.remove();
@@ -65,77 +143,93 @@ function toast(kind, title, text) {
   setTimeout(() => el.remove(), 6000);
 }
 
-/* ---------- Окно заявки (M01–M03, вопрос) ---------- */
+/* ---------- Окно заявки ---------- */
 const LEAD = {
-  price: { title: "Узнать стоимость", sub: "Менеджер перезвонит и назовёт цену с доставкой до вашего объекта.", submit: "Узнать цену", fields: ["product", "city"] },
-  question: { title: "Вопрос по технике", sub: "Спросите про комплектацию, сроки или доставку — ответим по телефону или в мессенджере.", submit: "Отправить вопрос", fields: ["product", "comment"] },
-  leasing: { title: "Заявка на лизинг", sub: "Рассчитаем платёж и подберём лизинговую компанию. Документы в банк подаём сами.", submit: "Рассчитать лизинг", fields: ["product", "city", "comment"] },
-  consultation: { title: "Консультация", sub: "Расскажите о задаче — подберём технику под объём работ и условия.", submit: "Получить консультацию", fields: ["city", "comment"] },
+  price: { title: "Оформить заявку", sub: "Наш специалист свяжется с вами в ближайшее время", submit: "Оставить заявку", fields: ["product", "city"] },
+  question: { title: "Задать вопрос", sub: "Спросите про комплектацию, сроки или доставку — ответим по телефону или в мессенджере", submit: "Отправить вопрос", fields: ["product", "comment"] },
+  leasing: { title: "Заявка на лизинг", sub: "Свяжитесь с нами одним из удобных способов", submit: "Оставить заявку", fields: ["email", "product", "city", "comment"] },
+  consultation: { title: "Получить консультацию", sub: "Свяжитесь с нами одним из удобных способов", submit: "Получить консультацию", fields: ["email", "city", "comment"] },
 };
+// Ссылки оригинала href="#modal-…" → тип заявки
+const HASH_TYPE = { "#modal-feedback": "consultation", "#modal-application": "leasing", "#modal-application-second": "price" };
 const dlg = $("#lead-dialog");
+const form = $("[data-lead-form]");
 let opener = null;
 
-function openLead(btn) {
-  const type = LEAD[btn.dataset.lead] ? btn.dataset.lead : "consultation";
-  const cfg = LEAD[type];
-  const form = $("[data-lead-form]", dlg);
+const syncLabel = (input) => input.closest(".ui-input")?.classList.toggle("ui-input--active", !!input.value || input.tagName === "SELECT");
+
+function openLead(btn, type) {
+  const cfg = LEAD[type] || LEAD.consultation;
   form.reset();
   $$(".field__error", form).forEach((e) => (e.hidden = true));
   $$("[aria-invalid]", form).forEach((e) => e.removeAttribute("aria-invalid"));
+  $$(".ui-input--error", form).forEach((e) => e.classList.remove("ui-input--error"));
   $("[data-lead-title]", dlg).textContent = cfg.title;
   $("[data-lead-sub]", dlg).textContent = cfg.sub;
   $("[data-submit-label]", dlg).textContent = cfg.submit;
-  const title = btn.dataset.productTitle || "";
+  const title = btn.dataset.productTitle || btn.dataset.product || "";
   $$("[data-field]", form).forEach((f) => {
     const name = f.dataset.field;
     f.hidden = !cfg.fields.includes(name) || (name === "product" && !title);
   });
   form.elements.type.value = type;
-  form.product_id.value = btn.dataset.productId || "";
-  form.product_title.value = title;
-  form.page_url.value = location.pathname;
-  form.submit_token.value = crypto.randomUUID();
+  form.elements.product_id.value = btn.dataset.productId || "";
+  form.elements.product_title.value = title;
+  form.elements.page_url.value = location.pathname;
+  form.elements.submit_token.value = crypto.randomUUID();
+  $$(".ui-input__input", form).forEach(syncLabel);
   $("[data-lead-body]", dlg).hidden = false;
   $("[data-lead-done]", dlg).hidden = true;
   opener = btn;
+  setMenu(false, false);
   dlg.showModal();
   form.elements.name.focus(); // не form.name: это имя самой формы
 }
 document.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-lead]");
-  if (btn) { e.preventDefault(); openLead(btn); }
+  const btn = e.target.closest("[data-lead], a[href^='#modal-']");
+  if (!btn) return;
+  e.preventDefault();
+  openLead(btn, btn.dataset.lead || HASH_TYPE[btn.getAttribute("href")] || "consultation");
 });
-$$("[data-dialog-close]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
+// Ссылки-открывашки оригинала ведут себя как кнопки
+$$("a[href^='#modal-']").forEach((a) => { a.setAttribute("role", "button"); a.setAttribute("aria-haspopup", "dialog"); });
+$$("[data-dialog-close]", dlg || document).forEach((b) => b.addEventListener("click", () => dlg.close()));
 dlg?.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
 dlg?.addEventListener("close", () => opener?.focus());
 
-function showErrors(form, errors) {
+function showErrors(errors, { focus = true } = {}) {
   let first = null;
   for (const [name, msg] of Object.entries(errors)) {
     const input = form.elements[name];
     const err = document.getElementById(`lead-${name}-err`);
     if (!input || !err) continue;
     input.setAttribute("aria-invalid", "true");
+    input.closest(".ui-input")?.classList.add("ui-input--error");
     err.textContent = msg;
     err.hidden = false;
     first ||= input;
   }
-  first?.focus();
+  if (focus) first?.focus();
 }
 function clearError(input) {
   input.removeAttribute("aria-invalid");
+  input.closest(".ui-input")?.classList.remove("ui-input--error");
   const err = document.getElementById(`lead-${input.name}-err`);
   if (err) err.hidden = true;
 }
 
-const form = $("[data-lead-form]");
 if (form) {
-  // Маска телефона: +7 (XXX) XXX-XX-XX
-  form.phone.addEventListener("input", () => {
-    const el = form.phone;
+  $$(".ui-input__input", form).forEach((i) => {
+    i.addEventListener("input", () => { syncLabel(i); clearError(i); });
+    i.addEventListener("change", () => syncLabel(i));
+  });
+  form.elements.consent.addEventListener("change", () => clearError(form.elements.consent));
+
+  // Маска +7 (XXX) XXX-XX-XX; курсор остаётся после той же цифры при правке в середине (BUG-001)
+  form.elements.phone.addEventListener("input", () => {
+    const el = form.elements.phone;
     const raw = el.value;
     const caret = el.selectionStart ?? raw.length;
-    // Сколько цифр стояло перед курсором — после форматирования курсор ставим после того же числа цифр (BUG-001)
     let before = raw.slice(0, caret).replace(/\D/g, "").length;
     let d = raw.replace(/\D/g, "");
     if (d[0] === "8") d = "7" + d.slice(1);
@@ -144,31 +238,34 @@ if (form) {
     const p = [d.slice(1, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)];
     const out = d ? `+7${p[0] ? " (" + p[0] : ""}${p[1] ? ") " + p[1] : ""}${p[2] ? "-" + p[2] : ""}${p[3] ? "-" + p[3] : ""}` : "";
     el.value = out;
+    syncLabel(el);
     if (document.activeElement !== el) return;
     before = Math.min(Math.max(before, 1), d.length);
     let pos = 0;
     for (let seen = 0; pos < out.length && seen < before; pos++) if (/\d/.test(out[pos])) seen++;
     el.setSelectionRange(pos, pos);
   });
-  form.phone.addEventListener("blur", () => {
-    if (form.phone.value && !normalizePhone(form.phone.value)) showErrors(form, { phone: "Введите номер полностью: +7 и 10 цифр" });
+  form.elements.phone.addEventListener("blur", (e) => {
+    // Ушли на «Отправить» — ошибку покажет отправка. Иначе текст ошибки сдвигает кнопку и нажатие промахивается (BUG-002)
+    if (e.relatedTarget?.type === "submit") return;
+    const v = form.elements.phone.value;
+    // Без переноса фокуса: иначе на телефоне ошибка перехватывает нажатие «Отправить» (BUG-002)
+    if (v && !normalizePhone(v)) showErrors({ phone: "Введите номер полностью: +7 и 10 цифр" }, { focus: false });
   });
-  $$("input, textarea", form).forEach((i) => i.addEventListener("input", () => clearError(i)));
-  form.consent.addEventListener("change", () => clearError(form.consent));
 
   let busy = false;
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (busy) return;
     const fields = Object.fromEntries(new FormData(form));
-    fields.consent = form.consent.checked ? "1" : "";
-    fields.consent_doc_ver = document.documentElement.dataset.consentVer || "2026-11";
+    fields.consent = form.elements.consent.checked ? "1" : "";
+    fields.consent_doc_ver = "2026-11";
     const btn = $("[type=submit]", form);
+    const label = $("[data-submit-label]", btn);
+    const prev = label.textContent;
     busy = true;
     btn.disabled = true;
     btn.setAttribute("aria-busy", "true");
-    const label = $("[data-submit-label]", btn);
-    const prev = label.textContent;
     label.textContent = "Отправляем…";
     const res = await submitLead(fields);
     busy = false;
@@ -182,117 +279,98 @@ if (form) {
       done.focus();
       window.ym?.(0, "reachGoal", `lead_${fields.type}`);
     } else if (res.errors && Object.keys(res.errors).length) {
-      showErrors(form, res.errors);
-    } else if (res.message && res.message !== "network" && res.message !== "server") {
+      showErrors(res.errors);
+    } else if (res.message && !["network", "server"].includes(res.message)) {
       toast("error", "Не удалось отправить", res.message);
     } else {
-      toast("error", "Не удалось отправить", "Проверьте интернет и попробуйте ещё раз или позвоните 8 800 101-65-54.");
+      toast("error", "Не удалось отправить", "Проверьте интернет и попробуйте ещё раз или позвоните 8 800 101 65 54.");
     }
   });
 }
 
-/* ---------- Каталог: фильтр по бренду и «Показать ещё» ---------- */
+/* ---------- Каталог: фильтр по бренду, «Показать еще» и номера страниц ---------- */
+const plural = (n) => {
+  const a = n % 100, b = n % 10;
+  return `${n} ${a > 10 && a < 20 ? "моделей" : b === 1 ? "модель" : b > 1 && b < 5 ? "модели" : "моделей"}`;
+};
 $$("[data-catalog]").forEach((root) => {
-  const cards = $$("[data-cards] > .card", root);
+  const cards = $$("[data-cards] > .card-product", root);
   const more = $("[data-more]", root);
+  const pagesNav = $("[data-pages-nav]", root), pages = $("[data-pages]", root);
   const count = $("[data-count]", root);
-  const size = +root.dataset.pageSize || 8;
-  let shown = size;
-  const plural = (n) => {
-    const a = n % 100, b = n % 10;
-    return `${n} ${a > 10 && a < 20 ? "моделей" : b === 1 ? "модель" : b > 1 && b < 5 ? "модели" : "моделей"}`;
+  const size = +root.dataset.pageSize || 4;
+  let from = 0, to = size;
+  const matching = () => {
+    const vendors = $$("[data-filter] input:checked", root).map((i) => i.value);
+    return cards.filter((c) => !vendors.length || vendors.includes(c.dataset.vendor));
   };
   function render() {
-    const vendors = $$("[data-filter] input:checked", root).map((i) => i.value);
-    const match = cards.filter((c) => !vendors.length || vendors.includes(c.dataset.vendor));
+    const m = matching();
     cards.forEach((c) => (c.hidden = true));
-    match.slice(0, shown).forEach((c) => (c.hidden = false));
-    if (count) count.textContent = plural(match.length);
+    m.slice(from, to).forEach((c) => (c.hidden = false));
+    if (count) count.textContent = plural(m.length);
+    const rest = m.length - to;
     if (more) {
-      const rest = match.length - shown;
       more.hidden = rest <= 0;
-      more.textContent = `Показать ещё ${Math.min(rest, size)}`;
+      $("[data-more-label]", more).textContent = `Показать еще ${Math.min(rest, size)} из ${rest}`;
     }
-    return match;
+    const total = Math.ceil(m.length / size);
+    if (pages) {
+      pagesNav.hidden = total < 2;
+      pages.innerHTML = "";
+      const page = Math.floor(from / size) + 1;
+      const go = (n) => { from = (n - 1) * size; to = n * size; render(); $(".card-product__title a", m[from])?.focus(); };
+      const item = (label, n, { disabled = false, current = false, cls = "" } = {}) => {
+        const li = document.createElement("li");
+        li.className = `pagination__item ${cls}`;
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "pagination__link";
+        b.textContent = label;
+        b.disabled = disabled;
+        if (current) b.setAttribute("aria-current", "page");
+        if (/^\d+$/.test(label)) b.setAttribute("aria-label", `Страница ${label}`);
+        b.addEventListener("click", () => go(n));
+        li.append(b);
+        pages.append(li);
+      };
+      item("Назад", page - 1, { disabled: page <= 1, cls: "pagination__item--prev" });
+      for (let i = 1; i <= total; i++) item(String(i), i, { current: from === (i - 1) * size && to === i * size });
+      item("Вперёд", page + 1, { disabled: page >= total, cls: "pagination__item--next" });
+    }
+    return m;
   }
-  $$("[data-filter] input", root).forEach((i) => i.addEventListener("change", () => { shown = size; render(); }));
-  more?.addEventListener("click", () => {
-    const before = shown;
-    shown += size;
-    const match = render();
-    $("a", match[before])?.focus();
-  });
+  $$("[data-filter] input", root).forEach((i) => i.addEventListener("change", () => { from = 0; to = size; render(); }));
+  more?.addEventListener("click", () => { const before = to; to += size; const m = render(); $(".card-product__title a", m[before])?.focus(); });
   render();
 });
 
-/* ---------- Галерея товара ---------- */
-$$("[data-gallery]").forEach((g) => {
-  const thumbs = $$("[data-thumb]", g);
-  const count = $("[data-gallery-count]", g);
-  const main = $(".gallery__media", g);
-  thumbs.forEach((t) => t.addEventListener("click", () => {
-    thumbs.forEach((x) => x.removeAttribute("aria-current"));
-    t.setAttribute("aria-current", "true");
-    const total = count.textContent.split("/")[1].trim();
-    count.textContent = `${t.dataset.thumb} / ${total}`;
-    main.setAttribute("aria-label", main.getAttribute("aria-label").replace(/\d+ из/, `${t.dataset.thumb} из`));
-  }));
-});
-
-/* ---------- Карусель на scroll-snap ---------- */
-$$("[data-carousel]").forEach((c) => {
-  const track = $("[data-track]", c);
-  const prev = $("[data-prev]", c), next = $("[data-next]", c);
-  const step = () => track.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
-  const update = () => {
-    prev.disabled = track.scrollLeft <= 2;
-    next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+/* ---------- Контакты: филиал → карта (клик по карточке или кнопка «Показать … на карте» для клавиатуры) ---------- */
+const map = $("[data-map]");
+$$(".contacts__item[data-coords]").forEach((item) => {
+  const show = () => {
+    $$(".contacts__item").forEach((x) => x.classList.remove("active"));
+    item.classList.add("active");
+    const [lat, lon] = item.dataset.coords.split(",");
+    if (map) map.src = `https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=15&pt=${lon}%2C${lat}%2Cpm2rdm`;
   };
-  prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: reduced ? "auto" : "smooth" }));
-  next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: reduced ? "auto" : "smooth" }));
-  track.addEventListener("scroll", update, { passive: true });
-  addEventListener("resize", update);
-  update();
+  item.addEventListener("click", (e) => { if (!e.target.closest("a")) show(); });
+  $("[data-map-btn]", item)?.addEventListener("click", (e) => { e.stopPropagation(); show(); });
 });
 
-/* ---------- Счётчики на главной ---------- */
-const stats = $$("[data-count-to]");
-if (stats.length && !reduced && "IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (!en.isIntersecting) return;
-    io.unobserve(en.target);
-    const el = en.target, to = +el.dataset.countTo, from = to > 1900 ? to - 30 : 0, t0 = performance.now();
-    const fmt = (n) => (to > 1900 ? String(n) : n.toLocaleString("ru-RU"));
-    const tick = (t) => {
-      const k = Math.min(1, (t - t0) / 900);
-      el.textContent = fmt(Math.round(from + (to - from) * (1 - (1 - k) ** 3)));
-      if (k < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }), { threshold: 0.6 });
-  stats.forEach((s) => io.observe(s));
-}
-
-/* ---------- Поиск (S06): в MODX — mSearch2, здесь — по индексу ---------- */
+/* ---------- Страница поиска (S06) ---------- */
 const results = $("[data-search-results]");
 if (results) {
   const q = new URLSearchParams(location.search).get("query")?.trim() || "";
-  const input = $("#q-page");
-  input.value = q;
-  const SYN = { "лонкинг": "lonking", "шанмон": "shanmon", "фронтальник": "фронтальный", "дгу": "дизель-генератор", "экскаватор": "экскаватор" };
-  const norm = (s) => s.toLowerCase().replace(/ё/g, "е");
-  const terms = norm(q).split(/\s+/).filter(Boolean).map((t) => SYN[t] || t);
+  $("#q-page").value = q;
   const status = $("[data-search-status]");
   if (!q) {
     status.textContent = "Введите модель, бренд или тип техники.";
   } else {
-    const idx = JSON.parse($("#search-index").textContent);
-    const hits = idx.filter((p) => terms.every((t) => norm(p.text).includes(t.slice(0, Math.max(4, t.length - 2)))));
-    const cards = $$("[data-search-card]", results);
-    cards.forEach((c) => (c.hidden = !hits.some((h) => h.slug === c.dataset.searchCard)));
-    const n = hits.length;
-    status.textContent = n ? `По запросу «${q}» — ${n} ${n % 10 === 1 && n % 100 !== 11 ? "модель" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "модели" : "моделей"}` : "";
-    $("[data-search-empty]").hidden = n > 0;
+    const hits = matchProducts(q);
+    $$("[data-search-card]", results).forEach((c) => (c.hidden = !hits.some((h) => h.slug === c.dataset.searchCard)));
+    status.textContent = hits.length ? `По запросу «${q}» — ${plural(hits.length)}` : "";
+    $("[data-search-empty]").hidden = hits.length > 0;
     $("[data-search-empty-q]").textContent = q;
   }
 }

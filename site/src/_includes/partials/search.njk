@@ -1,0 +1,21 @@
+{# Оверлей поиска оригинала (.search.show). В MODX — mSearch2 с автодополнением; здесь подсказки из индекса каталога #}
+{% set S = "/assets/template/img/sprites/sprite.svg" %}
+<div class="search" id="site-search" data-search>
+  <div class="search__inner">
+    <form class="search__form" action="/rezultaty-poiska/" method="get" role="search">
+      <label class="visually-hidden" for="search-input">Поиск по каталогу</label>
+      <input class="search__input" type="search" name="query" id="search-input" placeholder="Начните вводить" autocomplete="off" minlength="2">
+      <button class="search__btn-close" type="button" aria-label="Закрыть поиск" data-search-close>
+        <svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#close"></use></svg>
+      </button>
+    </form>
+    <div class="search-results scrollable" data-search-suggest hidden>
+      <div class="search-results__list" data-search-suggest-list></div>
+      <a class="leasing-link search-results__link" href="/rezultaty-poiska/" data-search-all>
+        <span><svg width="20" height="20" aria-hidden="true"><use href="{{ S }}#arrow-right"></use></svg></span>
+        Смотреть все результаты
+      </a>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="search-index">{{ catalog.products | searchIndex | safe }}</script>

@@ -1,9 +1,143 @@
-// Точка входа стилей. Токены — из replica/design (npm run tokens), значения только через var(--...).
-@use "tokens-vars";
-@use "bp" as *;
-@use "base";
-@use "ui/buttons";
-@use "ui/layout";
-@use "ui/catalog";
-@use "ui/forms";
-@use "ui/blocks";
+// Правки поверх UI kit НОРД (assets/template/styles/nord.min.css — исходный CSS nordtech.su).
+// Здесь только то, чего в оригинале нет или что в нём сломано. Цвета и шрифты — из переменных оригинала:
+// --color-dark #1a1a1a, --color-accent #217bc5, --color-accent-dark #002a5d, --color-light #fff, --color-gray #f8f7fa, --transition .4s ease
+
+/* ---------- Переменные, которые на оригинале выставляет его скрипт ---------- */
+// --header-height используют .breadcrumbs, .header-menu и др. Значение уточняет main.js по реальной высоте шапки
+:root { --header-height: 54px; }
+
+/* ---------- Доступность ---------- */
+// Оригинал снимает outline у кнопок и label — возвращаем видимый фокус только для клавиатуры
+:focus-visible,
+button:focus-visible,
+label:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.header:not(.header--move):not(.header--second) :focus-visible,
+.about :focus-visible, .leasing :focus-visible, .categories-header :focus-visible, .service-header :focus-visible,
+.footer :focus-visible, .leasing-advantages :focus-visible { outline-color: #fff; }
+
+.skip-link { position: absolute; left: 16px; top: -100px; z-index: 1000; background: var(--color-light); color: var(--color-dark); padding: 12px 16px; font-weight: 500; }
+.skip-link:focus { top: 16px; }
+main:focus { outline: none; }
+
+// Элементы, которые в оригинале были <a href="#modal-…">, у нас — <button>: снимаем стили браузера с нулевой специфичностью,
+// чтобы классы оригинала остались главными
+:where(button.card-product__link, button.about__btn, button.leasing-link, button.product-button, button.pagination__more, button.modal-btn) {
+  font: inherit; border: 0; background: transparent; padding: 0; text-align: inherit; cursor: pointer; color: inherit;
+}
+.card-product__title a { color: inherit; text-decoration: none; }
+.card-product__title a:hover { color: var(--color-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- Окно заявки: нативный <dialog> + внешний вид .modal--right оригинала ---------- */
+dialog.lead-dialog {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; background: transparent; overflow-y: auto;
+  &::backdrop { background: rgb(24 24 27 / 0.6); }
+  .modal { display: flex; position: absolute; top: 0; right: 0; min-height: 100%; }
+  &[open] .modal { animation: lead-in var(--transition); }
+}
+@keyframes lead-in { from { transform: translateX(100%); } }
+body:has(dialog.lead-dialog[open]) { overflow: hidden; }
+
+.ui-input { position: relative; }
+.ui-input[hidden] { display: none; }
+.ui-input select.ui-input__input { appearance: none; background: transparent; cursor: pointer; }
+.ui-input--textarea textarea[readonly] { resize: none; }
+.field__error { margin-top: 6px; font-size: 13px; line-height: 1.3; color: #c62f2f; }
+.field__error[hidden] { display: none; }
+.ui-input--error .ui-input__label { color: #c62f2f; }
+.ui-checkbox .field__error { margin-left: 42px; }
+// Оригинал прячет input (opacity 0) и рисует квадрат через label::before — фокус с клавиатуры показываем на квадрате
+.ui-checkbox__input:focus-visible ~ .ui-checkbox__label::before { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ui-checkbox__input[aria-invalid="true"] ~ .ui-checkbox__label::before { border-color: #c62f2f; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.lead-done { align-items: flex-start; gap: 24px; padding-top: 40px; }
+.lead-done[hidden], [data-lead-body][hidden] { display: none; }
+.lead-done:focus { outline: none; }
+.modal-feedback__form-btn[aria-busy="true"] { opacity: 0.7; cursor: progress; }
+
+/* ---------- Каталог ---------- */
+.categories-header__inner { max-width: none; } // у нас 5 подразделов (+«Фронтальный погрузчик»), в оригинале 4 — снимаем лимит 1099px
+.categories-header__links { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.categories-header__link { flex: none; }
+.brand-filter {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 24px 0 0; padding: 0; border: 0; color: var(--color-light);
+  legend { float: left; margin-right: 12px; font-weight: 500; opacity: 0.8; }
+}
+.brand-filter__item {
+  position: relative;
+  input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid rgb(255 255 255 / 0.4); font-weight: 500; transition: var(--transition); }
+  input:checked + span { background: var(--color-light); color: var(--color-accent-dark); border-color: var(--color-light); }
+  input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+}
+// В оригинале счётчик скрыт (display:none) — у нас он нужен скринридерам после фильтрации, поэтому только визуально скрыт
+.catalog-count { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.categories__list > .card-product[hidden], .search-card[hidden] { display: none; }
+.catalog-page__paginations { display: grid; gap: 24px; justify-items: center; margin-top: 40px; }
+.pagination__more {
+  display: inline-flex !important; align-items: center; justify-content: center; gap: 12px; width: min(100%, 460px); min-height: 64px;
+  background: var(--color-accent-dark) !important; color: var(--color-light) !important;
+  font-weight: 700; font-size: 16px; text-transform: uppercase; transition: var(--transition);
+  &:hover { background: var(--color-accent) !important; }
+  &[hidden] { display: none !important; }
+}
+.pagination button.pagination__link { border-top: 0; border-bottom: 0; border-left: 0; background: transparent; font: inherit; cursor: pointer; }
+.pagination button.pagination__link:disabled { opacity: 0.4; cursor: default; }
+
+.empty-state {
+  display: grid; justify-items: start; gap: 16px; padding: 60px 40px; background: var(--color-gray);
+  .empty-state__title { font-weight: 900; font-size: clamp(22px, 2vw, 32px); text-transform: uppercase; color: var(--color-dark); }
+  .empty-state__text { max-width: 60ch; font-size: 16px; line-height: 1.5; color: #4f4f4f; }
+}
+
+/* ---------- Товар ---------- */
+.product__no-specs { display: grid; gap: 20px; justify-items: start; padding: 30px; background: var(--color-gray); margin-top: 30px; p { font-size: 16px; line-height: 1.5; } }
+.product__availability--yellow { color: #9a5f00; border-color: #e1a13e; }
+
+/* ---------- Услуги без аналога в оригинале ---------- */
+.services-grid {
+  display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  .escort__slide { width: auto; height: auto; }
+}
+.policy__content mark { background: #fcf3e4; color: #6b4300; padding: 0 4px; }
+
+/* ---------- Контакты: карта-виджет ---------- */
+.contacts__map iframe { display: block; width: 100%; height: 100%; min-height: 420px; border: 0; }
+// position: relative держит скрытую кнопку внутри карточки — иначе на мобильном она вылезала из ленты и растягивала страницу до 633px (BUG-003)
+.contacts__item[data-coords] { cursor: pointer; position: relative; }
+.contacts__item-phone, .contacts__item-mail { display: inline-block; min-height: 24px; line-height: 24px; } // WCAG 2.5.8: зона нажатия >= 24 px
+// Видна только при фокусе с клавиатуры
+.visually-hidden-focusable:not(:focus-visible) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.contacts__map-btn:focus-visible { display: inline-flex; margin-top: 8px; padding: 6px 10px; border: 1px solid var(--color-accent-dark); background: var(--color-light); color: var(--color-accent-dark); font: inherit; font-weight: 500; }
+
+/* ---------- Поиск ---------- */
+.search-page__form { display: flex; flex-wrap: wrap; gap: 12px; max-width: 720px; margin-top: 24px; .search__input { flex: 1 1 260px; min-height: 64px; padding: 0 20px; border: 0; font: inherit; font-size: 16px; } }
+.search-results:not([hidden]) { display: flex; } // на оригинале показывал его скрипт
+.search-results[hidden] { display: none !important; }
+.search-results__item { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: center; padding: 12px; color: var(--color-dark); text-decoration: none; }
+.search-results__item:hover, .search-results__item:focus-visible { background: var(--color-gray); }
+.search-results__item img { width: 64px; height: 48px; object-fit: cover; }
+
+/* ---------- Уведомления ---------- */
+.toasts { position: fixed; right: 16px; bottom: 96px; z-index: 1100; display: grid; gap: 12px; width: min(380px, calc(100% - 32px)); }
+.toast { display: flex; gap: 12px; align-items: flex-start; padding: 16px; background: var(--color-light); box-shadow: 0 16px 48px rgb(0 42 93 / 0.24); border-left: 4px solid var(--color-accent); }
+.toast--error { border-left-color: #c62f2f; }
+.toast p { color: #4f4f4f; margin-top: 4px; }
+.toast__close { margin-left: auto; background: none; border: 0; padding: 4px; cursor: pointer; }
+.toast .icon { width: 20px; height: 20px; flex: none; }
+
+/* ---------- Страница /ui-kit/ (только для команды, noindex) ---------- */
+.ui-kit__swatches { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-top: 30px; }
+.ui-kit__swatch { display: grid; gap: 4px; font-size: 13px; background: var(--color-light); padding-bottom: 12px; i { display: block; height: 72px; border-bottom: 1px solid #ebebeb; } b, span { padding: 0 12px; } span { color: #6b6b6b; } }
+.ui-kit__row { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin: 30px 0; }
+.ui-kit__dark { background: var(--color-accent-dark); color: var(--color-light); padding: 30px; }
+
+/* ---------- Унаследованные баги вёрстки оригинала ---------- */
+// «О компании» на мобильном: синяя подложка шапки (::before, right:-20px, width:100vw) вылезает на 5px за экран,
+// потому что поле контейнера там 15px, а не 20px — страница 395px при экране 390 (так и на nordtech.su)
+@media (max-width: 575px) { .about-company__header::before { right: -15px; } }
+.about-company__header-images { overflow-x: auto; }

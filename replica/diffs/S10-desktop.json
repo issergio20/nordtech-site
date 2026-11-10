@@ -6,45 +6,37 @@
   },
   "clone": {
     "width": 1440,
-    "height": 2918
+    "height": 4996
   },
   "compared_at": {
     "width": 480,
-    "height": 973
+    "height": 1665
   },
-  "height_delta_pct": -41.6,
-  "score": 25.8,
-  "verdict": "different",
+  "height_delta_pct": 0.0,
+  "score": 99.0,
+  "verdict": "matches",
   "regions": [
     {
-      "x": 0,
-      "y": 0,
-      "w": 1440,
-      "h": 3000,
-      "cells": 207,
-      "where": "middle centre"
-    },
-    {
-      "x": 240,
-      "y": 120,
+      "x": 600,
+      "y": 1080,
       "w": 120,
       "h": 120,
       "cells": 1,
-      "where": "top left"
+      "where": "top centre"
     },
     {
-      "x": 1080,
-      "y": 840,
+      "x": 600,
+      "y": 4200,
       "w": 120,
       "h": 120,
       "cells": 1,
-      "where": "top right"
+      "where": "bottom centre"
     },
     {
-      "x": 840,
-      "y": 2520,
+      "x": 600,
+      "y": 4920,
       "w": 120,
-      "h": 120,
+      "h": 76,
       "cells": 1,
       "where": "bottom centre"
     }

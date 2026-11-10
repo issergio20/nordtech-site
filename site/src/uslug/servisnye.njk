@@ -4,8 +4,12 @@ title: Сервисные услуги
 permalink: /uslug/servisnye-uslugi/
 ---
 {% import "ui/ui.njk" as ui %}
-{# S09 — раньше пустая страница #}
-{{ ui.pageHero("Сервисные услуги", "Лизинг, гарантия, выездной сервис и доставка — всё через одного менеджера.", [{title: "Услуги", url: "/uslug/"}], "Сервисные услуги") }}
-<div class="container section">
-  {% include "partials/services-list.njk" %}
-</div>
+{# S09 — на текущем сайте страница пустая #}
+<section class="leasing-service section">
+  <div class="container-secondary">
+    {{ ui.serviceHeader("Сервисные услуги", "Лизинг, гарантия, выездной сервис и доставка — через одного менеджера", [{title: "Услуги", url: "/uslug/"}], "Получить консультацию") }}
+    <div class="block block--indent">
+      <div class="services-grid">{% include "partials/escort-slides.njk" %}</div>
+    </div>
+  </div>
+</section>

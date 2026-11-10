@@ -1,6 +1,17 @@
-<nav class="tabbar" aria-label="Быстрые разделы">
-  <a href="/katalog/"{% if page.url.startsWith("/katalog/") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-grid"/></svg>Каталог</a>
-  <a href="/rezultaty-poiska/"{% if page.url.startsWith("/rezultaty-poiska/") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-search"/></svg>Поиск</a>
-  <a href="/uslug/servisnye-uslugi/lizing/"{% if page.url.includes("lizing") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-percent"/></svg>Лизинг</a>
-  <a href="/uslug/"{% if page.url.startsWith("/uslug/") and not page.url.includes("lizing") %} aria-current="page"{% endif %}><svg class="icon"><use href="#i-wrench"/></svg>Услуги</a>
+{% set S = "/assets/template/img/sprites/sprite.svg" %}
+<nav class="nav-tab" aria-label="Быстрые разделы">
+  <ul class="nav-tab__list">
+    <li class="nav-tab__item{% if page.url.startsWith('/katalog/') %} active{% endif %}">
+      <a href="/katalog/"{% if page.url.startsWith('/katalog/') %} aria-current="page"{% endif %}><svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#grip"></use></svg><span class="nav-tab__item-title">Каталог</span></a>
+    </li>
+    <li class="nav-tab__item{% if page.url.startsWith('/rezultaty-poiska/') %} active{% endif %}">
+      <a href="/rezultaty-poiska/" class="btn-search" data-search-open><svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#search"></use></svg><span class="nav-tab__item-title">Поиск</span></a>
+    </li>
+    <li class="nav-tab__item{% if page.url.includes('lizing') %} active{% endif %}">
+      <a href="/uslug/servisnye-uslugi/lizing/"><svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#nav-tractor"></use></svg><span class="nav-tab__item-title">Лизинг</span></a>
+    </li>
+    <li class="nav-tab__item{% if page.url.startsWith('/uslug/') and not page.url.includes('lizing') %} active{% endif %}">
+      <a href="/uslug/"><svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#nav-wrench"></use></svg><span class="nav-tab__item-title">Услуги</span></a>
+    </li>
+  </ul>
 </nav>

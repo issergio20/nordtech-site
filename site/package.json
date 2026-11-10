@@ -4,15 +4,16 @@
   "type": "module",
   "description": "Вёрстка нового nordtech.su (прототип перед натяжкой на MODX)",
   "scripts": {
-    "tokens": "node scripts/sync-tokens.mjs",
-    "dev": "npm run tokens && eleventy --serve --port=8080",
-    "build": "npm run tokens && eleventy",
+    "dev": "eleventy --serve --port=8080",
+    "build": "eleventy",
     "test": "playwright test"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
     "@axe-core/playwright": "^4.11.0",
+    "@fancyapps/ui": "^5.0.36",
     "@playwright/test": "^1.56.1",
-    "sass": "^1.83.4"
+    "sass": "^1.83.4",
+    "swiper": "^11.1.14"
   }
 }

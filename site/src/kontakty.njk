@@ -3,34 +3,4 @@ layout: layouts/base.njk
 title: Контакты
 permalink: /kontakty/
 ---
-{% import "ui/ui.njk" as ui %}
-{# S13 — данные из modx_nord_branches #}
-{{ ui.pageHero("Контакты", "Единый номер " + site.phone + " — бесплатно по России. Или звоните в ближайший филиал.", [], "Контакты") }}
-<div class="container section">
-  <ul class="branches">
-    {% for b in branches %}
-    <li>
-      <address class="branch{% if b.kind == 'agent' %} branch--agent{% endif %}">
-        <p class="caption muted">{% if b.kind == "agent" %}Представитель в Китае{% else %}Филиал · {{ b.tz }}{% endif %}</p>
-        <h2 class="h3">{{ b.city }}</h2>
-        {% if b.kind == "agent" %}
-        <dl>
-          <div><dt>Компания</dt><dd lang="zh">{{ b.companyZh }}</dd><dd>{{ b.companyEn }}</dd></div>
-          <div><dt>Контакт</dt><dd><span lang="zh">{{ b.personZh }}</span> · {{ b.personEn }}</dd></div>
-        </dl>
-        {% else %}
-        <dl>
-          {% if b.office %}<div><dt>Офис</dt><dd>{{ b.office }}</dd></div>{% endif %}
-          <div><dt>Площадка с техникой</dt><dd>{{ b.yard }}</dd></div>
-        </dl>
-        {% endif %}
-        <a class="branch__phone" href="{{ b.phoneHref }}">{{ b.phone }}</a>
-        <a href="mailto:{{ b.email }}">{{ b.email }}</a>
-        {% if b.kind == "branch" %}
-        <a class="btn btn--ghost" href="https://yandex.ru/maps/?text={{ (b.city + ', ' + b.yard) | urlencode }}" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg>Маршрут к площадке</a>
-        {% endif %}
-      </address>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+{% include "original/kontakty.njk" %}

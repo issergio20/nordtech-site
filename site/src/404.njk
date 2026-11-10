@@ -5,8 +5,14 @@ permalink: /404.html
 noindex: true
 ---
 {% import "ui/ui.njk" as ui %}
-{{ ui.pageHero("Страница не найдена", "Возможно, модель переехала в другой раздел. Посмотрите каталог или найдите её поиском.") }}
-<div class="container section" style="display:flex;flex-wrap:wrap;gap:var(--sp-3)">
-  <a class="btn btn--primary btn--lg" href="/katalog/">Каталог <svg class="icon"><use href="#i-arrow"/></svg></a>
-  <a class="btn btn--ghost btn--lg" href="/rezultaty-poiska/">Поиск</a>
-</div>
+{# .section-error — блок 404 из CSS оригинала #}
+<section class="section-error section">
+  <div class="container">
+    <h1 class="section__title">Страница не найдена</h1>
+    <p class="section-error__text">Возможно, модель переехала в другой раздел. Посмотрите каталог или найдите её поиском.</p>
+    <div class="product__buttons">
+      <a class="product-button" href="/katalog/">Каталог <span>{{ ui.icon("arrow-right") }}</span></a>
+      <a class="product-button product-button--accent" href="/rezultaty-poiska/">Поиск <span>{{ ui.icon("search") }}</span></a>
+    </div>
+  </div>
+</section>

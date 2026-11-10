@@ -3,28 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{% if isHome %}{{ site.name }} — спецтехника от официального дилера{% else %}{{ metaTitle or title }} — {{ site.name }}{% endif %}</title>
+<title>{% if isHome %}{{ site.name }} — надёжная спецтехника для больших задач{% else %}{{ metaTitle or title }} — {{ site.name }}{% endif %}</title>
 <meta name="description" content="{{ description or site.description }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 {% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
 <meta name="theme-color" content="#002a5d">
-{# В проде — Onest локально (woff2 + preload), здесь — Google Fonts для превью #}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/template/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/template/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/assets/template/img/favicons/apple-touch-icon.png">
+<link rel="preload" href="/assets/template/fonts/Onest.woff2" as="font" type="font/woff2" crossorigin>
+{# UI kit НОРД: исходный CSS сайта (стили проекта + Swiper + Fancybox) и наши правки поверх #}
+<link rel="stylesheet" href="/assets/template/styles/nord.min.css">
 <link rel="stylesheet" href="/css/main.css">
+<script src="/assets/template/js/swiper-bundle.min.js" defer></script>
+<script src="/assets/template/js/fancybox.umd.js" defer></script>
 <script type="module" src="/js/main.js"></script>
 </head>
-<body class="{{ bodyClass }}">
+<body>
 <a class="skip-link" href="#main">Перейти к содержимому</a>
-{% include "partials/sprite.njk" %}
 {% include "partials/header.njk" %}
-<main id="main" tabindex="-1">
+{% include "partials/header-menu.njk" %}
+{% if isHome %}{% include "partials/sidebar.njk" %}{% endif %}
+{% include "partials/tabbar.njk" %}
+{% include "partials/search.njk" %}
+<main id="main" class="{{ 'main-page' if isHome else 'main-secondary' }}" tabindex="-1">
 {{ content | safe }}
 </main>
 {% include "partials/footer.njk" %}
-{% include "partials/tabbar.njk" %}
 {% include "partials/lead-dialog.njk" %}
+<a class="logistics-link logistics-link--main" href="/logistika/">Логистика<svg width="22" height="22" aria-hidden="true"><use href="/assets/template/img/sprites/sprite.svg#square-arrow"></use></svg></a>
+<div class="site-grid" aria-hidden="true">{% for i in [1,2,3,4,5] %}<div class="line line--{{ i }}"></div>{% endfor %}</div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 </body>
 </html>

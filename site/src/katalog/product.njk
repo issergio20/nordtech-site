@@ -10,76 +10,49 @@ eleventyComputed:
   description: "{{ p.title }} — {{ 'в наличии' if p.availability == 'in_stock' else 'под заказ' }} у официального дилера НОРД. Узнайте цену с доставкой, условия лизинга и гарантии."
 ---
 {% import "ui/ui.njk" as ui %}
-{# S05 — карточка товара. Шаблон MODX: product.tpl #}
-<div class="container product" itemscope itemtype="https://schema.org/Product">
-  {{ ui.breadcrumbs(p.trail, p.title) }}
-  <h1 class="h1 product__title" itemprop="name">{{ p.title }}</h1>
-  <meta itemprop="brand" content="{{ p.vendor }}">
-
-  <div class="product__top">
-    <div class="gallery" data-gallery>
-      <div class="gallery__main">
-        {{ ui.media(p.icon, "Фото: " + p.title + ", 1 из " + p.images, "4/3", "gallery__media") }}
-        <span class="gallery__count" data-gallery-count>1 / {{ p.images }}</span>
+{# S05 — карточка товара в разметке оригинала (.product). Галерея — Swiper + Fancybox, как на сайте #}
+<section class="product section section--indent" itemscope itemtype="https://schema.org/Product">
+  <div class="container">
+    {{ ui.breadcrumbs(p.trail | capitalizeTitles, p.title, p.url) }}
+    <h1 class="section__title section__title--indent-secondary product__title" itemprop="name">{{ p.title }}</h1>
+    <meta itemprop="brand" content="{{ p.vendor }}">
+    <div class="product__row">
+      <div class="product__sliders" data-gallery>
+        <div class="product-slider__main swiper">
+          <div class="swiper-wrapper">
+            {% for ph in p.photos %}
+            <div class="swiper-slide"><a href="{{ ph.full }}" data-fancybox="gallery" aria-label="Открыть фото {{ loop.index }} из {{ p.photos.length }}"><img src="{{ ph.big }}" alt="{{ p.title }}, фото {{ loop.index }}" width="800" height="600"{% if not loop.first %} loading="lazy"{% endif %}></a></div>
+            {% endfor %}
+          </div>
+        </div>
+        {% if p.photos.length > 1 %}
+        <div class="product-slider__thumb swiper">
+          <div class="swiper-wrapper">
+            {% for ph in p.photos %}<div class="swiper-slide"><img src="{{ ph.small }}" alt="" width="160" height="120" loading="lazy"></div>{% endfor %}
+          </div>
+        </div>
+        {% endif %}
       </div>
-      {% if p.images > 1 %}
-      <ul class="gallery__thumbs">
-        {% for i in range(1, p.images + 1) %}{% if loop.index <= 5 %}
-        <li><button type="button" class="gallery__thumb" aria-label="Фото {{ i }} из {{ p.images }}"{% if i == 1 %} aria-current="true"{% endif %} data-thumb="{{ i }}">{{ ui.media(p.icon) }}</button></li>
-        {% endif %}{% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-
-    <div class="product__aside">
-      <div class="product__meta">
-        {{ ui.badge(p.availability) }}
-        {% if p.maxConfig %}<span class="card__tag">Максимальная комплектация</span>{% endif %}
-        <span class="product__vendor">Бренд: <b>{{ p.vendor }}</b></span>
+      <div class="product__content">
+        <div class="product__block">
+          <p class="product__availability{% if p.availability != 'in_stock' %} product__availability--yellow{% endif %}">{{ "В наличии" if p.availability == "in_stock" else "Под заказ" }}</p>
+          {% if p.description %}<div class="product__description" itemprop="description"><p>{{ p.description }}</p></div>{% endif %}
+        </div>
+        <div class="product__buttons">
+          <button class="product-button modal-btn" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog">Узнать стоимость <span>{{ ui.icon("arrow-right") }}</span></button>
+          <button class="product-button product-button--accent" type="button" data-lead="question" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog">Задать вопрос <span>{{ ui.icon("tg") }}</span></button>
+        </div>
+        {% if p.specs.length %}
+        <ul class="product__specifications">
+          {% for s in p.specs %}<li class="product__specification">{{ s.name }} <span>{{ s.value }}</span></li>{% endfor %}
+        </ul>
+        {% else %}
+        <div class="product__no-specs">
+          <p>Полные характеристики этой модели пришлём по запросу — с комплектацией, которая есть на складе сейчас.</p>
+          <button class="leasing-link" type="button" data-lead="question" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog"><span>{{ ui.icon("arrow-right") }}</span>Запросить характеристики</button>
+        </div>
+        {% endif %}
       </div>
-      {% if p.description %}<p class="product__desc" itemprop="description">{{ p.description }}</p>{% endif %}
-      <div class="product__price">
-        <p class="caption muted">Цена</p>
-        <p class="h3">По запросу</p>
-        <p class="muted">Зависит от комплектации, наличия и доставки до вашего объекта. Назовём в течение 15 минут.</p>
-      </div>
-      <div class="product__ctas">
-        <button class="btn btn--primary btn--lg btn--block" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog">
-          Узнать стоимость <span class="btn__sep"></span><svg class="icon"><use href="#i-arrow"/></svg>
-        </button>
-        <button class="btn btn--brand btn--lg btn--block" type="button" data-lead="question" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog">
-          Задать вопрос <span class="btn__sep"></span><svg class="icon"><use href="#i-send"/></svg>
-        </button>
-        <button class="btn btn--ghost" type="button" data-lead="leasing" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog">Купить в лизинг</button>
-      </div>
-      <ul class="product__perks">
-        <li><svg class="icon"><use href="#i-shield"/></svg>Гарантия производителя</li>
-        <li><svg class="icon"><use href="#i-truck"/></svg>Доставка до объекта</li>
-        <li><svg class="icon"><use href="#i-wrench"/></svg>Выездной сервис</li>
-      </ul>
     </div>
   </div>
-
-  <section class="product__specs" aria-labelledby="specs-title">
-    <h2 class="h2" id="specs-title">Характеристики</h2>
-    {% if p.specs.length %}
-    <dl class="specs specs--table">
-      {% for s in p.specs %}<div><dt>{{ s.name }}</dt><dd>{{ s.value }}</dd></div>{% endfor %}
-    </dl>
-    {% else %}
-    <div class="notice">
-      <p>Полные характеристики этой модели пришлём по запросу — с комплектацией, которая есть на складе сейчас.</p>
-      <button class="btn btn--primary" type="button" data-lead="question" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}">Запросить характеристики</button>
-    </div>
-    {% endif %}
-  </section>
-
-  {% if p.related.length %}
-  <section class="product__related" aria-labelledby="rel-title">
-    <h2 class="h2" id="rel-title">Похожая техника</h2>
-    <div class="cards">
-      {% for r in p.related %}{{ ui.productCard(r) }}{% endfor %}
-    </div>
-  </section>
-  {% endif %}
-</div>
+</section>

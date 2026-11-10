@@ -1,0 +1,27 @@
+{% set S = "/assets/template/img/sprites/sprite.svg" %}
+<div class="header-menu" id="site-menu" data-menu>
+  <a class="header-menu__catalog" href="/katalog/">
+    <svg width="20" height="20" aria-hidden="true"><use href="{{ S }}#grip"></use></svg>
+    Каталог
+  </a>
+  <nav aria-label="Меню сайта">
+    <ul class="header-menu__list">
+      <li class="header-menu__item"><a class="header-menu__link" href="/o-kompanii/">О компании</a></li>
+      <li class="header-menu__item"><a class="header-menu__link" href="/uslug/">Услуги</a></li>
+      <li class="header-menu__item"><a class="header-menu__link" href="/kontakty/">Контакты</a></li>
+      <li class="header-menu__item">
+        <a class="logistics-link" href="/logistika/">Логистика
+          <svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#square-arrow"></use></svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="header-menu__contacts">
+    <a class="header-menu__contacts-phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+    <div class="header-menu__socials">
+      <a class="header-menu__social" href="https://ok.ru/group/70000036933413" target="_blank" rel="noopener" aria-label="Одноклассники"><svg width="36" height="36" aria-hidden="true"><use href="{{ S }}#classmates"></use></svg></a>
+      <a class="header-menu__social" href="https://vk.com/nordtechgroup" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg width="36" height="36" aria-hidden="true"><use href="{{ S }}#vk"></use></svg></a>
+      <a class="header-menu__social" href="https://t.me/nordtechgroup" target="_blank" rel="noopener" aria-label="Telegram"><svg width="36" height="36" aria-hidden="true"><use href="{{ S }}#tg"></use></svg></a>
+    </div>
+  </div>
+</div>

@@ -1,260 +1,53 @@
-# Компоненты nordtech.su
+# UI kit НОРД — компоненты
 
-Значения — только из `tokens.css` (`var(--c-accent)`, `var(--sp-4)` …), без хардкода hex и px в компонентах.
-Стек: MODX + Fenom + SCSS, без Tailwind (см. architecture.md). Каждый компонент — чанк Fenom `@FILE chunks/ui/{имя}.tpl` + SCSS-файл `scss/ui/_{имя}.scss` по БЭМ.
-Иконки: **Lucide** (ISC) инлайн-SVG из спрайта `assets/icons/sprite.svg`. Логотипы производителей — только по дилерскому договору.
-Шрифт: **Onest** (OFL), локально `woff2`, начертания 400/500/600/700/900, `font-display: swap`, preload для 400 и 900.
-Живой образец всех примитивов: `replica/design/primitives.html`.
+Решение 2026-11-10: сайт пересобирается **в оригинальном дизайне nordtech.su**. UI kit — это исходный CSS сайта
+(`site/src/assets/template/styles/nord.min.css`, BEM-классы), спрайт иконок и логотипов (`assets/template/img/sprites/sprite.svg`),
+шрифт Onest (`assets/template/fonts/Onest.woff2`), те же библиотеки — Swiper 11 и Fancybox 5.
+Поверх — тонкий слой правок `site/src/scss/main.scss`: доступность, новые состояния, то, что на оригинале делал его скрипт.
 
-Общие правила
-- Углы квадратные (`--r-none`). Скругление только у плашек статуса (`--r-sm`) и точек.
-- Фокус: `outline: 2px solid var(--c-focus); outline-offset: 2px` только на `:focus-visible`; на тёмном фоне — `--c-focus-on-brand`.
-- Анимации: `--m-base` + `--m-ease`; `prefers-reduced-motion` обнуляет длительности (уже в tokens.css).
-- Цель касания на мобильном ≥ 44×44.
+Живой образец всех компонентов: **`/ui-kit/`** (`site/src/ui-kit.njk`, `npm --prefix site run dev` → http://localhost:8080/ui-kit/).
+Макросы компонентов: `site/src/_includes/ui/ui.njk` (1 макрос = 1 будущий чанк Fenom).
 
----
+Что на оригинале делал скрипт и теперь делает `site/src/js/main.js`:
+`--header-height`, `header--move` при прокрутке, `.header-menu.show` / `.hamburger.open`, `.search.show` + подсказки,
+слайдеры с параметрами оригинала (сняты со `swiper.params` живого сайта), галерея Fancybox, `.faq__item.active`,
+`.ui-input--active` (плавающая подпись), показ `.search-results`.
 
-```
-Button
-  variants  primary (bg accent, текст on-accent)
-            brand (bg surface-brand, текст on-brand) — шапка, иконочные кнопки
-            outline (рамка 1px текущего цвета, фон прозрачный) — на героях поверх фото
-            light (bg bg, текст text-brand) — «Перейти в каталог» на тёмном
-            ghost (без рамки, текст accent) — «Подробнее», «Показать ещё»
-  sizes     sm 36px, md 44px, lg 50px; иконочная квадратная = высота
-  states    default, hover (accent-hover / подложка 8%), active (translateY(1px)),
-            focus-visible (кольцо 2px), disabled (opacity .5, cursor not-allowed),
-            loading (спиннер вместо иконки, текст остаётся, aria-busy="true", disabled)
-  tokens    label 12/700 прописные, letter-spacing .02em; padding-inline sp-6; radius none
-  icon      справа — стрелка (переход) или Telegram («Задать вопрос»), 20px, отделена вертикальной линией 1px
-  a11y      <button> для действий, <a> для переходов; иконочная кнопка — aria-label;
-            открывающая окно — aria-haspopup="dialog" aria-controls
-  used on   все
-```
+| компонент | классы оригинала | где | наши правки поверх |
+| --- | --- | --- | --- |
+| Шапка | `.header`, `.header--second` (внутренние), `.header--move` (главная при прокрутке), `.header__logo`, `.header__button`, `.header-nav`, `.header-dropdown`, `.header-search__button`, `.header__phone`, `.header__social-link`, `.hamburger` | все | `aria-label` у иконок и соцсетей, `aria-expanded` у бургера и поиска, `aria-current` в меню; «Каталог» на внутренних ведёт в `/katalog/` |
+| Мобильное меню | `.header-menu`, `.header-menu.show`, `.header-menu__list`, `.logistics-link` | все | Esc, фокус в меню и обратно на бургер |
+| Нижняя панель | `.nav-tab`, `.nav-tab__item.active` | мобильный | `<span>` вместо `<h3>` в пунктах (не заголовки), `aria-current` |
+| Боковая навигация | `.sidebar`, `.sidebar__link` | главная | `<nav aria-label>` |
+| Поиск | `.search`, `.search.show`, `.search__input`, `.search-results`, `.search-results__item` | все | подсказки из индекса каталога (в MODX — mSearch2), Esc, подпись поля |
+| Кнопка «Логистика» | `.logistics-link.logistics-link--main` | все | — |
+| Сетка фона | `.site-grid`, `.line--1…5` | все | `aria-hidden` |
+| Крошки | `.breadcrumbs`, `.breadcrumbs__list`, `.breadcrumbs__item.active` | внутренние | `<nav aria-label>`, `aria-current`, микроразметка BreadcrumbList |
+| Заголовки | `.section__title`, `--white`, `--indent`, `--indent-secondary`; `.section-title`, `--white` | все | на главной H1 видимый (на оригинале был `visually-hidden` «Главная») |
+| Первый экран | `.about`, `.about__title`, `.about__btns`, `.about__btn`, `.about__link`, `.about__video`, `.section-icon` (#nord) | главная | видео `preload="none"`, на `prefers-reduced-motion` — только постер |
+| Факты | `.why-we__blocks`, `.why-we__block-title`, `.why-we__slider` | главная | текст 3-го факта без противоречия с лизингом |
+| Навигация слайдера | `.navigations`, `.navigations__btn--prev/--next`, `.navigations__text` | слайдеры | `aria-label` у стрелок; «Используйте клавиатуру» теперь правда — Swiper keyboard |
+| Плитка раздела | `.catalog-slide`, `.catalog-slide__link`, `.catalog-slide__categories`, `.catalog-slide__img`, `.arrow` | главная, каталог | — |
+| Карточка товара | `.card-product`, `__img`, `__equipment`, `__title`, `__availability`, `__availability--yellow`, `__specifications`, `__link` | главная, разделы, поиск | название — ссылка на товар; «Узнать стоимость» — `<button>` с `aria-label` «…: модель»; характеристики выводятся, если есть |
+| Подразделы | `.categories-header`, `__links`, `__link`, `.active` | разделы | 5-й подраздел «Фронтальный погрузчик»; лимит 1099px снят, на узких — горизонтальная прокрутка |
+| Фильтр по бренду | — (новое, вместо сломанного вывода `Array`) | разделы | `.brand-filter` в стиле `.categories-header__link`, настоящие чекбоксы |
+| Пагинация | `.pagination`, `.pagination__item--prev/--next`, `.pagination__link`; «Показать еще N из M» | разделы | `.pagination__more` (на оригинале рисовал mSearch2), кнопки вместо ссылок в прототипе |
+| Пустое состояние | — (на оригинале «Нечего фильтровать / Подходящих результатов не найдено.») | разделы, поиск | `.empty-state` в типографике оригинала + `.product-button` «Подобрать технику» |
+| Товар | `.product`, `.product__row`, `.product-slider__main/__thumb`, `.product__availability`, `.product__description`, `.product__buttons`, `.product-button`, `--accent`, `.product__specifications` | товар | «Задать вопрос» открывает форму (на оригинале — ссылка в Telegram); без характеристик — блок «Запросить характеристики» |
+| Этапы | `.stages-work__list/__item`, иконки 72px | главная | «оговорённые» вместо «говоренные» |
+| Сервис | `.escort__slider`, `.escort__slide`, `__img`, `__title`, `__content` | главная, услуги | заголовки — ссылки на страницы услуг; дубли текста убраны; на `/uslug/` — сетка `.services-grid` |
+| Лизинг (блок) | `.leasing`, `__header`, `__stages`, `__stage`, `.leasing__body-link`, `.leasing-link` | главная | «предварительное решение за 2 часа» |
+| Лизинг (страница) | `.leasing-service`, `.service-header`, `.conditions-slider`, `.basic-conditions`, `.leasing-advantages`, `.leasing-registration`, `.leasing-registration-process` | лизинг | горизонтальные ленты с `tabindex=0` и `role=region` |
+| Партнёры | `.partners__slider`, `.partners__slide` (логотипы из спрайта) | главная, о компании | `role=img` + имя у логотипа; автопрокрутка останавливается при наведении и выключена при reduced-motion |
+| О компании | `.about-company`, `__benefits`, сертификаты `data-fancybox="certificate"` | о компании | подписи у ссылок-сертификатов, абсолютные пути |
+| FAQ | `.faq`, `.faq__item`, `.faq__item.active`, `.faq__item-button`, `.faq__item-content` | о компании | `role=button`, `tabindex`, `aria-expanded`, Enter/Space |
+| Контакты | `.contacts`, `.contacts__item`, `.active`, `.contacts__map`, `.contacts-china__item` | контакты | карта — виджет Яндекс Карт без ключа; кнопка «Показать … на карте» для клавиатуры; один блок Китая |
+| Окно заявки | `.modal.modal--right.modal-feedback`, `.modal__close`, `.modal__title`, `.modal-feedback__form`, `.ui-input`, `.ui-input--textarea`, `.ui-input--active`, `.ui-checkbox`, `.button.button--blue`, `.modal-success__inner` | все | нативный `<dialog>` (фокус внутри, Esc, возврат фокуса), тип заявки по кнопке, текст ошибок под полями, маска телефона, защита от двойной отправки, «Заявка принята» |
+| Политика | `.policy`, `.policy-container`, `.policy__content` | юридические | текст как на сайте; чужой домен и пустое согласие помечены `<mark>` |
+| 404 | `.section-error` | 404 | — |
+| Подвал | `.footer`, `__cooperating`, `__contacts`, `__developer` | все | `<footer>`, подписи у соцсетей |
 
-```
-Header
-  variants  over-hero (прозрачный поверх героя, текст on-brand), solid (bg bg, рамка снизу border)
-  parts     логотип → «/»; кнопка «Каталог» (brand, иконка grid); поиск (иконочная brand);
-            телефон (ссылка tel:, label 14/700); соцсети VK, Telegram, OK (иконки 20px); бургер
-  states    закреплена: после 80px прокрутки — solid + тень card-hover; меню открыто
-  mobile    56px: логотип, телефон-иконка, бургер. Телефон на героe — on-brand, контраст 14:1
-            (на текущем сайте почти не виден)
-  a11y      <header>, ссылка «Перейти к содержимому» первой; телефон с aria-label «Позвонить 8 800 101-65-54»
-  used on   все
-```
+## Доступность: что осталось на решение заказчика
 
-```
-TabBar (мобильная нижняя панель)
-  items     Каталог, Поиск, Лизинг, Услуги — иконка 24 + caption 12/500
-  states    default (text-muted), active (accent + полоса 2px сверху), pressed
-  rules     только < 1024px; высота 64 + env(safe-area-inset-bottom); поверх контента z-tabbar;
-            body получает padding-bottom = --tabbar-h
-  a11y      <nav aria-label="Быстрые разделы">, aria-current="page" у активной
-  used on   все (мобильные)
-```
-
-```
-CatalogMenu (M04)
-  variants  desktop: выпадающая панель на всю ширину под шапкой, 6 колонок разделов с подразделами
-            mobile: полноэкранный drawer, разделы — аккордеоном
-  states    закрыт, открыт, раздел раскрыт (mobile); пустые разделы не выводятся
-  motion    панель: opacity + translateY(-8px→0), --m-base; drawer: translateX(100%→0), --m-slow
-  a11y      кнопка aria-expanded; Esc закрывает и возвращает фокус на кнопку; ловушка фокуса в drawer
-  used on   шапка
-```
-
-```
-Breadcrumbs
-  tokens    caption 12/500, text-muted, разделитель «/» border-strong, текущий — accent без ссылки
-  rules     переносится на мобильном, а не обрезается; микроразметка BreadcrumbList
-  a11y      <nav aria-label="Хлебные крошки"><ol>, aria-current="page"
-  used on   S02–S07, S10, S13
-```
-
-```
-Hero
-  variants  home (фото/видео + затемнение overlay 65%, h1 + lead + 2 кнопки, знак бренда фоном)
-            page (bg surface-brand, h1 + lead + кнопка)
-  tokens    h1 fluid, lead 20/500 on-brand; высота home: min(100svh, 760px)
-  states    видео: poster до загрузки, на мобильном и при reduced-motion — только poster
-  a11y      фоновое видео muted, без звука, без управления; заголовок — настоящий <h1> (сейчас он visually-hidden)
-  used on   S01, S03, S04, S10
-```
-
-```
-Stat (счётчик-факт)
-  parts     число stat 900 accent, подпись sm text-muted, максимум 2 строки
-  states    на главной считает от 0 при появлении (IntersectionObserver), при reduced-motion — сразу итог
-  a11y      итоговое число в DOM с самого начала, анимируется только отображение
-  used on   S01
-```
-
-```
-CategoryTile
-  parts     фото 4:3 (object-fit cover), подпись в плашке bg + кнопка-стрелка brand в левом верхнем углу
-  states    hover: фото scale(1.04) --m-slow, плашка → accent; focus-visible — кольцо по всей плитке
-  a11y      вся плитка — одна ссылка; alt пустой (подпись уже есть)
-  used on   S01, S02
-```
-
-```
-ProductCard
-  parts     фото 4:3 на surface; Badge наличия; метка «Максимальная комплектация» (caption, text-brand на surface);
-            название h4 прописными, max 3 строки; 3 характеристики (dl, sm: muted / text);
-            кнопка «Узнать стоимость» primary md на всю ширину
-  states    default, hover (тень card-hover, фото scale 1.03), без фото (заглушка-силуэт техники, svg),
-            без характеристик (блок не выводится, кнопка прижата вниз), focus-visible
-  rules     карточки в ряду одной высоты (grid + кнопка margin-top:auto)
-  a11y      <article>; ссылка на товар — название (растянута на карточку через ::after),
-            кнопка — отдельный фокус и подпись aria-label «Узнать стоимость: {название}»
-  used on   S01, S03, S04, S06
-```
-
-```
-Badge (наличие)
-  variants  in-stock: текст success на success-bg, точка success-line, «В наличии»
-            on-order: текст warning на warning-bg, точка warning-line, «Под заказ»
-  tokens    caption 12/500, padding 4/8, radius sm
-  a11y      смысл передаёт текст, цвет — дополнение
-  used on   карточки, S05
-```
-
-```
-Carousel
-  parts     трек Swiper, кнопки «назад/вперёд» (brand 36px), счётчик «3 / 10»
-  states    первый/последний слайд — кнопка disabled; drag на тач-устройствах
-  rules     без бесконечного дублирования слайдов (сейчас «Топ-10» показывает 5 товаров дважды);
-            без подсказки «Используйте клавиатуру» — стрелки работают при фокусе на карусели
-  a11y      region с aria-roledescription="карусель", слайды aria-label «3 из 10», без автопрокрутки
-  used on   S01 (Топ-10, услуги)
-```
-
-```
-SubcategoryTabs
-  parts     горизонтальный список ссылок-плашек, активная — bg bg + текст text-brand на тёмном hero
-  mobile    горизонтальная прокрутка с fade-краем, без переноса
-  a11y      это ссылки на подразделы, не role="tab"; aria-current у активной
-  used on   S03, S04
-```
-
-```
-FilterBar (бренд, позже — характеристики)
-  parts     чипы-чекбоксы брендов, счётчик товаров «N товаров» (правильные окончания: 1 товар, 2 товара, 5 товаров)
-  states    нет вариантов → блок не выводится (сейчас печатает служебный Array); загрузка — карточки opacity .5
-  a11y      <fieldset><legend>Бренд</legend>, настоящие checkbox; результат объявляется aria-live="polite"
-  used on   S03, S04
-```
-
-```
-Pagination + LoadMore
-  parts     кнопка «Показать ещё 4» (ghost, lg, на всю ширину) + номера страниц ниже
-  states    загрузка (кнопка loading), последняя страница (кнопка скрыта)
-  rules     «Показать ещё» дописывает карточки и меняет URL (?page=N) через history.replaceState;
-            номера страниц — настоящие ссылки для SEO
-  a11y      <nav aria-label="Страницы">, aria-current; после подгрузки фокус на первую новую карточку
-  used on   S03, S04, S06
-```
-
-```
-EmptyState
-  parts     иконка 48 (lucide package-search), h3, sm-текст, кнопка outline
-  variants  пустой раздел («Скоро здесь появится техника» + «Подобрать под задачу» → M02),
-            пустой поиск («Ничего не нашли по „{запрос}“» + подсказки + M02)
-  used on   S03, S04, S06
-```
-
-```
-Steps
-  variants  row (главная: номер stat accent, h4, sm), list (лизинг: 0–5, вертикальная линия border)
-  a11y      <ol>
-  used on   S01, S10
-```
-
-```
-Accordion (FAQ)
-  parts     вопрос h4 + иконка plus/minus, ответ base
-  states    закрыт, открыт (height-анимация через grid-template-rows 0fr→1fr), focus-visible
-  a11y      <details>/<summary> — работает без JS; микроразметка FAQPage
-  used on   S07
-```
-
-```
-Gallery (товар)
-  parts     главное фото 4:3, миниатюры 4 в ряд (5-я — «+N»), полноэкранный просмотр Fancybox
-  states    одно фото — миниатюры не выводятся; загрузка — фон surface
-  a11y      миниатюры — кнопки с aria-label «Фото 2 из 6», в просмотре стрелки и Esc
-  used on   S05
-```
-
-```
-SpecTable
-  parts     <dl> в 2 колонки: название muted, значение text; строки через border снизу
-  rules     единицы измерения из опций ms2, числа с неразрывным пробелом разрядов (11 200 кг)
-  mobile    1 колонка
-  used on   S05
-```
-
-```
-Drawer (M01–M03)
-  parts     панель справа drawer 480px (mobile — на весь экран), затемнение overlay 65%,
-            крестик (brand 54px), заголовок h3 прописными, подпись muted, форма
-  states    открыт, закрыт, отправка (кнопка loading), успех (форма заменяется сообщением и кнопкой «Закрыть»)
-  motion    translateX(100%→0) --m-slow, затемнение opacity --m-base
-  a11y      <dialog> c showModal(): ловушка фокуса, Esc, фокус на первое поле, возврат фокуса на кнопку-вызов;
-            aria-labelledby на заголовок
-  used on   M01, M02, M03
-```
-
-```
-Field (Input / Textarea / Select)
-  parts     <label> над полем (sm/500, не placeholder вместо label — сейчас подписи внутри поля), поле, подсказка/ошибка
-  sizes     высота lg 50, textarea от 100
-  states    default (рамка border-input), hover (text-muted), focus (рамка accent + кольцо),
-            error (рамка danger, текст ошибки danger sm под полем, иконка), disabled (bg surface), readonly
-            (название товара в M01 — readonly с подставленным значением)
-  rules     телефон: type="tel", inputmode="tel", autocomplete="tel", маска +7 (___) ___-__-__;
-            имя: autocomplete="name"; email: type="email" autocomplete="email"
-  a11y      aria-invalid, aria-describedby на текст ошибки; ошибки валидируются при уходе с поля и при отправке
-  used on   M01–M03
-```
-
-```
-Checkbox (согласие)
-  parts     квадрат 20, галочка on-accent на accent, подпись sm со ссылкой на /obrabotka-dannyh
-  states    off, on, focus-visible, error (рамка danger + текст «Нужно согласие»)
-  a11y      настоящий <input type="checkbox" required>, кликабельна вся подпись
-  used on   M01–M03
-```
-
-```
-Toast
-  variants  success (полоса success слева), error (полоса danger) — текст text на bg, тень pop
-  rules     справа внизу (mobile — над TabBar), 5 с, закрытие крестиком, максимум 2 одновременно
-  a11y      контейнер role="status" aria-live="polite"; ошибки — role="alert"
-  used on   после отправки форм
-```
-
-```
-BranchCard
-  parts     город h3, строки «Офис», «Площадка» (muted-подпись + адрес), телефон (ссылка tel:, h4), email (mailto:),
-            кнопка «Маршрут» → Яндекс Карты
-  variants  branch, agent (представитель в Китае: названия на китайском и английском, lang="zh")
-  a11y      <address>
-  used on   S13
-```
-
-```
-PartnerLogos
-  parts     сетка логотипов, grayscale → цвет при hover
-  rules     выводится только при наличии прав на логотипы
-  used on   S01, S07
-```
-
-```
-Footer
-  parts     bg surface-brand: логотип, меню (каталог, услуги, компания, контакты), телефон, соцсети,
-            «© {год основания}–{текущий год} НОРД», политика, «Разработка сайта — ВостокВеб»
-  a11y      <footer>, ссылки on-brand-muted → hover on-brand
-  used on   все
-```
+Палитра оригинала не проходит WCAG AA (см. `tokens.json → _contrast_known`, тест `site/e2e/contrast.spec.js`).
+Затемнение — 5 значений в одном месте `main.scss`, визуально почти незаметно (`#217bc5 → #1c6db0`). Не применено, потому что задача — дизайн 1:1.

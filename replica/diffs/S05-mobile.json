@@ -6,103 +6,95 @@
   },
   "clone": {
     "width": 390,
-    "height": 3434
+    "height": 2234
   },
   "compared_at": {
     "width": 390,
-    "height": 2531
+    "height": 2234
   },
-  "height_delta_pct": 35.7,
-  "score": 24.0,
+  "height_delta_pct": -11.7,
+  "score": 45.6,
   "verdict": "different",
   "regions": [
     {
       "x": 0,
-      "y": 160,
+      "y": 576,
       "w": 384,
-      "h": 1408,
-      "cells": 378,
-      "where": "top centre"
+      "h": 768,
+      "cells": 196,
+      "where": "middle centre"
     },
     {
       "x": 0,
-      "y": 1952,
+      "y": 1792,
       "w": 384,
-      "h": 256,
-      "cells": 63,
+      "h": 384,
+      "cells": 97,
       "where": "bottom centre"
     },
     {
       "x": 0,
-      "y": 2240,
-      "w": 384,
-      "h": 291,
-      "cells": 44,
-      "where": "bottom centre"
-    },
-    {
-      "x": 160,
-      "y": 1600,
-      "w": 224,
-      "h": 288,
-      "cells": 39,
-      "where": "bottom right"
-    },
-    {
-      "x": 0,
-      "y": 2208,
-      "w": 192,
-      "h": 160,
-      "cells": 24,
-      "where": "bottom left"
-    },
-    {
-      "x": 0,
-      "y": 0,
-      "w": 320,
-      "h": 160,
-      "cells": 20,
-      "where": "top centre"
-    },
-    {
-      "x": 0,
-      "y": 1568,
+      "y": 1312,
       "w": 160,
-      "h": 160,
-      "cells": 13,
+      "h": 224,
+      "cells": 20,
       "where": "middle left"
     },
     {
+      "x": 192,
+      "y": 1376,
+      "w": 192,
+      "h": 160,
+      "cells": 15,
+      "where": "middle right"
+    },
+    {
       "x": 0,
-      "y": 1760,
-      "w": 96,
-      "h": 96,
-      "cells": 8,
+      "y": 1600,
+      "w": 160,
+      "h": 160,
+      "cells": 15,
       "where": "bottom left"
     },
     {
-      "x": 64,
-      "y": 1856,
-      "w": 160,
-      "h": 64,
-      "cells": 6,
-      "where": "bottom centre"
-    },
-    {
-      "x": 224,
-      "y": 2208,
+      "x": 192,
+      "y": 1664,
       "w": 128,
-      "h": 32,
-      "cells": 4,
+      "h": 128,
+      "cells": 8,
       "where": "bottom right"
     },
     {
-      "x": 192,
-      "y": 0,
-      "w": 96,
+      "x": 0,
+      "y": 2208,
+      "w": 224,
       "h": 32,
-      "cells": 3,
+      "cells": 7,
+      "where": "bottom left"
+    },
+    {
+      "x": 288,
+      "y": 1600,
+      "w": 96,
+      "h": 64,
+      "cells": 5,
+      "where": "bottom right"
+    },
+    {
+      "x": 160,
+      "y": 512,
+      "w": 128,
+      "h": 32,
+      "cells": 4,
       "where": "top centre"
+    },
+    {
+      "x": 64,
+      "y": 1536,
+      "w": 128,
+      "h": 32,
+      "cells": 4,
+      "where": "bottom left"
     },
     {
       "x": 320,
@@ -113,60 +105,68 @@
       "where": "top right"
     },
     {
-      "x": 0,
-      "y": 0,
-      "w": 32,
-      "h": 64,
-      "cells": 2,
-      "where": "top left"
-    },
-    {
-      "x": 0,
-      "y": 1920,
+      "x": 128,
+      "y": 64,
       "w": 64,
       "h": 32,
       "cells": 2,
-      "where": "bottom left"
+      "where": "top centre"
     },
     {
-      "x": 320,
-      "y": 0,
-      "w": 32,
+      "x": 64,
+      "y": 512,
+      "w": 64,
       "h": 32,
-      "cells": 1,
-      "where": "top right"
-    },
-    {
-      "x": 288,
-      "y": 32,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
-      "where": "top right"
-    },
-    {
-      "x": 0,
-      "y": 160,
-      "w": 32,
-      "h": 32,
-      "cells": 1,
+      "cells": 2,
       "where": "top left"
     },
     {
       "x": 320,
-      "y": 480,
-      "w": 32,
+      "y": 512,
+      "w": 64,
       "h": 32,
-      "cells": 1,
+      "cells": 2,
       "where": "top right"
     },
     {
       "x": 352,
-      "y": 800,
+      "y": 2176,
+      "w": 32,
+      "h": 64,
+      "cells": 2,
+      "where": "bottom right"
+    },
+    {
+      "x": 224,
+      "y": 64,
       "w": 32,
       "h": 32,
       "cells": 1,
-      "where": "top right"
+      "where": "top centre"
+    },
+    {
+      "x": 288,
+      "y": 1344,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "middle right"
+    },
+    {
+      "x": 320,
+      "y": 1728,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "bottom right"
+    },
+    {
+      "x": 288,
+      "y": 1760,
+      "w": 32,
+      "h": 32,
+      "cells": 1,
+      "where": "bottom right"
     }
   ],
   "files": {

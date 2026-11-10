@@ -19,6 +19,7 @@ const SCREENS = {
   S13: "/kontakty/",
   S14: "/politika-konfidencialnosti/",
   S15: "/obrabotka-dannyh/",
+  "UI-kit": "/ui-kit/",
 };
 
 for (const [id, url] of Object.entries(SCREENS)) {
@@ -28,7 +29,9 @@ for (const [id, url] of Object.entries(SCREENS)) {
     await expect(page.locator("h1")).toHaveCount(1);
     expect(await page.title()).toMatch(/НОРД/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.{40,}/);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    // Сравниваем с заданной шириной окна: в мобильной эмуляции браузер растягивает и innerWidth, если что-то шире экрана (BUG-003)
+    const vw = page.viewportSize().width;
+    const overflow = await page.evaluate((w) => document.documentElement.scrollWidth > w || window.innerWidth > w, vw);
     expect(overflow, "горизонтальная прокрутка").toBe(false);
     expect(await axe(page)).toEqual([]);
   });

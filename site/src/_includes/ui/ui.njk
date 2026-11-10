@@ -1,66 +1,81 @@
-{# Примитивы. Каждый макрос = будущий чанк Fenom: ui/{name}.tpl #}
+{# UI kit НОРД: макросы в разметке оригинала (BEM-классы из nord.min.css). 1 макрос = 1 будущий чанк Fenom #}
+{% set S = "/assets/template/img/sprites/sprite.svg" %}
 
-{% macro media(icon, label="", ratio="4/3", cls="") %}
-<div class="media {{ cls }}" style="aspect-ratio:{{ ratio }}" {% if label %}role="img" aria-label="{{ label }}"{% else %}aria-hidden="true"{% endif %}>
-  <svg class="media__sil"><use href="#m-{{ icon or 'loader' }}"/></svg>
-</div>
-{% endmacro %}
+{% macro icon(id, w=20, h=20) %}<svg width="{{ w }}" height="{{ h }}" aria-hidden="true"><use href="/assets/template/img/sprites/sprite.svg#{{ id }}"></use></svg>{% endmacro %}
 
-{% macro badge(availability) %}
-{% if availability == "in_stock" %}<span class="badge badge--in">В наличии</span>
-{% else %}<span class="badge badge--order">Под заказ</span>{% endif %}
-{% endmacro %}
+{% macro arrow() %}<span class="arrow">{{ icon("arrow-right") }}</span>{% endmacro %}
 
-{% macro breadcrumbs(items, current) %}
-<nav class="crumbs" aria-label="Хлебные крошки">
-  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
-    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="/"><span itemprop="name">Главная</span></a><meta itemprop="position" content="1"></li>
+{% macro breadcrumbs(items, current, currentUrl) %}
+<nav class="breadcrumbs" aria-label="Хлебные крошки">
+  <ul class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a class="breadcrumbs__link" itemprop="item" href="/"><span itemprop="name">Главная</span></a><meta itemprop="position" content="1"></li>
     {% for it in items %}
-    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="{{ it.url }}"><span itemprop="name">{{ it.title }}</span></a><meta itemprop="position" content="{{ loop.index + 1 }}"></li>
+    <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a class="breadcrumbs__link" itemprop="item" href="{{ it.url }}"><span itemprop="name">{{ it.title }}</span></a><meta itemprop="position" content="{{ loop.index + 1 }}"></li>
     {% endfor %}
-    <li><span aria-current="page">{{ current }}</span></li>
-  </ol>
+    <li class="breadcrumbs__item active"><a class="breadcrumbs__link" href="{{ currentUrl or '#' }}" aria-current="page"><span>{{ current }}</span></a></li>
+  </ul>
 </nav>
 {% endmacro %}
 
-{% macro productCard(p, headingLevel=3) %}
-<article class="card" data-vendor="{{ p.vendor }}">
-  {{ media(p.icon, "", "4/3", "card__media") }}
-  <div class="card__body">
-    <div class="card__meta">
-      {{ badge(p.availability) }}
-      {% if p.maxConfig %}<span class="card__tag">Максимальная комплектация</span>{% endif %}
-    </div>
-    <h{{ headingLevel }} class="card__title"><a href="{{ p.url }}">{{ p.title }}</a></h{{ headingLevel }}>
-    {% if p.cardSpecs.length %}
-    <dl class="specs specs--card">
-      {% for s in p.cardSpecs %}<div><dt>{{ s.name }}</dt><dd>{{ s.value }}</dd></div>{% endfor %}
-    </dl>
-    {% endif %}
-    <button class="btn btn--primary btn--block card__cta" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-label="Узнать стоимость: {{ p.title }}">
-      Узнать стоимость <svg class="icon"><use href="#i-arrow"/></svg>
-    </button>
+{% macro navigations(prefix, label) %}
+<div class="navigations {{ prefix }}__navigations">
+  <div class="navigations__inner">
+    <button class="navigations__btn navigations__btn--prev {{ prefix }}__button {{ prefix }}__button--prev" type="button" aria-label="Назад: {{ label }}">{{ icon("arrow-left", 16, 16) }}</button>
+    <button class="navigations__btn navigations__btn--next {{ prefix }}__button {{ prefix }}__button--next" type="button" aria-label="Вперёд: {{ label }}">{{ icon("arrow-left", 16, 16) }}</button>
   </div>
-</article>
-{% endmacro %}
-
-{% macro emptyState(title, text, cta="Подобрать технику", lead="consultation") %}
-<div class="empty">
-  <svg class="icon empty__icon"><use href="#i-box"/></svg>
-  <p class="h3">{{ title }}</p>
-  <p class="muted">{{ text }}</p>
-  <button class="btn btn--primary" type="button" data-lead="{{ lead }}">{{ cta }} <svg class="icon"><use href="#i-arrow"/></svg></button>
+  <p class="navigations__text" aria-hidden="true">Используйте клавиатуру</p>
 </div>
 {% endmacro %}
 
-{% macro pageHero(title, lead="", crumbs=[], current="", cta="", ctaLead="consultation") %}
-<section class="page-hero">
-  <div class="container">
-    {% if current %}<div class="page-hero__crumbs">{{ breadcrumbs(crumbs, current) }}</div>{% endif %}
-    <h1 class="h1">{{ title }}</h1>
-    {% if lead %}<p class="lead page-hero__lead">{{ lead }}</p>{% endif %}
-    {% if cta %}<button class="btn btn--light btn--lg" type="button" data-lead="{{ ctaLead }}">{{ cta }} <svg class="icon"><use href="#i-arrow"/></svg></button>{% endif %}
-    {{ caller() if caller }}
+{% macro productCard(p, headingLevel=3, slide=true) %}
+<div class="card-product{% if slide %} swiper-slide{% endif %}" data-vendor="{{ p.vendor }}">
+  <a class="card-product__img" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ p.thumb }}" alt="" width="400" height="300" loading="lazy">
+    {% if p.maxConfig %}<span class="card-product__equipment"><span>Максимальная</span> комплектация</span>{% endif %}
+  </a>
+  <div class="card-product__content">
+    <h{{ headingLevel }} class="card-product__title"><a href="{{ p.url }}">{{ p.title }}</a></h{{ headingLevel }}>
+    <p class="card-product__availability{% if p.availability != 'in_stock' %} card-product__availability--yellow{% endif %}">{{ "В наличии" if p.availability == "in_stock" else "Под заказ" }}</p>
+    <ul class="card-product__specifications">
+      {% for s in p.cardSpecs %}<li class="card-product__specification">{{ s.name }} <span>{{ s.value }}</span></li>{% endfor %}
+    </ul>
+    <button class="card-product__link modal-btn" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-label="Узнать стоимость: {{ p.title }}" aria-haspopup="dialog">
+      Узнать стоимость {{ arrow() }}
+    </button>
   </div>
-</section>
+</div>
+{% endmacro %}
+
+{% macro catalogSlide(root) %}
+<div class="catalog-slide swiper-slide">
+  <a class="catalog-slide__link" href="{{ root.url }}">{{ root.title }} {{ arrow() }}</a>
+  <div class="catalog-slide__categories">
+    {% for ch in root.children %}<a class="catalog-slide__category" href="{{ ch.url }}">{{ ch.title }}</a>{% endfor %}
+  </div>
+  <img class="catalog-slide__img" src="{{ root.image }}" alt="" width="460" height="560" loading="lazy">
+</div>
+{% endmacro %}
+
+{% macro leasingLink(text, attrs="", href="") %}
+{% if href %}<a class="leasing-link" href="{{ href }}">{% else %}<button class="leasing-link" type="button" {{ attrs | safe }}>{% endif %}
+  <span>{{ icon("arrow-right") }}</span>{{ text }}
+{% if href %}</a>{% else %}</button>{% endif %}
+{% endmacro %}
+
+{% macro emptyState(title, text, cta="Подобрать технику") %}
+<div class="empty-state">
+  <p class="empty-state__title">{{ title }}</p>
+  <p class="empty-state__text">{{ text }}</p>
+  <button class="product-button" type="button" data-lead="consultation" aria-haspopup="dialog">{{ cta }} <span>{{ icon("arrow-right") }}</span></button>
+</div>
+{% endmacro %}
+
+{# Шапка внутренних страниц услуг: .service-header оригинала #}
+{% macro serviceHeader(title, text, crumbs, cta="", ctaLead="consultation") %}
+<header class="service-header block block--indent">
+  {{ breadcrumbs(crumbs, title) }}
+  <h1 class="section__title section__title--white section__title--indent-secondary">{{ title }}</h1>
+  {% if text %}<p class="service-header__text">{{ text }}</p>{% endif %}
+  {% if cta %}<button class="leasing-link service-header__btn modal-btn" type="button" data-lead="{{ ctaLead }}" aria-haspopup="dialog"><span>{{ icon("arrow-right") }}</span>{{ cta }}</button>{% endif %}
+</header>
 {% endmacro %}

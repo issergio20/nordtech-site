@@ -1,30 +1,29 @@
 ---
 layout: layouts/base.njk
-title: Поиск по каталогу
+title: Результаты поиска
 permalink: /rezultaty-poiska/
 noindex: true
 ---
 {% import "ui/ui.njk" as ui %}
-{# S06 — в MODX: mSearch2 (mSearchForm + mSearch2). Здесь — поиск по встроенному индексу #}
-<section class="page-hero">
+{# S06 — разметка оригинала (.categories). В MODX — mSearch2; здесь — фильтрация по индексу с синонимами #}
+<section class="categories section section--indent">
   <div class="container">
-    <div class="page-hero__crumbs">{{ ui.breadcrumbs([], "Поиск") }}</div>
-    <h1 class="h1">Поиск</h1>
-    <form class="search-form" action="/rezultaty-poiska/" role="search">
-      <label class="visually-hidden" for="q-page">Что ищем</label>
-      <input class="input" id="q-page" name="query" type="search" placeholder="Например: Lonking или погрузчик" minlength="2" required>
-      <button class="btn btn--primary btn--lg" type="submit">Найти</button>
-    </form>
+    <header class="categories-header">
+      {{ ui.breadcrumbs([], "Результаты поиска", "/rezultaty-poiska/") }}
+      <h1 class="section__title section__title--white section__title--indent-secondary">Результаты поиска</h1>
+      <form class="search-page__form" action="/rezultaty-poiska/" role="search">
+        <label class="visually-hidden" for="q-page">Что ищем</label>
+        <input class="search__input" id="q-page" name="query" type="search" placeholder="Например: Lonking или погрузчик" minlength="2" required>
+        <button class="product-button" type="submit">Найти <span>{{ ui.icon("search") }}</span></button>
+      </form>
+      <p class="catalog-count" data-search-status aria-live="polite"></p>
+    </header>
+    <div class="categories__list" data-search-results>
+      {% for p in catalog.products %}<div class="search-card" data-search-card="{{ p.slug }}" hidden>{{ ui.productCard(p, 2, false) }}</div>{% endfor %}
+    </div>
+    <div data-search-empty hidden>
+      {{ ui.emptyState("Ничего не нашли", "Проверьте написание или опишите задачу — подберём технику, даже если её нет в каталоге.") }}
+      <span data-search-empty-q hidden></span>
+    </div>
   </div>
 </section>
-<div class="container section">
-  <p class="search-status" data-search-status aria-live="polite"></p>
-  <div class="cards" data-search-results>
-    {% for p in catalog.products %}<div data-search-card="{{ p.slug }}" hidden>{{ ui.productCard(p, 2) }}</div>{% endfor %}
-  </div>
-  <div data-search-empty hidden>
-    {{ ui.emptyState("Ничего не нашли", "Проверьте написание или опишите задачу — подберём технику, даже если её нет в каталоге.", "Подобрать технику") }}
-    <span data-search-empty-q hidden></span>
-  </div>
-</div>
-<script type="application/json" id="search-index">{{ catalog.products | searchIndex | safe }}</script>

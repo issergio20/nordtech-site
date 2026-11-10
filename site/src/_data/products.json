@@ -6,26 +6,109 @@
     "vendor": "SHANMON",
     "availability": "in_stock",
     "maxConfig": false,
-    "popular": true,
+    "popular": false,
     "images": 5,
     "icon": "backhoe",
     "description": "Универсальная машина для земляных и погрузочных работ: копает траншеи и котлованы под коммуникации, грузит грунт и сыпучие материалы, расчищает площадки. Полный привод и гидромеханическая коробка передач рассчитаны на работу вне асфальта.",
     "specs": [
-      { "key": "power_hp", "name": "Мощность двигателя", "value": "95,2 л.с.", "card": true },
-      { "key": "load_capacity_kg", "name": "Грузоподъёмность", "value": "2 500 кг", "card": true },
-      { "key": "operating_weight_kg", "name": "Эксплуатационная масса", "value": "11 200 кг", "card": true },
-      { "key": "series", "name": "Двигатель", "value": "Weichai" },
-      { "key": "engine_type", "name": "Тип двигателя", "value": "дизельный, 4 цилиндра, турбонаддув, водяное охлаждение" },
-      { "key": "drive", "name": "Привод", "value": "полный" },
-      { "key": "transmission", "name": "Коробка передач", "value": "ZL30, гидромеханическая, с электронным управлением" },
-      { "key": "axles", "name": "Мосты", "value": "2" },
-      { "key": "speed_kmh", "name": "Максимальная скорость", "value": "28 км/ч" },
-      { "key": "wheelbase_mm", "name": "Колёсная база", "value": "2 335 мм" },
-      { "key": "clearance_mm", "name": "Дорожный просвет", "value": "200 мм" },
-      { "key": "country", "name": "Производство", "value": "Китай" },
-      { "key": "warranty", "name": "Гарантия", "value": "12 месяцев или 2 000 моточасов — что наступит раньше" }
+      {
+        "key": "power_hp",
+        "name": "Мощность двигателя",
+        "value": "95,2 л.с.",
+        "card": true
+      },
+      {
+        "key": "load_capacity_kg",
+        "name": "Грузоподъёмность",
+        "value": "2 500 кг",
+        "card": true
+      },
+      {
+        "key": "operating_weight_kg",
+        "name": "Эксплуатационная масса",
+        "value": "11 200 кг",
+        "card": true
+      },
+      {
+        "key": "series",
+        "name": "Двигатель",
+        "value": "Weichai"
+      },
+      {
+        "key": "engine_type",
+        "name": "Тип двигателя",
+        "value": "дизельный, 4 цилиндра, турбонаддув, водяное охлаждение"
+      },
+      {
+        "key": "drive",
+        "name": "Привод",
+        "value": "полный"
+      },
+      {
+        "key": "transmission",
+        "name": "Коробка передач",
+        "value": "ZL30, гидромеханическая, с электронным управлением"
+      },
+      {
+        "key": "axles",
+        "name": "Мосты",
+        "value": "2"
+      },
+      {
+        "key": "speed_kmh",
+        "name": "Максимальная скорость",
+        "value": "28 км/ч"
+      },
+      {
+        "key": "wheelbase_mm",
+        "name": "Колёсная база",
+        "value": "2 335 мм"
+      },
+      {
+        "key": "clearance_mm",
+        "name": "Дорожный просвет",
+        "value": "200 мм"
+      },
+      {
+        "key": "country",
+        "name": "Производство",
+        "value": "Китай"
+      },
+      {
+        "key": "warranty",
+        "name": "Гарантия",
+        "value": "12 месяцев или 2 000 моточасов — что наступит раньше"
+      }
     ],
-    "_excluded_specs": "Объём двигателя (50,5 л), размер шин (6 100 x 2 365 x 3 752 мм) и габариты (3 000 x 5 000 мм) на текущем сайте ошибочны — не выводим до уточнения у клиента"
+    "_excluded_specs": "Объём двигателя (50,5 л), размер шин (6 100 x 2 365 x 3 752 мм) и габариты (3 000 x 5 000 мм) на текущем сайте ошибочны — не выводим до уточнения у клиента",
+    "thumb": "/assets/images/products/50/catalog/img-1.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/50/img-1.webp",
+        "big": "/assets/images/products/50/big/img-1.jpg",
+        "small": "/assets/images/products/50/small/img-1.jpg"
+      },
+      {
+        "full": "/assets/images/products/50/img-2.webp",
+        "big": "/assets/images/products/50/big/img-2.jpg",
+        "small": "/assets/images/products/50/small/img-2.jpg"
+      },
+      {
+        "full": "/assets/images/products/50/img-3.webp",
+        "big": "/assets/images/products/50/big/img-3.jpg",
+        "small": "/assets/images/products/50/small/img-3.jpg"
+      },
+      {
+        "full": "/assets/images/products/50/img-4.webp",
+        "big": "/assets/images/products/50/big/img-4.jpg",
+        "small": "/assets/images/products/50/small/img-4.jpg"
+      },
+      {
+        "full": "/assets/images/products/50/img-5.webp",
+        "big": "/assets/images/products/50/big/img-5.jpg",
+        "small": "/assets/images/products/50/small/img-5.jpg"
+      }
+    ]
   },
   {
     "slug": "frontalnyj-pogruzchik-lonking-lg833gb",
@@ -39,7 +122,15 @@
     "images": 1,
     "icon": "loader",
     "description": "",
-    "specs": []
+    "specs": [],
+    "thumb": "/assets/images/products/20/catalog/img-1.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/20/img-1.webp",
+        "big": "/assets/images/products/20/big/img-1.jpg",
+        "small": "/assets/images/products/20/big/img-1.jpg"
+      }
+    ]
   },
   {
     "slug": "frontalnyj-pogruzchik-lonking-zl50gc",
@@ -53,7 +144,15 @@
     "images": 1,
     "icon": "loader",
     "description": "",
-    "specs": []
+    "specs": [],
+    "thumb": "/assets/images/products/21/catalog/img-2.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/21/img-2.webp",
+        "big": "/assets/images/products/21/big/img-2.jpg",
+        "small": "/assets/images/products/21/big/img-2.jpg"
+      }
+    ]
   },
   {
     "slug": "frontalnyj-pogruzchik-lonking-lg863g",
@@ -67,7 +166,15 @@
     "images": 1,
     "icon": "loader",
     "description": "",
-    "specs": []
+    "specs": [],
+    "thumb": "/assets/images/products/22/catalog/img-3.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/22/img-3.webp",
+        "big": "/assets/images/products/22/big/img-3.jpg",
+        "small": "/assets/images/products/22/big/img-3.jpg"
+      }
+    ]
   },
   {
     "slug": "frontalnyj-pogruzchik-lonking-lg855gb",
@@ -81,7 +188,15 @@
     "images": 1,
     "icon": "loader",
     "description": "",
-    "specs": []
+    "specs": [],
+    "thumb": "/assets/images/products/23/catalog/img-4.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/23/img-4.webp",
+        "big": "/assets/images/products/23/big/img-4.jpg",
+        "small": "/assets/images/products/23/big/img-4.jpg"
+      }
+    ]
   },
   {
     "slug": "frontalnyj-pogruzchik-lonking-lg833gb-1",
@@ -96,6 +211,14 @@
     "icon": "loader",
     "description": "",
     "specs": [],
-    "_note": "Уточнить у клиента: отдельная модель или дубль LG833GB"
+    "_note": "Уточнить у клиента: отдельная модель или дубль LG833GB",
+    "thumb": "/assets/images/products/24/catalog/catalog-1.jpg",
+    "photos": [
+      {
+        "full": "/assets/images/products/24/catalog-1.webp",
+        "big": "/assets/images/products/24/big/catalog-1.jpg",
+        "small": "/assets/images/products/24/big/catalog-1.jpg"
+      }
+    ]
   }
 ]

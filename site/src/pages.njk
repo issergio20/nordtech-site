@@ -1,5 +1,5 @@
 ---
-# Простые текстовые страницы-заглушки (S08 частично, S11, S14, S15, новые услуги). Наполнение — после copywriter и согласования с клиентом.
+# Страницы без аналога на текущем сайте (там пусто или нет страницы) — на блоках оригинала: .service-header + .block
 layout: layouts/base.njk
 pagination:
   data: stubs
@@ -10,12 +10,11 @@ eleventyComputed:
   title: "{{ s.title }}"
 ---
 {% import "ui/ui.njk" as ui %}
-{{ ui.pageHero(s.title, s.lead, s.crumbs, s.title) }}
-<div class="container section">
-  <div class="prose">
-    {% for para in s.body %}<p>{{ para }}</p>{% endfor %}
+<section class="leasing-service section">
+  <div class="container-secondary">
+    {{ ui.serviceHeader(s.title, s.lead, s.crumbs, s.cta, s.ctaLead or "consultation") }}
+    <div class="policy__content block block--indent">
+      {% for para in s.body %}<p>{{ para }}</p>{% endfor %}
+    </div>
   </div>
-  {% if s.cta %}
-  <p style="margin-top:var(--sp-8)"><button class="btn btn--primary btn--lg" type="button" data-lead="{{ s.ctaLead or 'consultation' }}">{{ s.cta }} <svg class="icon"><use href="#i-arrow"/></svg></button></p>
-  {% endif %}
-</div>
+</section>

@@ -1,30 +1,19 @@
 ---
 layout: layouts/base.njk
-title: Каталог техники
+title: Каталог
 permalink: /katalog/
 ---
 {% import "ui/ui.njk" as ui %}
-{# S02 — корень каталога #}
-<section class="page-hero">
+{# S02 — корень каталога в разметке оригинала #}
+<section class="catalog section" id="catalog">
   <div class="container">
-    <div class="page-hero__crumbs">{{ ui.breadcrumbs([], "Каталог") }}</div>
-    <h1 class="h1">Каталог</h1>
-    <p class="lead page-hero__lead">Техника и оборудование от официальных поставщиков. Что есть на площадках — отдадим сразу, остальное привезём под заказ.</p>
+    {{ ui.breadcrumbs([], "Каталог", "/katalog/") }}
+    <h1 class="section__title section__title--indent">Каталог</h1>
+    <div class="catalog__slider swiper" data-swiper="catalog">
+      <div class="catalog__slider-wrapper swiper-wrapper">
+        {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}{{ ui.catalogSlide(root) }}{% endif %}{% endfor %}
+      </div>
+      {{ ui.navigations("catalog", "разделы каталога") }}
+    </div>
   </div>
 </section>
-<div class="container section">
-  <ul class="tiles">
-    {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}
-    <li>
-      <a class="tile" href="{{ root.url }}">
-        {{ ui.media(root.icon, "", "4/3", "tile__img") }}
-        <span class="tile__label"><span>{{ root.title }}</span><i><svg class="icon"><use href="#i-arrow"/></svg></i></span>
-        <span class="tile__count">{% if root.count %}{{ root.count | plural("модель", "модели", "моделей") }}{% else %}Под заказ{% endif %}</span>
-      </a>
-      <ul class="tile__subs">
-        {% for ch in root.children %}<li><a href="{{ ch.url }}">{{ ch.title }}</a></li>{% endfor %}
-      </ul>
-    </li>
-    {% endif %}{% endfor %}
-  </ul>
-</div>
