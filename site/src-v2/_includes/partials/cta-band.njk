@@ -1,0 +1,17 @@
+{% import "ui.njk" as ui with context %}
+{# Полоса заявки перед подвалом: слева заголовок, справа текст и кнопки в одну линию #}
+<section class="cta-band" aria-labelledby="cta-title">
+  <div class="wrap cta-band__inner">
+    <div>
+      <p class="eyebrow">Подбор за 2 часа</p>
+      <h2 class="cta-band__title" id="cta-title">Подберём технику под вашу задачу</h2>
+    </div>
+    <div class="cta-band__side">
+      <p class="cta-band__text">Расскажите, что нужно сделать на объекте — предложим модели в наличии и под заказ, посчитаем лизинг и доставку.</p>
+      <div class="cta-band__actions">
+        {{ ui.btn("Получить консультацию", lead="consultation") }}
+        <a class="btn btn--secondary" href="{{ site.telegramManager }}" target="_blank" rel="noopener"><span>Написать в Telegram</span><span class="btn__icon">{{ ui.icon("send") }}</span></a>
+      </div>
+    </div>
+  </div>
+</section>

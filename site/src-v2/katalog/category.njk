@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: catalog.flat
+  size: 1
+  alias: c
+permalink: "{{ c.url }}"
+eleventyComputed:
+  title: "{{ c.title | cap }}"
+  description: "{{ c.title | cap }} от официального дилера НОРД: наличие, характеристики, цены по запросу, лизинг и доставка."
+---
+{% import "ui.njk" as ui with context %}
+{% set crumbs = [{title: "Каталог", url: "/katalog/"}] %}
+{% if c.parent %}{% set crumbs = [{title: "Каталог", url: "/katalog/"}, c.parent] %}{% endif %}
+<header class="page-head page-head--image">
+  <img class="page-head__bg" src="{{ c.root.image or c.image }}" alt="" width="1600" height="900">
+  <div class="wrap">
+    {{ ui.crumbs(crumbs, c.title | cap) }}
+    <h1 class="page-head__title">{{ c.title | cap }}</h1>
+    {% if c.lead or c.root.lead %}<p class="page-head__lead">{{ c.lead or c.root.lead }}</p>{% endif %}
+    {% if c.tabs.length %}
+    <nav class="subnav" aria-label="Подразделы">
+      <ul class="chips">
+        {% for t in c.tabs %}{% if t.count or not site.hideEmptyCategories %}
+        <li><a class="chip" href="{{ t.url }}"{% if t.current %} aria-current="page"{% endif %}>{{ t.title | cap }} <span class="chip__count">{{ t.count }}</span></a></li>
+        {% endif %}{% endfor %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</header>
+
+<section class="section section--tight" data-catalog data-page-size="8" aria-label="Модели">
+  <div class="wrap">
+    <div class="toolbar">
+      <p class="toolbar__count" aria-live="polite" data-count>{{ c.count | plural("модель", "модели", "моделей") }}</p>
+      {% if c.vendors.length > 1 %}
+      <fieldset class="chips" data-filter="vendor">
+        <legend>Бренд</legend>
+        {% for v in c.vendors %}<label class="chip"><input type="checkbox" name="vendor" value="{{ v }}">{{ v }}</label>{% endfor %}
+      </fieldset>
+      {% endif %}
+    </div>
+    {% if c.count %}
+    <div class="cards" data-cards>
+      {% for p in c.products %}{{ ui.productCard(p, 2) }}{% endfor %}
+    </div>
+    <div class="list-foot">
+      <button class="btn btn--secondary" type="button" data-more hidden><span data-more-label>Показать ещё</span><span class="btn__icon">{{ ui.icon("refresh") }}</span></button>
+      <nav aria-label="Страницы" data-pages-nav hidden><ul class="pager" data-pages></ul></nav>
+    </div>
+    {% else %}
+    {{ ui.empty("Скоро здесь появится техника", "Раздел пополняется. Расскажите, что нужно, — подберём модель у производителя и привезём под заказ.") }}
+    {% endif %}
+  </div>
+</section>

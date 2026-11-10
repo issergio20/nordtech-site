@@ -1,0 +1,62 @@
+{% import "ui.njk" as ui with context %}
+{# Окно заявки: нативный <dialog> — фокус внутри, Esc, возврат фокуса. Тип задаёт кнопка: data-lead="price|consultation|leasing|question" #}
+<dialog class="dialog" id="lead-dialog" aria-labelledby="lead-title">
+  <button class="icon-btn dialog__close" type="button" aria-label="Закрыть" data-dialog-close>{{ ui.icon("x") }}</button>
+  <div class="dialog__inner" data-lead-body>
+    <div>
+      <h2 class="dialog__title" id="lead-title" data-lead-title>Оформить заявку</h2>
+      <p class="dialog__text" data-lead-sub style="margin-top:12px">Наш специалист свяжется с вами в ближайшее время</p>
+    </div>
+    <form class="dialog__form" novalidate data-lead-form>
+      <input type="hidden" name="type" value="price">
+      <input type="hidden" name="product_id" value="">
+      <input type="hidden" name="submit_token" value="">
+      <input type="hidden" name="page_url" value="">
+      <div class="hp" aria-hidden="true"><label>Не заполняйте <input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="field">
+        <label class="field__label" for="lead-name">Имя</label>
+        <input class="field__input" type="text" name="name" id="lead-name" autocomplete="name" required maxlength="128" aria-describedby="lead-name-err">
+        <p class="field__error" id="lead-name-err" hidden></p>
+      </div>
+      <div class="field">
+        <label class="field__label" for="lead-phone">Телефон</label>
+        <input class="field__input" type="tel" name="phone" id="lead-phone" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" aria-describedby="lead-phone-err">
+        <p class="field__error" id="lead-phone-err" hidden></p>
+      </div>
+      <div class="field" data-field="product">
+        <label class="field__label" for="lead-product">Название товара</label>
+        <textarea class="field__input" name="product_title" id="lead-product" readonly rows="2"></textarea>
+      </div>
+      <div class="field" data-field="email">
+        <label class="field__label" for="lead-email">Email</label>
+        <input class="field__input" type="email" name="email" id="lead-email" autocomplete="email">
+      </div>
+      <div class="field" data-field="city">
+        <label class="field__label" for="lead-city">Ближайший филиал</label>
+        <select class="field__input" name="city" id="lead-city">
+          <option value="">Не важно</option>
+          {% for b in branches %}{% if b.kind == "branch" %}<option value="{{ b.code }}">{{ b.city }}</option>{% endif %}{% endfor %}
+        </select>
+      </div>
+      <div class="field" data-field="comment">
+        <label class="field__label" for="lead-comment">Комментарий</label>
+        <textarea class="field__input" name="comment" id="lead-comment" maxlength="2000"></textarea>
+      </div>
+      <div class="check">
+        <input type="checkbox" name="consent" value="1" id="lead-consent" required aria-describedby="lead-consent-err">
+        <label for="lead-consent">Нажимая кнопку «Отправить», я соглашаюсь с <a href="/obrabotka-dannyh/" target="_blank">условиями обработки персональных данных</a></label>
+        <p class="field__error" id="lead-consent-err" hidden></p>
+      </div>
+      <button class="btn btn--primary btn--block" type="submit"><span data-submit-label>Оставить заявку</span><span class="btn__icon">{{ ui.icon("arrow-right") }}</span></button>
+      <p class="dialog__alt">Удобнее в мессенджере?
+        <a class="link-arrow" href="{{ site.telegramManager }}" target="_blank" rel="noopener"><span>Написать в Telegram</span>{{ ui.icon("send") }}</a>
+      </p>
+    </form>
+  </div>
+  <div class="dialog__inner lead-done" data-lead-done hidden tabindex="-1">
+    <span class="lead-done__icon">{{ ui.icon("check") }}</span>
+    <h2 class="dialog__title">Заявка принята</h2>
+    <p class="dialog__text">Наш специалист свяжется с вами в ближайшее время</p>
+    <button class="btn btn--light btn--plain" type="button" data-dialog-close style="justify-self:start">Хорошо</button>
+  </div>
+</dialog>

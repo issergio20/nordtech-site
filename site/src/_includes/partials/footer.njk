@@ -12,6 +12,11 @@
       <a class="footer__contacts-link" href="https://t.me/nordtechgroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg width="147" height="32" aria-hidden="true"><use href="{{ S }}#tg"></use></svg></a>
     </div>
   </div>
+  {% if v2 %}
+  <nav class="footer__nav" aria-label="Разделы сайта">
+    <a href="/katalog/">Каталог</a><a href="/uslug/">Услуги</a><a href="/uslug/servisnye-uslugi/lizing/">Лизинг</a><a href="/logistika/">Логистика</a><a href="/o-kompanii/">О компании</a><a href="/kontakty/">Контакты</a>
+  </nav>
+  {% endif %}
   <a class="footer__developer footer__text footer-link" href="https://vostokweb.ru/" target="_blank" rel="noopener">Разработка сайта
     <svg width="147" height="32" aria-hidden="true"><use href="{{ S }}#developer"></use></svg>
   </a>

@@ -103,8 +103,12 @@ ready(() => {
   };
 
   $$(".partners__slider:not([data-swiper])").forEach((el) => (el.dataset.swiper = "partners")); // «О компании»
+  // Вариант 2: каталог и партнёры — сетки, без карусели (ANALYSIS-v2 M1, M2)
+  const gridInV2 = new Set(["catalog", "partners"]);
+  const isV2 = document.body.classList.contains("v2");
   $$("[data-swiper]").forEach((el) => {
     const name = el.dataset.swiper;
+    if (isV2 && gridInV2.has(name)) return;
     const scope = el.closest("section") || document;
     const prev = $(`.${name}__button--prev`, scope), next = $(`.${name}__button--next`, scope);
     new window.Swiper(el, { ...common, ...opts[name], navigation: prev && next ? { prevEl: prev, nextEl: next } : false });
@@ -137,14 +141,55 @@ $$(".faq__item").forEach((item, i) => {
 
 /* ---------- Вариант 2: липкая кнопка на карточке товара, когда основные кнопки ушли с экрана ---------- */
 const sticky = $("[data-sticky-cta]"), mainButtons = $(".product__buttons");
-if (sticky && mainButtons && "IntersectionObserver" in window) {
+if (sticky && mainButtons) {
+  // Проверка положения при прокрутке, а не IntersectionObserver: при резком переходе (якорь, быстрый свайп)
+  // кнопки «пролетают» экран без пересечения, и наблюдатель не срабатывал
   const btn = $("button", sticky);
-  new IntersectionObserver(([e]) => {
-    const show = !e.isIntersecting && e.boundingClientRect.top < 0; // кнопки выше экрана
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const show = mainButtons.getBoundingClientRect().bottom < 0; // кнопки целиком выше экрана
+    if (show === sticky.classList.contains("is-visible")) return;
     sticky.classList.toggle("is-visible", show);
     sticky.setAttribute("aria-hidden", String(!show));
     btn.tabIndex = show ? 0 : -1;
-  }).observe(mainButtons);
+  };
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener("resize", update);
+  update();
+}
+
+/* ---------- Вариант 2: появление блоков при прокрутке ---------- */
+// Карточки и пункты появляются по очереди; крупные блоки секций — целиком. Видимое при загрузке не трогаем.
+// После появления атрибут снимается: у карточек возвращаются переходы kit для наведения.
+if (document.body.classList.contains("v2") && !reduced && "IntersectionObserver" in window) {
+  const ITEMS = [".catalog-slide", ".partners__slide", ".why-we__block", ".stages-work__item", ".trust__certs li", ".leasing__stage",
+    ".card-product", ".basic-conditions__item", ".leasing-advantages__item", ".leasing-registration-process__item",
+    ".leasing-registration__item", ".about-company__advantage", ".about-company__benefit", ".contacts__item", ".escort__slide"].join(",");
+  const main = $("#main");
+  const belowFold = (el) => el.getBoundingClientRect().top > innerHeight * 0.9;
+  const targets = new Set($$(ITEMS, main).filter(belowFold));
+  $$(".section:not(.about)", main).forEach((section) => {
+    const box = $(":scope > .container", section) || section;
+    [...box.children].forEach((el) => {
+      if (el.matches(ITEMS + ",.visually-hidden,script,template,[hidden]") || el.querySelector(ITEMS + ",[data-sticky-cta]")) return;
+      if (belowFold(el)) targets.add(el);
+    });
+  });
+  const done = (el) => { el.removeAttribute("data-reveal"); el.classList.remove("is-in"); el.style.transitionDelay = ""; };
+  const io = new IntersectionObserver((entries) => {
+    // Задержка по порядку внутри одной пачки: что вошло в экран вместе, появляется «лесенкой»
+    entries.filter((e) => e.isIntersecting).forEach((e, i) => {
+      const el = e.target, delay = Math.min(i, 6) * 70;
+      io.unobserve(el);
+      el.style.transitionDelay = `${delay}ms`;
+      el.classList.add("is-in");
+      setTimeout(() => done(el), 850 + delay);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  targets.forEach((el) => { el.setAttribute("data-reveal", ""); io.observe(el); });
+  document.body.classList.add("reveal-on");
+  addEventListener("beforeprint", () => targets.forEach(done));
 }
 
 /* ---------- Уведомления ---------- */

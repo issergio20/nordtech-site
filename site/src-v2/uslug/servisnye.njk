@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+title: Сервисные услуги
+permalink: /uslug/servisnye-uslugi/
+description: Сервисные услуги НОРД — лизинг спецтехники, гарантия производителя, выездной сервис и доставка автомобильным транспортом.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Сервисные услуги", "Лизинг, гарантия, выездной сервис и доставка — через одного менеджера.", [{title: "Услуги", url: "/uslug/"}], "", "Получить консультацию", "consultation", "/assets/template/img/why-we/img-2.jpg") }}
+<section class="section" aria-labelledby="srv-list">
+  <div class="wrap">
+    {{ ui.secHead("Четыре направления", "Что мы делаем", "", "", "", "srv-list") }}
+    {{ ui.services() }}
+  </div>
+</section>

@@ -9,6 +9,7 @@ export default defineConfig({
   fullyParallel: true,
   reporter: [["list"]],
   use: {
+    reducedMotion: "reduce", // анимации появления варианта 2 не мешают проверкам; отдельный тест включает их
     baseURL: `http://127.0.0.1:${PORT}`,
     locale: "ru-RU",
     trace: "retain-on-failure",

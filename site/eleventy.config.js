@@ -1,10 +1,12 @@
 import * as sass from "sass";
 import path from "node:path";
+import fs from "node:fs";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 
 // Префикс адресов: локально и в MODX — "/", на GitHub Pages — "/nordtech-site/" (PATH_PREFIX в .github/workflows/pages.yml).
 // Плагин сам дописывает префикс ко всем абсолютным адресам в HTML; в JS префикс берётся из window.NORD_BASE.
 const PREFIX = process.env.PATH_PREFIX || "/";
+const V2 = process.env.VARIANT === "2";
 const withPrefix = (u) => (u.startsWith("/") ? PREFIX.replace(/\/$/, "") + u : u);
 
 export default function (cfg) {
@@ -20,31 +22,47 @@ export default function (cfg) {
   }
   // Демо на GitHub Pages закрываем от поисковиков, чтобы не конкурировать с настоящим nordtech.su
   cfg.addGlobalData("isDemo", !!process.env.DEMO);
-  // Вариант дизайна: 1 — оригинальный UI kit nordtech.su, 2 — тот же kit с улучшенной подачей (replica/design-alt/DESIGN.md)
-  cfg.addGlobalData("v2", process.env.VARIANT === "2");
-  cfg.addPassthroughCopy({ "src/js": "js", "src/assets": "assets" });
+  // Вариант дизайна: 1 — оригинальный UI kit nordtech.su (шаблоны src/),
+  // 2 — новая дизайн-система «НОРД Тёмный» с нуля (шаблоны src-v2/, replica/design-v2/DESIGN.md). Данные и фото — общие.
+  cfg.addGlobalData("v2", V2);
+  cfg.addPassthroughCopy({ "src/assets": "assets" });
+  if (V2) {
+    cfg.addPassthroughCopy({ "src-v2/js": "js", "src/js/lead-api.js": "js/lead-api.js" });
+    // Unbounded (заголовки) — из npm-пакета, отдаётся с сайта, без запросов к Google
+    for (const sub of ["cyrillic", "latin"]) cfg.addPassthroughCopy({ [`node_modules/@fontsource-variable/unbounded/files/unbounded-${sub}-wght-normal.woff2`]: `fonts/unbounded-${sub}.woff2` });
+    cfg.addPassthroughCopy({ "node_modules/@fancyapps/ui/dist/fancybox/fancybox.css": "assets/vendor/fancybox.css" });
+    cfg.addWatchTarget("src-v2/scss/");
+    // Текст юридических страниц берём из импорта оригинала (src/_includes/original) без разметки kit
+    cfg.addFilter("policyBody", (name) => {
+      const html = fs.readFileSync(`src/_includes/original/${name}.njk`, "utf8");
+      return (html.match(/<div class="policy__content">([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/) || [, ""])[1];
+    });
+  } else {
+    cfg.addPassthroughCopy({ "src/js": "js" });
+  }
   // Те же библиотеки, что на nordtech.su: Swiper (слайдеры) и Fancybox (галерея товара)
   cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js": "assets/template/js/swiper-bundle.min.js" });
   // Карта исходников Swiper: без неё инструменты разработчика пишут 404 в консоль
   cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js.map": "assets/template/js/swiper-bundle.min.js.map" });
   cfg.addPassthroughCopy({ "node_modules/@fancyapps/ui/dist/fancybox/fancybox.umd.js": "assets/template/js/fancybox.umd.js" });
-  cfg.addWatchTarget("src/scss/");
+  if (!V2) cfg.addWatchTarget("src/scss/");
 
   cfg.addTemplateFormats("scss");
   cfg.addExtension("scss", {
     outputFileExtension: "css",
     // В выдачу попадает только main.scss → /css/main.css; партиалы (_*.scss) не публикуются
     compileOptions: {
+      cache: false, // app.scss сам не меняется, меняются партиалы — без этого сервер отдаёт старый CSS
       permalink: (contents, inputPath) => {
         const name = path.basename(inputPath);
         if (name === "main.scss") return "/css/main.css";
-        if (name === "v2.scss") return process.env.VARIANT === "2" ? "/css/v2.css" : false;
+        if (name === "app.scss") return "/css/app.css"; // вариант 2
         return false;
       },
     },
     compile(input, inputPath) {
       if (path.basename(inputPath).startsWith("_")) return;
-      const result = sass.compileString(input, { loadPaths: ["src/scss"], style: "expanded" });
+      const result = sass.compileString(input, { loadPaths: [path.dirname(inputPath)], style: "expanded" });
       return () => result.css;
     },
   });
@@ -71,5 +89,5 @@ export default function (cfg) {
     }))).replace(/</g, "\\u003c"));
   cfg.addFilter("year", () => new Date().getFullYear());
 
-  return { dir: { input: "src", output: "_site" }, pathPrefix: PREFIX, markdownTemplateEngine: "njk", htmlTemplateEngine: "njk" };
+  return { dir: V2 ? { input: "src-v2", data: "../src/_data", output: "_site" } : { input: "src", output: "_site" }, pathPrefix: PREFIX, markdownTemplateEngine: "njk", htmlTemplateEngine: "njk" };
 }

@@ -3,7 +3,7 @@ import { test, expect, PRODUCT, fillLead } from "./fixtures.js";
 
 test("F02-H1 консультация с первого экрана", async ({ page, guard }) => {
   await page.goto("/");
-  await page.locator(".about").getByRole("button", { name: "Получить консультацию" }).click();
+  await page.locator("#about").getByRole("button", { name: "Получить консультацию" }).click();
   const dlg = page.getByRole("dialog", { name: "Получить консультацию" });
   await expect(dlg.getByLabel("Название товара")).toBeHidden();
   await expect(dlg.getByLabel("Комментарий")).toBeVisible();
@@ -73,9 +73,9 @@ test("F04-E4 Esc закрывает оверлей поиска", async ({ page,
   await page.goto("/");
   const open = page.getByRole("button", { name: "Открыть поиск" });
   await open.click();
-  await expect(page.locator("#site-search")).toHaveClass(/show/);
+  await expect(page.locator("#site-search")).toHaveClass(/show|is-open/);
   await page.keyboard.press("Escape");
-  await expect(page.locator("#site-search")).not.toHaveClass(/show/);
+  await expect(page.locator("#site-search")).not.toHaveClass(/show|is-open/);
   await expect(open).toBeFocused();
 });
 
@@ -83,7 +83,7 @@ test("F05-H1 контакты: филиалы, телефоны, предста�
   await page.goto("/kontakty/");
   for (const city of ["Чита", "Иркутск", "Магадан"]) await expect(page.getByRole("heading", { name: city })).toBeVisible();
   await expect(page.getByRole("link", { name: "+7 914 350 41 41" })).toHaveAttribute("href", "tel:+79143504141");
-  await expect(page.locator(".contacts-china__item")).toHaveCount(1);
+  await expect(page.locator(".contacts-china__item, [data-agent]")).toHaveCount(1);
   await page.getByRole("button", { name: "Показать Магадан на карте" }).focus();
   await page.keyboard.press("Enter");
   await expect(page.locator("[data-map]")).toHaveAttribute("src", /150\.803555/);
@@ -91,7 +91,7 @@ test("F05-H1 контакты: филиалы, телефоны, предста�
 
 test("F06-H1 вопрос по товару", async ({ page, guard }) => {
   await page.goto(PRODUCT);
-  await page.locator(".product__buttons").getByRole("button", { name: "Задать вопрос" }).click();
+  await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Задать вопрос" }).click();
   const dlg = page.getByRole("dialog", { name: "Задать вопрос" });
   await fillLead(page);
   await dlg.getByLabel("Комментарий").fill("Есть ли в наличии в Иркутске?");
@@ -123,6 +123,14 @@ test("NAV-H2 мобильное меню: бургер, Esc, фокус наза
 
 test("FAQ на «О компании» раскрывается с клавиатуры", async ({ page }) => {
   await page.goto("/o-kompanii/");
+  if (process.env.VARIANT === "2") { // вариант 2: нативный details/summary
+    const s = page.locator(".accordion__q").first();
+    await s.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".accordion__item").first()).toHaveAttribute("open", "");
+    await expect(page.locator(".accordion__a").first()).toBeVisible();
+    return;
+  }
   const q = page.locator(".faq__item-button").first();
   await q.focus();
   await page.keyboard.press("Enter");

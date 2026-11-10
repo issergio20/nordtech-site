@@ -1,0 +1,103 @@
+// Дизайн-система «НОРД Тёмный» — токены. Единственный источник цветов, шрифтов, отступов и движения.
+// Компоненты используют только переменные отсюда, без «сырых» значений.
+
+/* ---------- Шрифты: Unbounded — заголовки, Onest — текст. Оба отдаются с сайта ---------- */
+@font-face {
+  font-family: "Unbounded";
+  src: url("../fonts/unbounded-cyrillic.woff2") format("woff2-variations");
+  font-weight: 200 900;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Unbounded";
+  src: url("../fonts/unbounded-latin.woff2") format("woff2-variations");
+  font-weight: 200 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Onest";
+  src: url("../assets/template/fonts/Onest.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* ---------- Цвет: поверхности от глубокого графита к светлее ---------- */
+  --bg: #0a0c0f;            // фон страницы
+  --bg-raised: #101318;     // чередующиеся секции
+  --surface: #161a20;       // карточки
+  --surface-2: #1d222a;     // карточки при наведении, поля
+  --paper: #eef1f5;         // светлые плитки (логотипы партнёров, сертификаты)
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+
+  --text: #f2f4f7;          // 18:1 на --bg
+  --text-2: #aab1bc;        // 7.9:1 на --surface
+  --text-3: #8a929e;        // 5.3:1 на --surface — только подписи
+  --on-paper: #0a0c0f;
+
+  // Бренд НОРД: синий. Заливка — с белым текстом (5.2:1), «чернила» — для текста и ссылок на тёмном (8.6:1)
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-ink: #8ab4ff;
+  --accent-soft: rgb(37 99 235 / 0.16);
+  --accent-glow: 0 18px 40px -16px rgb(37 99 235 / 0.75);
+
+  --ok: #4ade80;            // «В наличии»
+  --warn: #fbbf24;          // «Под заказ»
+  --danger: #f87171;        // ошибки форм
+
+  /* ---------- Типографика: плавная шкала 360 → 1920 px, rem — уважает настройку шрифта ---------- */
+  --font-display: "Unbounded", "Onest", system-ui, sans-serif;
+  --font-text: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --fs-display: clamp(2.25rem, 1.2rem + 4.4vw, 7rem);    // 36 → 103: первый экран
+  --fs-h1: clamp(2rem, 1.25rem + 3.2vw, 5.25rem);        // 32 → 84: заголовок страницы
+  --fs-h2: clamp(1.625rem, 1.1rem + 2.4vw, 4rem);        // 26 → 64: заголовок секции (26 — чтобы длинные слова влезали в 360 px)
+  --fs-h3: clamp(1.25rem, 1.05rem + 0.85vw, 2.125rem);   // 20 → 34
+  --fs-h4: clamp(1.0625rem, 1rem + 0.35vw, 1.375rem);    // 17 → 22
+  --fs-lead: clamp(1.125rem, 1rem + 0.6vw, 1.625rem);    // 18 → 26
+  --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);     // 16 → 18
+  --fs-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);  // 14 → 15
+  --fs-xs: 0.8125rem;                                    // 13: надписи-метки прописными
+
+  --lh-tight: 1.04;
+  --lh-head: 1.12;
+  --lh-body: 1.6;
+  --tracking-head: -0.025em;
+  --tracking-label: 0.14em;
+
+  /* ---------- Сетка на всю ширину экрана: поля и промежутки растут с экраном ---------- */
+  --gutter: clamp(16px, 4vw, 80px);      // поля страницы слева и справа
+  --gap: clamp(12px, 1.4vw, 28px);       // промежуток колонок
+  --section: clamp(72px, 8vw, 168px);    // вертикальный ритм секций
+  --stack: clamp(32px, 3vw, 64px);       // отступ «заголовок секции → содержимое»
+  --pad: clamp(20px, 1.8vw, 32px);       // внутренний отступ карточек и плиток — один для всех
+  --pad-lg: clamp(28px, 3.6vw, 72px);    // внутренний отступ больших панелей (лизинг, представитель)
+  --header-h: 72px;                      // уточняет JS
+
+  /* ---------- Форма ---------- */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --r-pill: 999px;
+  --shadow: 0 30px 60px -24px rgb(0 0 0 / 0.65);
+
+  /* ---------- Движение ---------- */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); // выезжающая панель (окно заявки)
+  --t-fast: 160ms;
+  --t-base: 260ms;
+
+  /* ---------- Слои ---------- */
+  --z-header: 50;
+  --z-tabbar: 60;
+  --z-overlay: 80;
+  --z-toast: 90;
+}

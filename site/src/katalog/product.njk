@@ -9,7 +9,7 @@ eleventyComputed:
   title: "{{ p.title }}"
   description: "{{ p.title }} — {{ 'в наличии' if p.availability == 'in_stock' else 'под заказ' }} у официального дилера НОРД. Узнайте цену с доставкой, условия лизинга и гарантии."
 ---
-{% import "ui/ui.njk" as ui %}
+{% import "ui/ui.njk" as ui with context %}
 {# S05 — карточка товара в разметке оригинала (.product). Галерея — Swiper + Fancybox, как на сайте #}
 <section class="product section section--indent" itemscope itemtype="https://schema.org/Product">
   <div class="container">

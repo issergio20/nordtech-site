@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: Результаты поиска
+permalink: /rezultaty-poiska/
+noindex: true
+description: Поиск по каталогу спецтехники НОРД — модели, бренды и типы техники в наличии и под заказ.
+---
+{% import "ui.njk" as ui with context %}
+<header class="page-head">
+  <div class="wrap">
+    {{ ui.crumbs([], "Результаты поиска") }}
+    <h1 class="page-head__title">Результаты поиска</h1>
+    <form class="search__form" action="/rezultaty-poiska/" role="search" style="margin-top:32px;max-width:900px">
+      {{ ui.icon("search") }}
+      <label class="visually-hidden" for="q-page">Что ищем</label>
+      <input class="search__input" id="q-page" name="query" type="search" placeholder="Например: Lonking или погрузчик" minlength="2" required>
+      <button class="btn btn--primary btn--sm" type="submit"><span>Найти</span><span class="btn__icon">{{ ui.icon("arrow-right") }}</span></button>
+    </form>
+    <p class="t-lead" data-search-status aria-live="polite" style="margin-top:24px"></p>
+  </div>
+</header>
+<section class="section section--tight" aria-label="Найденные модели">
+  <div class="wrap">
+    <div class="cards" data-search-results>
+      {% for p in catalog.products %}<div data-search-card="{{ p.slug }}" hidden>{{ ui.productCard(p, 2) }}</div>{% endfor %}
+    </div>
+    <div data-search-empty hidden>
+      {{ ui.empty("Ничего не нашли", "Проверьте написание или опишите задачу — подберём технику, даже если её нет в каталоге.") }}
+    </div>
+  </div>
+</section>

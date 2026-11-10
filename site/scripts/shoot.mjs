@@ -21,7 +21,7 @@ fs.mkdirSync(outDir, { recursive: true });
 
 const browser = await chromium.launch();
 for (const [vp, size] of [["desktop", { width: 1440, height: 900 }], ["mobile", { width: 390, height: 844 }]]) {
-  const ctx = await browser.newContext({ viewport: size, locale: "ru-RU", deviceScaleFactor: 1 });
+  const ctx = await browser.newContext({ viewport: size, locale: "ru-RU", deviceScaleFactor: 1, reducedMotion: "reduce" });
   const page = await ctx.newPage();
   for (const [id, [orig, clone]] of Object.entries(SCREENS)) {
     await page.goto(base + (which === "original" ? orig : clone), { waitUntil: "networkidle", timeout: 45000 });

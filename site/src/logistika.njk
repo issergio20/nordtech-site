@@ -3,7 +3,7 @@ layout: layouts/base.njk
 title: Логистика
 permalink: /logistika/
 ---
-{% import "ui/ui.njk" as ui %}
+{% import "ui/ui.njk" as ui with context %}
 {# S12 — на текущем сайте ссылка уводит на /##. Блоки оригинала: шапка услуги + этапы как в «Процесс оформления лизинга» #}
 <section class="leasing-service section">
   <div class="container-secondary">
@@ -18,7 +18,7 @@ permalink: /logistika/
             <h3 class="leasing-registration-process__item-title">{{ st[0] }}</h3>
             <p class="leasing-registration-process__item-text">{{ st[1] }}</p>
           </div>
-          <img class="leasing-registration-process__item-img" src="/assets/template/img/general/leasing-registration-process.webp" alt="">
+          <img class="leasing-registration-process__item-img" src="/assets/template/img/general/leasing-registration-process.webp" alt="" width="390" height="166" loading="lazy">
         </div>
         {% endfor %}
       </div>

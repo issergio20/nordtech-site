@@ -158,3 +158,6 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
 // потому что поле контейнера там 15px, а не 20px — страница 395px при экране 390 (так и на nordtech.su)
 @media (max-width: 575px) { .about-company__header::before { right: -15px; } }
 .about-company__header-images { overflow-x: auto; }
+
+/* ---------- Зона нажатия ≥ 24px (WCAG 2.5.8): почта и телефон представителя в Китае ---------- */
+.contacts-china__item a { display: inline-flex; align-items: center; min-height: 32px; }

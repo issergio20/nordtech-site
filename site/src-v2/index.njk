@@ -1,0 +1,130 @@
+---
+layout: layouts/base.njk
+title: Главная
+isHome: true
+permalink: /
+---
+{% import "ui.njk" as ui with context %}
+{# Главная «НОРД Тёмный». Блок «Официальный дилер» убран по решению заказчика (2026-11-10) #}
+
+<section class="hero" id="about" aria-labelledby="hero-title">
+  <video class="hero__media" src="/assets/template/img/general/video.mp4" autoplay muted loop playsinline preload="none" poster="/assets/template/img/general/about.webp" aria-hidden="true" data-hero-video></video>
+  <div class="wrap hero__inner">
+    <div class="hero__content">
+      <div>
+        <p class="eyebrow">Продажа · лизинг · сервис спецтехники</p>
+        <h1 class="hero__title" id="hero-title" style="margin-top:24px">Надёжная спецтехника для <em>больших задач</em></h1>
+      </div>
+      <div class="hero__aside">
+        <p class="hero__lead">Мы — гарант работы вашего бизнеса. Техника для эксплуатации в суровых условиях — с площадок в Чите, Иркутске и Магадане.</p>
+        <div class="btn-row">
+          {{ ui.btn("Получить консультацию", lead="consultation", size="lg") }}
+          {{ ui.btn("Перейти в каталог", href="/katalog/", kind="secondary", ico="grid", size="lg") }}
+        </div>
+      </div>
+    </div>
+    <div class="hero__bar">
+      <div class="hero__fact"><b>с 2019 года</b><span>официальный дилер SHANMON</span></div>
+      <div class="hero__fact"><b>1 500 м²</b><span>ангаров с техникой и комплектующими</span></div>
+      <div class="hero__fact"><b>2 часа</b><span>предварительное решение по лизингу</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="catalog" aria-labelledby="catalog-title">
+  <div class="wrap">
+    {{ ui.secHead("Каталог", "Технику подбираем под задачу", "", "Весь каталог", "/katalog/", "catalog-title") }}
+    <div class="tiles">
+      {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}{{ ui.tile(root) }}{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="popular" aria-labelledby="popular-title">
+  <div class="wrap carousel" data-carousel>
+    <header class="sec-head">
+      <div>
+        <p class="eyebrow">Чаще всего берут</p>
+        <h2 class="sec-head__title" id="popular-title">Топ-10 видов спецтехники</h2>
+      </div>
+      <div class="carousel__nav">
+        <button class="icon-btn" type="button" data-prev aria-label="Назад: популярные модели">{{ ui.icon("arrow-left") }}</button>
+        <button class="icon-btn" type="button" data-next aria-label="Вперёд: популярные модели">{{ ui.icon("arrow-right") }}</button>
+      </div>
+    </header>
+    <div class="carousel__track" data-track role="region" aria-roledescription="карусель" aria-label="Популярные модели" tabindex="0">
+      {% for p in catalog.popular %}{{ ui.productCard(p) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--raised" id="why-we" aria-labelledby="why-title">
+  <div class="wrap why">
+    <div>
+      {{ ui.secHead("Почему мы", "Работаем напрямую с производителями", "", "", "", "why-title") }}
+      <div class="why__stats" data-reveal-block>
+        <div class="stat"><p class="stat__value">2019</p><p class="stat__label">Являемся официальным дилером спецтехники SHANMON</p></div>
+        <div class="stat"><p class="stat__value">1 500 м²</p><p class="stat__label">Общая площадь ангаров со спецтехникой и комплектующими</p></div>
+        <div class="stat"><p class="stat__value">120 мин</p><p class="stat__label">Предварительное решение по вашей заявке на лизинг — в течение 2 часов</p></div>
+      </div>
+    </div>
+    <ul class="why__photos">
+      {% for i in [1,2,3,4] %}<li data-reveal-item><img src="/assets/template/img/why-we/img-{{ i }}.jpg" alt="" width="400" height="460" loading="lazy"></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="stages-work" aria-labelledby="stages-title">
+  <div class="wrap">
+    {{ ui.secHead("Как мы работаем", "От заявки до объекта — четыре шага", "", "", "", "stages-title") }}
+    <ol class="steps">
+      {{ ui.step(1, "pointer", "Получаем заявку", "Вы оставляете заявку любым удобным способом на сайте, либо в мессенджерах") }}
+      {{ ui.step(2, "list", "Подбор спецтехники", "Наш специалист подберёт спецтехнику под вашу задачу с учётом всех требований") }}
+      {{ ui.step(3, "file", "Заключение договора", "После согласования выбранной спецтехники мы заключаем договор, где прописаны все гарантии с нашей стороны") }}
+      {{ ui.step(4, "truck", "Доставка на объект", "Подберём оптимальный вариант доставки, техника будет на объекте в оговорённые сроки") }}
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="escort" aria-labelledby="escort-title">
+  <div class="wrap">
+    {{ ui.secHead("Сервис", "Сервисные услуги", "", "Подробнее", "/uslug/servisnye-uslugi/", "escort-title") }}
+    {{ ui.services() }}
+  </div>
+</section>
+
+<section class="section" id="leasing" aria-labelledby="leasing-title">
+  <div class="wrap">
+    <div class="leasing-panel" data-reveal-block>
+      <div class="leasing-panel__main">
+        <p class="eyebrow">Лизинг</p>
+        <h2 class="t-h2" id="leasing-title" style="margin-top:16px">Спецтехника в лизинг</h2>
+        <p class="leasing-panel__lead">Мы подготовили самые выгодные условия — документы в банк подаём сами.</p>
+        <ol class="leasing-panel__steps">
+          <li data-reveal-item>Вы выбираете технику и подаёте заявку</li>
+          <li data-reveal-item>Мы дадим предварительное решение в течение 2 часов</li>
+          <li data-reveal-item>Документы в банк мы подаём сами</li>
+          <li data-reveal-item>Вы приходите на подписание и оплату</li>
+        </ol>
+      </div>
+      <div class="leasing-panel__side">
+      <dl class="leasing-panel__terms">
+        <div data-reveal-item><dt>авансовый платёж</dt><dd>от 10%</dd></div>
+        <div data-reveal-item><dt>срок лизинга</dt><dd>12–60 мес</dd></div>
+        <div data-reveal-item><dt>предварительное решение</dt><dd>2 часа</dd></div>
+      </dl>
+        <div class="btn-row leasing-panel__actions">
+          {{ ui.btn("Заявка на лизинг", lead="leasing", kind="light") }}
+          <a class="btn btn--secondary" href="/uslug/servisnye-uslugi/lizing/" style="--btn-line:rgb(255 255 255 / .5)"><span>Смотреть условия</span><span class="btn__icon">{{ ui.icon("arrow-right") }}</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="partners" aria-labelledby="partners-title">
+  <div class="wrap">
+    {{ ui.secHead("Партнёры", "Партнёры", "Сотрудничаем с ведущими поставщиками и лизинговыми компаниями на рынке России", "", "", "partners-title") }}
+    {{ ui.partners() }}
+  </div>
+</section>

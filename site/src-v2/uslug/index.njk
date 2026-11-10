@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+title: Услуги
+permalink: /uslug/
+description: Услуги НОРД для владельцев спецтехники — лизинг, гарантия производителя, выездной сервис и доставка через одного менеджера.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Услуги", "Помогаем не только купить технику, но и работать на ней без простоев.", [], "Сервис и финансы", "Получить консультацию") }}
+<section class="section" aria-labelledby="srv-title">
+  <div class="wrap">
+    {{ ui.secHead("Что входит", "Сервисные услуги", "", "Подробнее", "/uslug/servisnye-uslugi/", "srv-title") }}
+    {{ ui.services() }}
+  </div>
+</section>
+<section class="section section--raised" aria-labelledby="why-srv">
+  <div class="wrap">
+    {{ ui.secHead("Почему удобно", "Один менеджер на всё", "", "", "", "why-srv") }}
+    <div class="f-grid">
+      {{ ui.fCard("users", "Один контакт", "Подбор, лизинг, доставка и сервис — через одного менеджера, без пересказа задачи разным людям.") }}
+      {{ ui.fCard("clock", "Быстрые решения", "Предварительное решение по лизингу — в течение 2 часов, расчёт доставки — в день обращения.") }}
+      {{ ui.fCard("shield", "Гарантия через дилера", "Гарантийные случаи решаем мы, а не вы с заводом-производителем.") }}
+    </div>
+  </div>
+</section>

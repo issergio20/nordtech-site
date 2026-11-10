@@ -1,0 +1,25 @@
+---
+# Страницы без аналога на текущем сайте (там пусто): гарантия, выездной сервис, «Спецтехника» в услугах. Тексты — черновики из stubs.json
+layout: layouts/base.njk
+pagination:
+  data: stubs
+  size: 1
+  alias: s
+permalink: "{{ s.url }}"
+eleventyComputed:
+  title: "{{ s.title }}"
+  description: "{{ s.title }} — НОРД: {{ s.lead }}"
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead(s.title, s.lead, s.crumbs, "", s.cta, s.ctaLead or "consultation") }}
+<section class="section section--tight" aria-label="Описание">
+  <div class="wrap">
+    <div class="prose">{% for para in s.body %}<p><mark>{{ para }}</mark></p>{% endfor %}</div>
+  </div>
+</section>
+<section class="section" aria-labelledby="other-srv">
+  <div class="wrap">
+    {{ ui.secHead("Ещё", "Другие услуги", "", "", "", "other-srv") }}
+    {{ ui.services() }}
+  </div>
+</section>

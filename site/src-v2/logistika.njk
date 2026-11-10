@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+title: Логистика
+permalink: /logistika/
+description: Доставка спецтехники НОРД — с площадок в Чите, Иркутске и Магадане или напрямую от производителя из Китая, до вашего объекта.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Логистика", "Привозим технику с наших площадок или напрямую от производителя — до вашего объекта.", [], "Доставка", "Рассчитать доставку", "consultation", "/assets/template/img/why-we/img-3.jpg") }}
+<section class="section" aria-labelledby="route-title">
+  <div class="wrap">
+    {{ ui.secHead("Маршрут", "Как привозим", "", "", "", "route-title") }}
+    <ol class="steps">
+      {{ ui.step(1, "warehouse", "Со склада", "Техника в наличии отгружается с площадки в Чите, Иркутске или Магадане") }}
+      {{ ui.step(2, "globe", "Из Китая", "Модели под заказ везём от производителя; в Маньчжурии работает наш представитель [маршрут и сроки уточнить у клиента]") }}
+      {{ ui.step(3, "route", "До объекта", "Автомобильным транспортом [способы перевозки уточнить у клиента]") }}
+    </ol>
+  </div>
+</section>
+<section class="section section--raised" aria-labelledby="yards-title">
+  <div class="wrap">
+    {{ ui.secHead("Площадки", "Откуда отгружаем", "", "Все контакты", "/kontakty/", "yards-title") }}
+    <div class="f-grid">
+      {% for b in branches %}{% if b.kind == "branch" %}{{ ui.fCard("pin", b.city, "Площадка: " + b.yard) }}{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>

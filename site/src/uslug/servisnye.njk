@@ -3,12 +3,13 @@ layout: layouts/base.njk
 title: Сервисные услуги
 permalink: /uslug/servisnye-uslugi/
 ---
-{% import "ui/ui.njk" as ui %}
+{% import "ui/ui.njk" as ui with context %}
 {# S09 — на текущем сайте страница пустая #}
 <section class="leasing-service section">
   <div class="container-secondary">
     {{ ui.serviceHeader("Сервисные услуги", "Лизинг, гарантия, выездной сервис и доставка — через одного менеджера", [{title: "Услуги", url: "/uslug/"}], "Получить консультацию") }}
     <div class="block block--indent">
+      <h2 class="section-title">Что мы делаем</h2>
       <div class="services-grid">{% include "partials/escort-slides.njk" %}</div>
     </div>
   </div>

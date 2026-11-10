@@ -1,0 +1,31 @@
+{% import "ui.njk" as ui with context %}
+{% set B = "/assets/template/img/sprites/sprite.svg" %}
+{# Шапка: стекло на тёмном; на главной прозрачная над видео, пока страницу не прокрутили #}
+<header class="header{% if isHome %} header--home{% endif %}" data-header>
+  <div class="wrap header__bar">
+    <a class="header__logo" href="/" aria-label="{{ site.name }} — на главную"><svg width="121" height="42" aria-hidden="true"><use href="{{ B }}#logo"></use></svg></a>
+    <nav class="nav" aria-label="Основное меню">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="/katalog/"{% if page.url.startsWith("/katalog") %} aria-current="page"{% endif %}>Каталог</a></li>
+        <li class="nav__item">
+          <a class="nav__link" href="/uslug/"{% if page.url.startsWith("/uslug") or page.url.startsWith("/logistika") %} aria-current="page"{% endif %}>Услуги {{ ui.icon("chevron-down") }}</a>
+          <div class="nav__drop">
+            <a href="/uslug/servisnye-uslugi/">Сервисные услуги</a>
+            <a href="/uslug/servisnye-uslugi/lizing/">Лизинг</a>
+            <a href="/uslug/servisnye-uslugi/garantiya/">Гарантия производителя</a>
+            <a href="/uslug/servisnye-uslugi/vyezdnoj-servis/">Выездной сервис</a>
+            <a href="/logistika/">Логистика</a>
+          </div>
+        </li>
+        <li class="nav__item"><a class="nav__link" href="/o-kompanii/"{% if page.url.startsWith("/o-kompanii") %} aria-current="page"{% endif %}>О компании</a></li>
+        <li class="nav__item"><a class="nav__link" href="/kontakty/"{% if page.url.startsWith("/kontakty") %} aria-current="page"{% endif %}>Контакты</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <button class="icon-btn" type="button" aria-label="Открыть поиск" aria-controls="site-search" aria-expanded="false" data-search-open>{{ ui.icon("search") }}</button>
+      <a class="header__phone" href="{{ site.phoneHref }}"><b>{{ site.phone }}</b><small>{{ site.phoneNote }}</small></a>
+      <span class="header__cta">{{ ui.btn("Оставить заявку", lead="consultation", size="sm", ico="") }}</span>
+      <button class="icon-btn burger" type="button" aria-label="Меню" aria-controls="site-menu" aria-expanded="false" data-menu-toggle><span></span></button>
+    </div>
+  </div>
+</header>

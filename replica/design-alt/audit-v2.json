@@ -1,0 +1,897 @@
+{
+ "/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.catalog-slide__category 338×20 ×16"
+   ],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.catalog-slide__category 338×20 ×16",
+    "a 232×40 ×5",
+    "a 306×36",
+    "a 197×25",
+    "a 171×25",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "p.card-product__availability ×5",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 13,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 5831
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.catalog-slide__category 360×20 ×16",
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 6222
+  }
+ },
+ "/katalog/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.catalog-slide__category 338×20 ×16"
+   ],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17 ×2",
+    "a.catalog-slide__category 338×20 ×16",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2312
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.catalog-slide__category 360×20 ×16",
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1101
+  }
+ },
+ "/katalog/spectehnika/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.001,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17 ×2",
+    "a.breadcrumbs__link 75×17",
+    "input 87×40",
+    "input 107×40",
+    "a 265×40",
+    "a 310×40 ×3",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×3",
+    "p.card-product__availability ×4",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 9,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3003
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1465
+  }
+ },
+ "/katalog/spectehnika/frontalnyj-pogruzchik/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.001,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17 ×2",
+    "a.breadcrumbs__link 75×17",
+    "a.breadcrumbs__link 143×17",
+    "a 310×40 ×4",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×4",
+    "p.card-product__availability ×4",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 6,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2872
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1304
+  }
+ },
+ "/katalog/nasosy/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17 ×2",
+    "a.breadcrumbs__link 44×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×3",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 2,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1138
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 990
+  }
+ },
+ "/katalog/spectehnika/ekskavator-pogruzchik/ekskavator-pogruzchik-gros-shanmon-388-ii/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.034,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 75×17",
+    "a.breadcrumbs__link 133×17",
+    "a.breadcrumbs__link 281×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×4",
+    "p.product__availability",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 15,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2261
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.096,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1495
+  }
+ },
+ "/katalog/spectehnika/frontalnyj-pogruzchik/frontalnyj-pogruzchik-lonking-lg833gb/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.009,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 75×17",
+    "a.breadcrumbs__link 143×17",
+    "a.breadcrumbs__link 249×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×4",
+    "p.product__availability",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 2,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1570
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.195,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "div.product__sliders h=414"
+   ],
+   "pageHeight": 948
+  }
+ },
+ "/rezultaty-poiska/?query=погрузчик": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.36,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 111×17",
+    "a 265×40",
+    "a 310×40 ×5",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "p.card-product__availability ×6",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 11,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3795
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.066,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1659
+  }
+ },
+ "/o-kompanii/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.06,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 69×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "p",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 5,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "about-company-1.webp",
+    "about-company-2.webp",
+    "about-company-3.webp",
+    "about-company-4.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 4166
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.005,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 1,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "about-company-1.webp",
+    "about-company-2.webp",
+    "about-company-3.webp",
+    "about-company-4.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 3613
+  }
+ },
+ "/uslug/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 40×17",
+    "a 197×25",
+    "a 242×25",
+    "a 171×25",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2639
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1804
+  }
+ },
+ "/uslug/servisnye-uslugi/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 40×17",
+    "a.breadcrumbs__link 108×17",
+    "a 197×25",
+    "a 242×25",
+    "a 171×25",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×3",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2613
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "img-1.webp",
+    "img-3.webp",
+    "img-2.webp",
+    "img-3.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1772
+  }
+ },
+ "/uslug/servisnye-uslugi/lizing/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 40×17",
+    "a.breadcrumbs__link 108×17",
+    "a.breadcrumbs__link 118×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×4",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 23,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "leasing-registration.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 5116
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 1,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "leasing-registration.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 5016
+  }
+ },
+ "/logistika/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 61×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 4,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1595
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp",
+    "leasing-registration-process.webp"
+   ],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1552
+  }
+ },
+ "/kontakty/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "button.contacts__map-btn 16×6 ×3",
+    "a 318×22"
+   ],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 55×17",
+    "button.contacts__map-btn 16×6 ×3",
+    "a.contacts__item-phone 231×24 ×3",
+    "a.contacts__item-mail 231×24 ×3",
+    "a 318×22",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1736
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "button.contacts__map-btn 16×6 ×3",
+    "a 530×22",
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1987
+  }
+ },
+ "/politika-konfidencialnosti/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 46×17",
+    "a.breadcrumbs__link 184×17",
+    "a.footer__cooperating-link 360×17",
+    "a.footer__text 190×34",
+    "a.footer__contacts-link 42×42 ×3",
+    "a.footer__developer 360×32"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4",
+    "span ×2",
+    "a.footer__cooperating-link"
+   ],
+   "bodyUnder16": 17,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3122
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "a.footer__text 111×20"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 10,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 2017
+  }
+ }
+}

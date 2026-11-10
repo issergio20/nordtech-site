@@ -1,0 +1,10 @@
+{% import "ui.njk" as ui with context %}
+{# Нижняя панель на телефоне и планшете: 4 частых раздела под большим пальцем #}
+<nav class="tabbar" aria-label="Быстрые разделы">
+  <ul>
+    <li><a href="/katalog/"{% if page.url.startsWith("/katalog/") %} aria-current="page"{% endif %}>{{ ui.icon("grid") }}<span>Каталог</span></a></li>
+    <li><a href="/rezultaty-poiska/" data-search-open{% if page.url.startsWith("/rezultaty-poiska/") %} aria-current="page"{% endif %}>{{ ui.icon("search") }}<span>Поиск</span></a></li>
+    <li><a href="/uslug/servisnye-uslugi/lizing/"{% if page.url.includes("lizing") %} aria-current="page"{% endif %}>{{ ui.icon("percent") }}<span>Лизинг</span></a></li>
+    <li><a href="/uslug/"{% if page.url.startsWith("/uslug/") and not page.url.includes("lizing") %} aria-current="page"{% endif %}>{{ ui.icon("wrench") }}<span>Услуги</span></a></li>
+  </ul>
+</nav>

@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Политика конфиденциальности
+permalink: /politika-konfidencialnosti/
+hideCta: true
+description: Политика конфиденциальности сайта НОРД — какие персональные данные собираем, зачем и как защищаем.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Политика конфиденциальности") }}
+<section class="section section--tight" aria-labelledby="policy-text">
+  <div class="wrap">
+    <h2 class="visually-hidden" id="policy-text">Текст политики</h2>
+    <div class="prose">{{ "politika-konfidencialnosti" | policyBody | safe }}</div>
+  </div>
+</section>

@@ -9,7 +9,7 @@ eleventyComputed:
   title: "{{ c.title | cap }}"
   description: "{{ c.title | cap }} от официального дилера НОРД: наличие, характеристики, цены по запросу, лизинг и доставка."
 ---
-{% import "ui/ui.njk" as ui %}
+{% import "ui/ui.njk" as ui with context %}
 {# S03 / S04 — раздел и подраздел в разметке оригинала (.categories). Вместо сломанного фильтра (печатал Array) — фильтр по бренду #}
 {% set crumbs = [{title: "Каталог", url: "/katalog/"}] %}
 {% if c.parent %}{% set crumbs = [{title: "Каталог", url: "/katalog/"}, c.parent] %}{% endif %}

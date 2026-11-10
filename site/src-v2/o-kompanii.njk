@@ -1,0 +1,68 @@
+---
+layout: layouts/base.njk
+title: О компании
+permalink: /o-kompanii/
+hasGallery: true
+description: НОРД — официальный дилер спецтехники SHANMON и CATch. Работаем напрямую с производителями, даём гарантию, сервис и лизинг.
+---
+{% import "ui.njk" as ui with context %}
+{# Текст — с nordtech.su (src/_includes/original/o-kompanii.njk). FAQ: на оригинале три одинаковых вопроса-заглушки — оставлен один #}
+{{ ui.pageHead("О компании", "Более пяти лет поставляем на рынок высококачественную современную спецтехнику SHANMON и CATch по доступной цене.", [], "НОРД · с 2019 года", "Оставить заявку", "consultation", "/assets/template/img/general/about-company-3.webp") }}
+
+<section class="section" aria-labelledby="intro-title">
+  <div class="wrap why">
+    <div>
+      {{ ui.secHead("Кто мы", "Прямое сотрудничество с производителями", "", "", "", "intro-title") }}
+      <p class="t-lead" data-reveal-block>Наши клиенты могут рассчитывать на профессионализм сотрудников и качество услуг — благодаря прямому сотрудничеству с ведущими производителями спецтехники SHANMON и CATch.</p>
+    </div>
+    <div class="about-media">
+      <img src="/assets/template/img/general/about-company-3.webp" alt="" width="751" height="373" loading="lazy" data-reveal-item>
+      <img src="/assets/template/img/general/about-company-4.webp" alt="" width="751" height="373" loading="lazy" data-reveal-item>
+    </div>
+  </div>
+</section>
+
+<section class="section section--raised" aria-labelledby="choose-title">
+  <div class="wrap">
+    {{ ui.secHead("Преимущества", "Почему выбирают нас", "", "", "", "choose-title") }}
+    <div class="f-grid f-grid--4">
+      {{ ui.fCard("award", "Высококачественная спецтехника", "Широкий ассортимент техники SHANMON и CATch: надёжность, долговечность и современные характеристики для строительных, дорожных и промышленных задач.") }}
+      {{ ui.fCard("users", "Профессиональная команда", "Сотрудники регулярно проходят обучение и сертификацию у производителей — консультируем, помогаем с выбором и поддерживаем в эксплуатации.") }}
+      {{ ui.fCard("shield", "Гарантия и сервис", "Бесплатное устранение дефектов в гарантийный срок, своевременная поставка оригинальных запчастей, обслуживание и ремонт.") }}
+      {{ ui.fCard("tag", "Доступные цены", "Тесные связи с производителями и отлаженная логистика позволяют держать конкурентоспособные цены на всю линейку.") }}
+    </div>
+  </div>
+</section>
+
+<section class="section section--raised" aria-labelledby="certs-title">
+  <div class="wrap why">
+    {{ ui.secHead("Сертификаты", "Сертифицированный дилер SHANMON и CATch", "Статус подтверждён сертификатами производителей — мы соответствуем их стандартам качества и надёжности.", "", "", "certs-title") }}
+    <ul class="certs">
+      {% for i in [1, 2] %}<li data-reveal-item><a href="/assets/template/img/general/about-company-{{ i }}.webp" data-fancybox="certificate" aria-label="Сертификат дилера {{ i }} — открыть"><img src="/assets/template/img/general/about-company-{{ i }}.webp" alt="" width="298" height="210" loading="lazy"></a></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="faq-title">
+  <div class="wrap why">
+    {{ ui.secHead("Вопросы", "Часто задаваемые вопросы", "", "", "", "faq-title") }}
+    <div class="accordion">
+      <details class="accordion__item">
+        <summary class="accordion__q">Как выбрать насос для сложных условий (например, для грязной воды с песком)? Какие параметры критичны?</summary>
+        <div class="accordion__a prose">
+          <p>Для перекачки абразивных жидкостей подходят:</p>
+          <ul><li>Шламовые насосы — с усиленными рабочими колёсами из хромовой стали.</li><li>Мембранные насосы — если есть риск засорения.</li></ul>
+          <p>Что проверить:</p>
+          <ul><li>Материал корпуса — чугун или нержавейка для агрессивных сред.</li><li>Допустимый размер твёрдых частиц (указан в характеристиках, например, до 10 мм).</li><li>Возможность разборки для чистки — важно для обслуживания.</li></ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="partners-title">
+  <div class="wrap">
+    {{ ui.secHead("Партнёры", "С кем работаем", "Сотрудничаем с ведущими поставщиками и лизинговыми компаниями на рынке России", "", "", "partners-title") }}
+    {{ ui.partners() }}
+  </div>
+</section>

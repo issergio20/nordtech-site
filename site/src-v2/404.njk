@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+title: Страница не найдена
+permalink: /404.html
+noindex: true
+hideCta: true
+description: Такой страницы на сайте НОРД нет. Перейдите в каталог спецтехники или найдите модель поиском.
+---
+{% import "ui.njk" as ui with context %}
+<section class="page-head" style="min-height:80svh;display:flex;align-items:center;border:0">
+  <div class="wrap">
+    <p class="t-display" aria-hidden="true" style="font-family:var(--font-display);color:transparent;-webkit-text-stroke:1px var(--line-strong)">404</p>
+    <h1 class="page-head__title" style="margin-top:0">Страница не найдена</h1>
+    <p class="page-head__lead">Возможно, модель переехала в другой раздел. Посмотрите каталог или найдите её поиском.</p>
+    <div class="btn-row">
+      {{ ui.btn("Каталог", href="/katalog/", ico="grid") }}
+      {{ ui.btn("Поиск", href="/rezultaty-poiska/", kind="secondary", ico="search") }}
+    </div>
+  </div>
+</section>

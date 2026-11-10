@@ -25,6 +25,11 @@ function common(h) {
     .replace(/href="\/uslug\/servisnye-uslugi\/lizing\/#basic-conditions"/g, 'href="#basic-conditions"')
     .replace(/<svg(?![^>]*aria-hidden)/g, '<svg aria-hidden="true"')
     .replace(/target="_blank" rel="nofollow"/g, 'target="_blank" rel="noopener"')
+    // Размеры картинок kit (сняты натуральные) — иначе сдвиг вёрстки при догрузке
+    .replace(/(src="\/assets\/template\/img\/general\/leasing-registration\.webp" alt="")/g, '$1 width="781" height="392"')
+    .replace(/(src="\/assets\/template\/img\/general\/leasing-registration-process\.webp" alt="")(?! width)/g, '$1 width="390" height="166" loading="lazy"')
+    .replace(/(src="\/assets\/template\/img\/general\/about-company-[12]\.webp" alt="")/g, '$1 width="298" height="210"')
+    .replace(/(src="\/assets\/template\/img\/general\/about-company-[34]\.webp" alt="")/g, '$1 width="751" height="373"')
     .replace(/в течении/g, "в течение")
     .replace(/говоренные/g, "оговорённые");
 }
@@ -63,11 +68,15 @@ const pages = {
     // поэтому сама кнопкой быть не может)
     h = h.replace(/(<div class="contacts__item(?: active)?" data-coords="[^"]+">\s*<div class="contacts__item-top">\s*<h3 class="contacts__item-title">)([^<]+)(<\/h3>)/g,
       (m, a, city, b) => `${a}${city}${b}<button class="contacts__map-btn visually-hidden-focusable" type="button" data-map-btn>Показать ${city} на карте</button>`);
+    // h1 → h3 (города): невидимый h2 для порядка заголовков
+    h = h.replace(/<div class="contacts__block block block--indent">/, '<h2 class="visually-hidden">Филиалы</h2>\n<div class="contacts__block block block--indent">');
     return h.replace(/<p>13134933773<\/p>/, '<p><a href="tel:+8613134933773">+86 131 3493 3773</a></p>');
   },
   // Юридические тексты переносятся как есть: менять их должен юрист клиента.
   // ВНИМАНИЕ: в политике оригинала указан чужой сайт zabpoc.ru — см. replica/bugs.md
   "politika-konfidencialnosti"(h) {
+    // h1 → h3 в тексте политики: невидимый h2 для порядка заголовков
+    h = h.replace(/<div class="policy__content">/, '<h2 class="visually-hidden">Текст политики</h2>\n<div class="policy__content">');
     return h.replace(/zabpoc\.ru/g, '<mark title="На текущем сайте указан чужой домен — исправить юристу">zabpoc.ru</mark>');
   },
   "obrabotka-dannyh"(h) {

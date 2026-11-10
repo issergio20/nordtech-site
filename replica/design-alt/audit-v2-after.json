@@ -1,0 +1,723 @@
+{
+ "/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a 232×40 ×5",
+    "a 306×36",
+    "a 197×25",
+    "a 171×25",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 15,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 6220
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 6359
+  }
+ },
+ "/katalog/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36 ×2",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1478
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1222
+  }
+ },
+ "/katalog/spectehnika/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.001,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36 ×2",
+    "a.breadcrumbs__link 88×36",
+    "input 87×40",
+    "input 107×40",
+    "a 265×40",
+    "a 310×40 ×3",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 12,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3270
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1587
+  }
+ },
+ "/katalog/spectehnika/frontalnyj-pogruzchik/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.001,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36 ×2",
+    "a.breadcrumbs__link 88×36",
+    "a.breadcrumbs__link 166×36",
+    "a 310×40 ×4",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 10,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3156
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.001,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1442
+  }
+ },
+ "/katalog/nasosy/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36 ×2",
+    "a.breadcrumbs__link 52×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 2,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1339
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1085
+  }
+ },
+ "/katalog/spectehnika/ekskavator-pogruzchik/ekskavator-pogruzchik-gros-shanmon-388-ii/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.031,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 88×36",
+    "a.breadcrumbs__link 156×36",
+    "a.breadcrumbs__link 328×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 2,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2638
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.124,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 1,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1567
+  }
+ },
+ "/katalog/spectehnika/frontalnyj-pogruzchik/frontalnyj-pogruzchik-lonking-lg833gb/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.009,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 88×36",
+    "a.breadcrumbs__link 166×36",
+    "a.breadcrumbs__link 290×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 2,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1775
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.224,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "div.product__sliders h=414"
+   ],
+   "pageHeight": 1043
+  }
+ },
+ "/rezultaty-poiska/?query=погрузчик": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0.345,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 129×36",
+    "a 265×40",
+    "a 310×40 ×5",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 16,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 4104
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0.148,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 1,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1824
+  }
+ },
+ "/o-kompanii/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 81×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 4,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 4788
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 1,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 3974
+  }
+ },
+ "/uslug/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 46×36",
+    "a 197×25",
+    "a 242×25",
+    "a 171×25",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2822
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1528
+  }
+ },
+ "/uslug/servisnye-uslugi/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 46×36",
+    "a.breadcrumbs__link 126×36",
+    "a 197×25",
+    "a 242×25",
+    "a 171×25",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 2822
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1528
+  }
+ },
+ "/uslug/servisnye-uslugi/lizing/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 46×36",
+    "a.breadcrumbs__link 126×36",
+    "a.breadcrumbs__link 138×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 5,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 5603
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 1,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 5035
+  }
+ },
+ "/logistika/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 71×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1885
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 0,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 1627
+  }
+ },
+ "/kontakty/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "button.contacts__map-btn 16×6 ×3"
+   ],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 64×36",
+    "button.contacts__map-btn 16×6 ×3",
+    "a.contacts__item-phone 231×24 ×3",
+    "a.contacts__item-mail 231×24 ×3",
+    "a 320×32",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 1994
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [
+    "button.contacts__map-btn 16×6 ×3"
+   ],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 2101
+  }
+ },
+ "/politika-konfidencialnosti/": {
+  "mobile": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [],
+   "targetsUnder44": [
+    "a.header__logo 110×34",
+    "a.breadcrumbs__link 54×36",
+    "a.breadcrumbs__link 215×36",
+    "a.footer__contacts-link 42×42 ×3"
+   ],
+   "tinyText": [
+    "span.nav-tab__item-title ×4"
+   ],
+   "bodyUnder16": 1,
+   "longLines": 0,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54",
+    "nav.nav-tab h=62"
+   ],
+   "pageHeight": 3962
+  },
+  "desktop": {
+   "overflowX": false,
+   "cls": 0,
+   "h1": 1,
+   "headingSkips": 1,
+   "targetsUnder24": [],
+   "targetsUnder44": [],
+   "tinyText": [],
+   "bodyUnder16": 0,
+   "longLines": 10,
+   "uppercaseLongText": 0,
+   "imgsWithoutSize": [],
+   "controlsWithoutName": [],
+   "fixedElements": [
+    "header.header h=54"
+   ],
+   "pageHeight": 2112
+  }
+ }
+}

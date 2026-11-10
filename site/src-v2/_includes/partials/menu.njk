@@ -1,0 +1,22 @@
+{% import "ui.njk" as ui with context %}
+{# Мобильное меню: на весь экран, крупные пункты. Esc и повторное нажатие бургера закрывают #}
+<div class="menu" id="site-menu" data-menu>
+  <nav aria-label="Меню сайта">
+    <ul class="menu__list">
+      <li><a href="/katalog/">Каталог {{ ui.icon("arrow-up-right") }}</a></li>
+      <li><a href="/uslug/">Услуги {{ ui.icon("arrow-up-right") }}</a></li>
+      <li class="menu__sub"><a href="/uslug/servisnye-uslugi/lizing/">Лизинг</a></li>
+      <li class="menu__sub"><a href="/logistika/">Логистика</a></li>
+      <li><a href="/o-kompanii/">О компании {{ ui.icon("arrow-up-right") }}</a></li>
+      <li><a href="/kontakty/">Контакты {{ ui.icon("arrow-up-right") }}</a></li>
+    </ul>
+  </nav>
+  <div class="menu__contacts">
+    <a class="menu__phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+    <p class="t-muted t-sm">{{ site.phoneNote }}</p>
+    <div class="btn-row">
+      {{ ui.btn("Оставить заявку", lead="consultation") }}
+      <a class="icon-btn" href="{{ site.telegramManager }}" target="_blank" rel="noopener" aria-label="Telegram" style="width:56px;height:56px">{{ ui.icon("send") }}</a>
+    </div>
+  </div>
+</div>

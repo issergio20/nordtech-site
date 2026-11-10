@@ -1,0 +1,85 @@
+---
+layout: layouts/base.njk
+hasGallery: true
+pagination:
+  data: catalog.products
+  size: 1
+  alias: p
+permalink: "{{ p.url }}"
+eleventyComputed:
+  title: "{{ p.title }}"
+  description: "{{ p.title }} — {{ 'в наличии' if p.availability == 'in_stock' else 'под заказ' }} у официального дилера НОРД. Узнайте цену с доставкой, условия лизинга и гарантии."
+---
+{% import "ui.njk" as ui with context %}
+<article itemscope itemtype="https://schema.org/Product">
+  <div class="wrap product">
+    <div style="display:grid;gap:24px">
+      {{ ui.crumbs(p.trail | capitalizeTitles, p.title) }}
+      <div class="gallery" data-gallery>
+        {% set first = p.photos[0] %}
+        <a class="gallery__main" href="{{ first.full }}" data-gallery-main aria-label="Открыть фото на весь экран">
+          <img src="{{ first.big }}" alt="{{ p.title }}, фото 1" width="800" height="600" fetchpriority="high" itemprop="image">
+          <span class="gallery__zoom" aria-hidden="true">{{ ui.icon("expand") }}{{ p.photos.length }} фото</span>
+        </a>
+        {% if p.photos.length > 1 %}
+        <div class="gallery__thumbs" role="group" aria-label="Фотографии модели">
+          {% for ph in p.photos %}
+          <button class="gallery__thumb" type="button" data-thumb data-big="{{ ph.big }}" data-full="{{ ph.full }}" data-small="{{ ph.small }}" data-alt="{{ p.title }}, фото {{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}" aria-label="Фото {{ loop.index }} из {{ p.photos.length }}"><img src="{{ ph.small }}" alt="" width="160" height="120" loading="lazy"></button>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="buy">
+      <div class="buy__meta">{{ ui.badge(p) }}<span class="badge">{{ p.vendor }}</span>{% if p.maxConfig %}<span class="badge badge--accent">Максимальная комплектация</span>{% endif %}</div>
+      <meta itemprop="brand" content="{{ p.vendor }}">
+      <h1 class="buy__title" itemprop="name">{{ p.title }}</h1>
+      {% if p.description %}<p class="buy__text" itemprop="description">{{ p.description }}</p>{% endif %}
+      <div class="buy__actions" data-buy>
+        {{ ui.btn("Узнать стоимость", lead="price", product=p, attrs='style="justify-content:space-between"') }}
+        {{ ui.btn("Задать вопрос", lead="question", kind="secondary", ico="send", product=p, attrs='style="justify-content:space-between"') }}
+      </div>
+      {% if not p.specs.length %}
+      <div class="buy__ask">
+        <p>Полные характеристики этой модели пришлём по запросу — с комплектацией, которая есть на складе сейчас.</p>
+        {{ ui.btn("Запросить характеристики", lead="question", kind="secondary", size="sm", product=p, attrs='style="justify-self:start"') }}
+      </div>
+      {% endif %}
+      <ul class="buy__facts">
+        <li>{{ ui.icon("percent") }}Лизинг: аванс от 10%, решение за 2 часа</li>
+        <li>{{ ui.icon("truck") }}Доставка до объекта автотранспортом</li>
+        <li>{{ ui.icon("shield") }}Гарантия производителя через дилера</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if p.specs.length %}
+  <section class="section" aria-labelledby="specs-title">
+    <div class="wrap product-more">
+      <div>
+        <p class="eyebrow">Технические данные</p>
+        <h2 class="t-h2" id="specs-title" style="margin-top:16px">Характеристики</h2>
+      </div>
+      <table class="specs">
+        <caption class="visually-hidden">Характеристики {{ p.title }}</caption>
+        <tbody>{% for s in p.specs %}<tr><th scope="row">{{ s.name }}</th><td>{{ s.value }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+</article>
+
+{% if p.related.length %}
+<section class="section{% if not p.specs.length %} section--flush{% endif %}" aria-labelledby="related-title">
+  <div class="wrap">
+    {{ ui.secHead("В том же разделе", "Похожие модели", "", "Весь раздел", p.trail[p.trail.length - 1].url, "related-title") }}
+    <div class="cards">{% for r in p.related %}{{ ui.productCard(r) }}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+
+<div class="sticky-cta" data-sticky-cta aria-hidden="true">
+  <p class="sticky-cta__title">{{ p.title }}</p>
+  {{ ui.btn("Узнать цену", lead="price", size="sm", product=p, attrs='tabindex="-1"') }}
+</div>

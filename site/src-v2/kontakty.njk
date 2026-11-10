@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+title: Контакты
+permalink: /kontakty/
+description: Контакты НОРД — филиалы в Чите, Иркутске и Магадане, бесплатный телефон 8 800 101-65-54 и представитель в Китае.
+---
+{% import "ui.njk" as ui with context %}
+{% set coords = {chita: "52.065183,113.450151", irkutsk: "52.287792,104.269198", magadan: "59.539838,150.803555"} %}
+<header class="page-head">
+  <div class="wrap">
+    {{ ui.crumbs([], "Контакты") }}
+    <h1 class="page-head__title">Контакты</h1>
+    <p class="page-head__lead">Звонок по России бесплатный: <a href="{{ site.phoneHref }}" style="color:var(--text);font-weight:600">{{ site.phone }}</a>. Или приезжайте на площадку — покажем технику вживую.</p>
+  </div>
+</header>
+
+<section class="section section--tight" aria-labelledby="branches-title">
+  <div class="wrap">
+    <h2 class="visually-hidden" id="branches-title">Филиалы</h2>
+    <div class="contacts">
+      <div class="branches">
+        {% for b in branches %}{% if b.kind == "branch" %}
+        <article class="branch{% if loop.first %} is-active{% endif %}" id="{{ b.code }}" data-branch data-coords="{{ coords[b.code] }}" data-reveal-item>
+          <div class="branch__head">
+            <h3 class="branch__title">{{ b.city }}</h3>
+            <button class="btn btn--secondary btn--sm" type="button" data-map-btn aria-label="Показать {{ b.city }} на карте"><span>На карте</span><span class="btn__icon">{{ ui.icon("pin") }}</span></button>
+          </div>
+          <dl>
+            {% if b.office %}<dt>Офис</dt><dd>{{ b.office }}</dd>{% endif %}
+            <dt>Площадка</dt><dd>{{ b.yard }}</dd>
+            <dt>Телефон</dt><dd><a href="{{ b.phoneHref }}" aria-label="{{ b.phone | replace('-', ' ') }}">{{ b.phone }}</a></dd>
+            <dt>Почта</dt><dd><a href="mailto:{{ b.email }}">{{ b.email }}</a></dd>
+            <dt>Часовой пояс</dt><dd>{{ b.tz }}</dd>
+          </dl>
+        </article>
+        {% endif %}{% endfor %}
+      </div>
+      <div class="map"><iframe title="Карта: площадка выбранного филиала" data-map loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=113.450151%2C52.065183&amp;z=15&amp;pt=113.450151%2C52.065183%2Cpm2rdm" allowfullscreen></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="china-title">
+  <div class="wrap">
+    {{ ui.secHead("Китай", "Наш представитель в Китае", "Помогает с моделями под заказ и отправкой техники от производителя.", "", "", "china-title") }}
+    {% for b in branches %}{% if b.kind == "agent" %}
+    <div class="agent" data-agent data-reveal-block>
+      <div><p class="eyebrow">Компания</p><p style="margin-top:8px" lang="zh">{{ b.companyZh }}</p><p class="t-muted t-sm" lang="en">{{ b.companyEn }}</p></div>
+      <div><p class="eyebrow">Контактное лицо</p><p style="margin-top:8px"><span lang="zh">{{ b.personZh }}</span> · <span lang="en">{{ b.personEn }}</span></p><p class="t-muted t-sm">{{ b.city }}</p></div>
+      <div><p class="eyebrow">Связь</p><p style="margin-top:8px"><a href="{{ b.phoneHref }}">{{ b.phone }}</a></p><p><a href="mailto:{{ b.email }}">{{ b.email }}</a></p></div>
+    </div>
+    {% endif %}{% endfor %}
+  </div>
+</section>

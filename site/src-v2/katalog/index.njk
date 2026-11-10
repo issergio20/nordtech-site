@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Каталог
+permalink: /katalog/
+description: Каталог спецтехники НОРД — погрузчики, экскаваторы, насосы, дизель-генераторы, колёса и аксессуары от официального дилера.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Каталог", "Спецтехника SHANMON и Lonking в наличии на площадках в Чите, Иркутске и Магадане — и под заказ напрямую от производителя.", [], "Шесть разделов") }}
+<section class="section" aria-label="Разделы каталога">
+  <div class="wrap">
+    <div class="tiles">
+      {% for root in catalog.roots %}{% if root.count or not site.hideEmptyCategories %}{{ ui.tile(root, 2) }}{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>

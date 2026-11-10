@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% if isHome %}{{ site.name }} — надёжная спецтехника для больших задач{% else %}{{ metaTitle or title }} — {{ site.name }}{% endif %}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% if isDemo %}<meta name="robots" content="noindex, nofollow">{% elif noindex %}<meta name="robots" content="noindex, follow">{% endif %}
+<meta name="theme-color" content="#0a0c0f">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/template/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/template/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/assets/template/img/favicons/apple-touch-icon.png">
+<link rel="preload" href="/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/template/fonts/Onest.woff2" as="font" type="font/woff2" crossorigin>
+{# Дизайн-система «НОРД Тёмный» — без CSS оригинала. Fancybox — только полноэкранный просмотр фото #}
+<link rel="stylesheet" href="/css/app.css">
+{% if hasGallery %}<link rel="stylesheet" href="/assets/vendor/fancybox.css">{% endif %}
+<script>window.NORD_BASE = {{ base | dump | safe }};</script>
+{% if hasGallery %}<script src="/assets/template/js/fancybox.umd.js" defer></script>{% endif %}
+<script type="module" src="/js/app.js"></script>
+</head>
+<body>
+{% include "icons.njk" %}
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+{% include "partials/header.njk" %}
+{% include "partials/menu.njk" %}
+<main id="main" tabindex="-1">
+{{ content | safe }}
+</main>
+{% if not hideCta %}{% include "partials/cta-band.njk" %}{% endif %}
+{% include "partials/footer.njk" %}
+{% include "partials/tabbar.njk" %}
+{% include "partials/search.njk" %}
+{% include "partials/lead-dialog.njk" %}
+<div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

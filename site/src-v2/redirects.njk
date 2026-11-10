@@ -1,0 +1,9 @@
+---
+permalink: /redirects.nginx.conf
+eleventyExcludeFromCollections: true
+---
+# 301 для переноса погрузчиков Lonking в подраздел «Фронтальные погрузчики».
+# Подключить в server {} nginx. Сгенерировано из products.json (поле oldPath).
+# В MODX адреса без завершающего «/» (как на текущем сайте) — слэш в цели убирается.
+{% for r in catalog.redirects %}location = {{ r.from }} { return 301 {{ r.to | replace(r/\/$/, "") }}; }
+{% endfor %}

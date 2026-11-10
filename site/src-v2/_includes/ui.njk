@@ -1,0 +1,145 @@
+{# UI kit «НОРД Тёмный» — макросы компонентов. 1 макрос = 1 будущий чанк Fenom в MODX.
+   Подключение: {% import "ui.njk" as ui with context %} #}
+{% set BRAND = "/assets/template/img/sprites/sprite.svg" %}
+
+{% macro icon(id, cls="") %}<svg class="{{ cls }}" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-{{ id }}"></use></svg>{% endmacro %}
+
+{# Кнопка: ссылка (href), открывашка заявки (lead) или обычная кнопка. kind: primary | secondary | light; size: "" | sm #}
+{% macro btn(text, href="", lead="", kind="primary", ico="arrow-right", size="", attrs="", product=null, label="") %}
+{% set cls = "btn btn--" + kind + (" btn--" + size if size else "") + ("" if ico else " btn--plain") %}
+{% if href %}<a class="{{ cls }}" href="{{ href }}" {{ attrs | safe }}>{% else %}<button class="{{ cls }}" type="button"{% if lead %} data-lead="{{ lead }}" aria-haspopup="dialog"{% endif %}{% if product %} data-product-id="{{ product.slug }}" data-product-title="{{ product.title }}"{% endif %}{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs | safe }}>{% endif %}
+  <span>{{ text }}</span>{% if ico %}<span class="btn__icon">{{ icon(ico) }}</span>{% endif %}
+{% if href %}</a>{% else %}</button>{% endif %}
+{% endmacro %}
+
+{% macro linkArrow(text, href) %}<a class="link-arrow" href="{{ href }}"><span>{{ text }}</span>{{ icon("arrow-up-right") }}</a>{% endmacro %}
+
+{% macro badge(p) %}<span class="badge badge--{{ 'ok' if p.availability == 'in_stock' else 'warn' }}">{{ "В наличии" if p.availability == "in_stock" else "Под заказ" }}</span>{% endmacro %}
+
+{% macro crumbs(items, current) %}
+<nav class="crumbs" aria-label="Хлебные крошки">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="/"><span itemprop="name">Главная</span></a><meta itemprop="position" content="1"></li>
+    {% for it in items %}<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="{{ it.url }}"><span itemprop="name">{{ it.title }}</span></a><meta itemprop="position" content="{{ loop.index + 1 }}"></li>{% endfor %}
+    <li><span aria-current="page">{{ current }}</span></li>
+  </ol>
+</nav>
+{% endmacro %}
+
+{# Заголовок секции: метка, заголовок, текст, ссылка справа #}
+{% macro secHead(eyebrow, title, text="", linkText="", linkHref="", id="", tag="h2") %}
+<header class="sec-head">
+  <div>
+    {% if eyebrow %}<p class="eyebrow">{{ eyebrow }}</p>{% endif %}
+    <{{ tag }} class="sec-head__title"{% if id %} id="{{ id }}"{% endif %}>{{ title }}</{{ tag }}>
+  </div>
+  {% if linkText %}{{ linkArrow(linkText, linkHref) }}{% endif %}
+  {% if text %}<p class="sec-head__text">{{ text }}</p>{% endif %}
+</header>
+{% endmacro %}
+
+{# Шапка внутренней страницы: крошки, H1, вводный текст, действие, фон-фото #}
+{% macro pageHead(title, lead="", items=[], eyebrow="", cta="", ctaLead="consultation", img="", ctaHref="") %}
+<header class="page-head{% if img %} page-head--image{% endif %}">
+  {% if img %}<img class="page-head__bg" src="{{ img }}" alt="" width="1600" height="900" fetchpriority="high">{% endif %}
+  <div class="wrap">
+    {{ crumbs(items, title) }}
+    <div class="page-head__grid">
+      <div>
+        {% if eyebrow %}<p class="eyebrow" style="margin-top:32px">{{ eyebrow }}</p>{% endif %}
+        <h1 class="page-head__title">{{ title }}</h1>
+        {% if lead %}<p class="page-head__lead">{{ lead }}</p>{% endif %}
+        {% if cta %}<div class="btn-row">{% if ctaHref %}{{ btn(cta, href=ctaHref) }}{% else %}{{ btn(cta, lead=ctaLead) }}{% endif %}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+{% endmacro %}
+
+{# Плитка раздела каталога #}
+{% macro tile(root, h=3) %}
+<article class="tile" data-reveal-item>
+  <img class="tile__img" src="{{ root.image }}" alt="" width="460" height="560" loading="lazy">
+  <div class="tile__top">
+    <h{{ h }} class="tile__title"><a href="{{ root.url }}">{{ root.title }}</a></h{{ h }}>
+    <span class="tile__arrow" aria-hidden="true">{{ icon("arrow-up-right") }}</span>
+  </div>
+  {% if root.children.length %}<ul class="tile__subs" aria-label="Подразделы: {{ root.title }}">{% for ch in root.children %}<li><a class="tile__sub" href="{{ ch.url }}">{{ ch.title | cap }}</a></li>{% endfor %}</ul>{% endif %}
+</article>
+{% endmacro %}
+
+{# Карточка товара #}
+{% macro productCard(p, h=3) %}
+<article class="p-card" data-card data-vendor="{{ p.vendor }}">
+  <div class="p-card__media">
+    <img src="{{ p.thumb }}" alt="" width="400" height="300" loading="lazy">
+    {% if p.maxConfig %}<span class="badge badge--accent p-card__flag">Максимальная комплектация</span>{% endif %}
+  </div>
+  <div class="p-card__body">
+    {{ badge(p) }}
+    <h{{ h }} class="p-card__title"><a href="{{ p.url }}">{{ p.title }}</a></h{{ h }}>
+    {% if p.cardSpecs.length %}
+    <ul class="p-card__specs">{% for s in p.cardSpecs %}<li><span>{{ s.name }}</span><span>{{ s.value }}</span></li>{% endfor %}</ul>
+    {% else %}
+    <p class="p-card__specs p-card__specs--empty t-sm">Характеристики — по запросу</p>
+    {% endif %}
+    <div class="p-card__foot">{{ btn("Узнать стоимость", lead="price", kind="secondary", size="sm", product=p, label="Узнать стоимость: " + p.title, attrs='style="width:100%;justify-content:space-between"') }}</div>
+  </div>
+</article>
+{% endmacro %}
+
+{# Карточка услуги с фото #}
+{% macro serviceCard(title, url, img, text="", num="") %}
+<article class="s-card" data-reveal-item>
+  <img class="s-card__img" src="{{ img }}" alt="" width="400" height="548" loading="lazy">
+  {% if num %}<span class="s-card__num" aria-hidden="true">{{ num }}</span>{% endif %}
+  <h3 class="s-card__title"><a href="{{ url }}">{{ title }}</a></h3>
+  {% if text %}<p class="s-card__text">{{ text }}</p>{% endif %}
+</article>
+{% endmacro %}
+
+{# Карточка-факт #}
+{% macro fCard(ico, title, text, h=3) %}
+<article class="f-card" data-reveal-item>
+  {% if ico %}<span class="f-card__icon">{{ icon(ico) }}</span>{% endif %}
+  <h{{ h }} class="f-card__title">{{ title }}</h{{ h }}>
+  <p class="f-card__text">{{ text }}</p>
+</article>
+{% endmacro %}
+
+{% macro step(n, ico, title, text) %}
+<li class="step" data-reveal-item>
+  {% if ico %}{{ icon(ico, "step__icon") }}{% endif %}
+  <h3 class="step__title">{{ title }}</h3>
+  <p class="step__text">{{ text }}</p>
+</li>
+{% endmacro %}
+
+{% macro empty(title, text, cta="Подобрать технику") %}
+<div class="empty">
+  <p class="empty__title">{{ title }}</p>
+  <p class="empty__text">{{ text }}</p>
+  {{ btn(cta, lead="consultation") }}
+</div>
+{% endmacro %}
+
+{% macro partners() %}
+<ul class="logos">
+  {% for p in [["reco","РЕСО-Лизинг"],["carcade","Каркаде"],["alfalizing","Альфа-Лизинг"],["gasprom","Газпромбанк Автолизинг"]] %}
+  <li class="logo-tile" data-reveal-item><svg role="img" aria-label="{{ p[1] }}"><use href="/assets/template/img/sprites/sprite.svg#{{ p[0] }}"></use></svg></li>
+  {% endfor %}
+</ul>
+{% endmacro %}
+
+{# Сервисные услуги — общий набор для главной и страниц услуг #}
+{% macro services() %}
+{% set SERVICES = [
+  {title: "Лизинг спецтехники", url: "/uslug/servisnye-uslugi/lizing/", img: "/assets/template/img/escort/img-1.webp", text: "Аванс от 10%, срок до 5 лет. Документы в банк подаём сами."},
+  {title: "Гарантия производителя", url: "/uslug/servisnye-uslugi/garantiya/", img: "/assets/template/img/escort/img-3.webp", text: "Гарантийный ремонт и оригинальные запчасти — через нас, без переписки с заводом."},
+  {title: "Выездной сервис", url: "/uslug/servisnye-uslugi/vyezdnoj-servis/", img: "/assets/template/img/escort/img-2.webp", text: "Обслуживание и ремонт на вашем объекте, в том числе в отдалённых районах."},
+  {title: "Доставка автомобильным транспортом", url: "/logistika/", img: "/assets/template/img/why-we/img-3.jpg", text: "С наших площадок в Чите, Иркутске и Магадане или напрямую от производителя."}
+] %}
+<div class="s-grid">
+  {% for s in SERVICES %}{{ serviceCard(s.title, s.url, s.img, s.text, "0" + loop.index) }}{% endfor %}
+</div>
+{% endmacro %}

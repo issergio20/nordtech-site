@@ -1,0 +1,41 @@
+{% import "ui.njk" as ui with context %}
+{% set B = "/assets/template/img/sprites/sprite.svg" %}
+{# Подвал: верх и низ по одной сетке из 4 колонок #}
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a href="/" aria-label="{{ site.name }} — на главную" style="display:inline-flex"><svg width="121" height="42" aria-hidden="true"><use href="{{ B }}#logo"></use></svg></a>
+        <p class="footer__about">Спецтехника SHANMON и Lonking: продажа, лизинг, доставка и сервис.</p>
+      </div>
+      <div>
+        <h2 class="footer__title">Каталог</h2>
+        <ul class="footer__links">{% for r in catalog.roots %}<li><a href="{{ r.url }}">{{ r.title }}</a></li>{% endfor %}</ul>
+      </div>
+      <nav aria-label="Разделы сайта">
+        <h2 class="footer__title">Компания</h2>
+        <ul class="footer__links">
+          <li><a href="/katalog/">Каталог</a></li><li><a href="/uslug/">Услуги</a></li><li><a href="/uslug/servisnye-uslugi/lizing/">Лизинг</a></li>
+          <li><a href="/logistika/">Логистика</a></li><li><a href="/o-kompanii/">О компании</a></li><li><a href="/kontakty/">Контакты</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 class="footer__title">Связаться</h2>
+        <a class="footer__phone" href="{{ site.phoneHref }}">{{ site.phone }}</a>
+        <p>{{ site.phoneNote }}</p>
+        <ul class="footer__links" style="margin-top:12px">{% for b in branches %}{% if b.kind == "branch" %}<li><a href="/kontakty/#{{ b.code }}">{{ b.city }}</a></li>{% endif %}{% endfor %}</ul>
+        <div class="footer__socials">
+          <a class="icon-btn" href="https://t.me/nordtechgroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram">{{ ui.icon("send") }}</a>
+          <a class="icon-btn" href="https://vk.com/nordtechgroup" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте"><span aria-hidden="true" style="font-weight:700;font-size:14px">VK</span></a>
+          <a class="icon-btn" href="https://ok.ru/group/70000036933413" target="_blank" rel="noopener noreferrer" aria-label="Одноклассники"><span aria-hidden="true" style="font-weight:700;font-size:14px">OK</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__grid footer__bottom">
+      <p>© 2003—{{ "" | year }} NORD, все авторские права защищены.</p>
+      <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a>
+      <a href="/obrabotka-dannyh/">Обработка данных</a>
+      <a class="footer__dev" href="https://vostokweb.ru/" target="_blank" rel="noopener" aria-label="Разработка сайта — ВостокВеб"><svg width="147" height="32" aria-hidden="true"><use href="{{ B }}#developer"></use></svg><span>Разработка сайта</span></a>
+    </div>
+  </div>
+</footer>

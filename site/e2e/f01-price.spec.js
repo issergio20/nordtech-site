@@ -15,7 +15,7 @@ test.describe("F01 узнать стоимость", () => {
     await expect(page).toHaveURL(PRODUCT);
     await page.waitForLoadState("load"); // кнопки окна заявки оживают после загрузки main.js
 
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     const dlg = page.getByRole("dialog", { name: "Оформить заявку" });
     await expect(dlg).toBeVisible();
     await expect(dlg.getByLabel("Название товара")).toHaveValue("Экскаватор-погрузчик GROS (SHANMON) 388-II");
@@ -41,7 +41,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E1 пустая форма — три ошибки, фокус на первой", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     const dlg = page.getByRole("dialog");
     await dlg.getByRole("button", { name: "Оставить заявку" }).click();
     await expect(dlg.getByText("Напишите, как к вам обращаться")).toBeVisible();
@@ -54,7 +54,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E2 неполный телефон и без согласия — заявка не уходит", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     await fillLead(page, { phone: "914350", consent: false });
     await page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" }).click();
     await expect(page.getByText("Введите номер полностью: +7 и 10 цифр")).toBeVisible();
@@ -64,7 +64,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E3 двойной клик — одна заявка", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     await fillLead(page);
     const submit = page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" });
     await submit.dblclick();
@@ -74,7 +74,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E4 длинное имя, эмодзи и латиница", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     await fillLead(page, { name: "Ёлкин-Щербакова Анна-Мария 🚜 ".repeat(8) });
     await page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" }).click();
     await expect(page.getByRole("heading", { name: "Заявка принята" })).toBeVisible();
@@ -83,7 +83,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E5 Esc закрывает окно, фокус возвращается на кнопку", async ({ page }) => {
     await page.goto(PRODUCT);
-    const open = page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" });
+    const open = page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" });
     await open.click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await page.keyboard.press("Escape");
@@ -94,7 +94,7 @@ test.describe("F01 узнать стоимость", () => {
   test("F01-E6 только клавиатура: от кнопки до отправки", async ({ page, guard, isMobile }) => {
     test.skip(isMobile, "клавиатурный сценарий — на десктопе");
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).focus();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).focus();
     await page.keyboard.press("Enter");
     await page.keyboard.type("Сергей");
     await page.keyboard.press("Tab");
@@ -114,7 +114,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E7 повторное открытие — форма чистая, новый токен", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    const open = page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" });
+    const open = page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" });
     await open.click();
     await fillLead(page);
     await page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" }).click();
@@ -129,7 +129,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-N1 сбой отправки — уведомление, форма сохранена", async ({ page, guard }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     await fillLead(page, { name: "ошибка" }); // заглушка отвечает сбоем на это имя
     await page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" }).click();
     await expect(page.getByRole("alert")).toContainText("Не удалось отправить");
@@ -139,7 +139,7 @@ test.describe("F01 узнать стоимость", () => {
 
   test("F01-E11 исправление цифры в середине телефона — курсор не прыгает в конец (BUG-001)", async ({ page }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     const phone = page.getByRole("dialog").getByLabel("Телефон");
     await phone.pressSequentially("9143504141", { delay: 5 });
     await expect(phone).toHaveValue("+7 (914) 350-41-41");
@@ -168,12 +168,12 @@ test.describe("F01 узнать стоимость", () => {
     await expect(page.locator("[data-count]")).toHaveText("6 моделей");
     await page.getByRole("group", { name: "Бренд" }).getByRole("checkbox", { name: "SHANMON" }).check();
     await expect(page.locator("[data-count]")).toHaveText("1 модель");
-    await expect(page.locator("[data-cards] > .card-product:visible")).toHaveCount(1);
+    await expect(page.locator("[data-cards] > [data-vendor]:visible")).toHaveCount(1);
   });
 
   test("F01-A11Y окно заявки без нарушений", async ({ page }) => {
     await page.goto(PRODUCT);
-    await page.locator(".product__buttons").getByRole("button", { name: "Узнать стоимость" }).click();
+    await page.locator(".product__buttons, [data-buy]").getByRole("button", { name: "Узнать стоимость" }).click();
     await page.getByRole("dialog").getByRole("button", { name: "Оставить заявку" }).click(); // с ошибками
     expect(await axe(page)).toEqual([]);
   });

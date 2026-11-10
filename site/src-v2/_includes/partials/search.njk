@@ -1,0 +1,16 @@
+{% import "ui.njk" as ui with context %}
+{# Поиск на весь экран с подсказками из индекса каталога. В MODX — mSearch2 #}
+<div class="search" id="site-search" data-search role="dialog" aria-modal="true" aria-label="Поиск">
+  <button class="icon-btn search__close" type="button" aria-label="Закрыть поиск" data-search-close>{{ ui.icon("x") }}</button>
+  <p class="eyebrow">Поиск по каталогу</p>
+  <form class="search__form" action="/rezultaty-poiska/" method="get" role="search">
+    {{ ui.icon("search") }}
+    <label class="visually-hidden" for="search-input">Поиск по каталогу</label>
+    <input class="search__input" type="search" name="query" id="search-input" placeholder="Модель, бренд или тип" autocomplete="off" minlength="2">
+  </form>
+  <div class="search__hints" data-search-suggest hidden>
+    <div data-search-suggest-list></div>
+    <a class="link-arrow" href="/rezultaty-poiska/" data-search-all style="margin-top:12px"><span>Все результаты</span>{{ ui.icon("arrow-up-right") }}</a>
+  </div>
+</div>
+<script type="application/json" id="search-index">{{ catalog.products | searchIndex | safe }}</script>

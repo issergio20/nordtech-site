@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+title: Обработка данных
+permalink: /obrabotka-dannyh/
+hideCta: true
+description: Согласие на обработку персональных данных при отправке заявки на сайте НОРД.
+---
+{% import "ui.njk" as ui with context %}
+{{ ui.pageHead("Обработка данных") }}
+<section class="section section--tight" aria-label="Текст согласия">
+  <div class="wrap">
+    <div class="prose">{{ "obrabotka-dannyh" | policyBody | safe }}</div>
+  </div>
+</section>

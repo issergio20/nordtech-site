@@ -1,0 +1,92 @@
+---
+layout: layouts/base.njk
+title: UI kit
+permalink: /ui-kit/
+noindex: true
+hideCta: true
+description: UI kit дизайн-системы «НОРД Тёмный» — цвета, шрифты Unbounded и Onest, сетка, кнопки, карточки, поля и состояния.
+---
+{% import "ui.njk" as ui with context %}
+{% set sample = catalog.products[0] %}
+{{ ui.pageHead("UI kit «НОРД Тёмный»", "Дизайн-система варианта 2: токены, типографика, сетка на всю ширину и компоненты со всеми состояниями. Источник — src-v2/scss/_tokens.scss.", [], "Дизайн-система") }}
+
+<section class="section section--tight" aria-labelledby="kit-color">
+  <div class="wrap">
+    <div class="kit-block">
+      <h2 class="t-h3" id="kit-color">Цвет</h2>
+      <div class="kit-swatches">
+        {% for c in [["--bg","Фон страницы"],["--bg-raised","Фон секции"],["--surface","Карточка"],["--surface-2","Карточка: наведение, поле"],["--paper","Светлая плитка"],["--text","Текст"],["--text-2","Текст второй"],["--text-3","Подписи"],["--accent","Акцент: заливка"],["--accent-ink","Акцент: текст"],["--ok","В наличии"],["--warn","Под заказ"],["--danger","Ошибка"]] %}
+        <div class="kit-swatch"><i style="background:var({{ c[0] }})"></i><span><code>{{ c[0] }}</code><br>{{ c[1] }}</span></div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="kit-block kit-type">
+      <h2 class="t-h3">Типографика: Unbounded + Onest</h2>
+      <p class="t-display" style="font-family:var(--font-display)">Display</p>
+      <p class="t-h1" style="font-family:var(--font-display)">Заголовок страницы</p>
+      <p class="t-h2" style="font-family:var(--font-display)">Заголовок секции</p>
+      <p class="t-h3" style="font-family:var(--font-display)">Заголовок карточки</p>
+      <p class="t-lead">Вводный текст — Onest, 18 → 26 px, второй цвет текста.</p>
+      <p>Основной текст — Onest 16 → 18 px, межстрочный 1.6. Размеры плавно меняются от 360 до 1920 px и следуют настройке шрифта в браузере.</p>
+      <p class="eyebrow">Метка раздела</p>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Сетка на всю ширину</h2>
+      <p class="t-muted">Поля страницы <code>--gutter</code> 16 → 80 px, промежуток <code>--gap</code> 12 → 28 px, ритм секций <code>--section</code> 72 → 168 px. Ограничения ширины нет — только у длинного текста (72 знака).</p>
+      <div class="grid">{% for i in range(12) %}<div style="height:48px;border-radius:8px;background:var(--accent-soft)"></div>{% endfor %}</div>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Кнопки</h2>
+      <div class="kit-row">
+        {{ ui.btn("Основная", lead="consultation") }}
+        {{ ui.btn("Второстепенная", href="#", kind="secondary") }}
+        {{ ui.btn("Светлая", href="#", kind="light") }}
+        {{ ui.btn("Без иконки", href="#", ico="") }}
+        {{ ui.btn("Маленькая", href="#", size="sm") }}
+        <button class="btn btn--primary" type="button" disabled><span>Недоступна</span><span class="btn__icon">{{ ui.icon("arrow-right") }}</span></button>
+        <button class="icon-btn" type="button" aria-label="Пример: иконка">{{ ui.icon("search") }}</button>
+        {{ ui.linkArrow("Ссылка со стрелкой", "#") }}
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Метки и фильтры</h2>
+      <div class="kit-row">
+        <span class="badge badge--ok">В наличии</span><span class="badge badge--warn">Под заказ</span><span class="badge badge--accent">Максимальная комплектация</span><span class="badge">SHANMON</span>
+      </div>
+      <ul class="chips"><li><a class="chip" href="#" aria-current="page">Активный <span class="chip__count">6</span></a></li><li><a class="chip" href="#">Обычный <span class="chip__count">2</span></a></li></ul>
+      <fieldset class="chips"><legend>Фильтр</legend><label class="chip"><input type="checkbox" checked>Выбран</label><label class="chip"><input type="checkbox">Не выбран</label></fieldset>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Карточки</h2>
+      <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))">
+        {{ ui.productCard(sample) }}
+        {{ ui.fCard("percent", "Карточка-факт", "Иконка, заголовок, текст — для условий и преимуществ.") }}
+        {{ ui.serviceCard("Карточка услуги", "#", "/assets/template/img/escort/img-2.webp", "Фото, затемнение, заголовок-ссылка.", "01") }}
+      </div>
+      <div class="tiles" style="margin-top:var(--gap)">{{ ui.tile(catalog.roots[3]) }}</div>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Поля формы</h2>
+      <div style="display:grid;gap:18px;max-width:520px">
+        <div class="field"><label class="field__label" for="kit-1">Обязательное поле</label><input class="field__input" id="kit-1" required placeholder="Подсказка"></div>
+        <div class="field"><label class="field__label" for="kit-2">Поле с ошибкой</label><input class="field__input" id="kit-2" aria-invalid="true" aria-describedby="kit-2-e" value="+7 (914"><p class="field__error" id="kit-2-e">Введите номер полностью: +7 и 10 цифр</p></div>
+        <div class="field"><label class="field__label" for="kit-3">Список</label><select class="field__input" id="kit-3"><option>Чита</option><option>Иркутск</option></select></div>
+        <div class="check"><input type="checkbox" id="kit-4"><label for="kit-4">Флажок с подписью</label></div>
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <h2 class="t-h3">Шаги, цифры, ответы</h2>
+      <ol class="steps">{{ ui.step(1, "pointer", "Шаг процесса", "Номер, иконка, заголовок, текст. Линия заполняется при появлении.") }}{{ ui.step(2, "truck", "Второй шаг", "Шаги переносятся по сетке автоматически.") }}</ol>
+      <div class="stat"><p class="stat__value">1 500 м²</p><p class="stat__label">Цифра с подписью</p></div>
+      <div class="accordion"><details class="accordion__item"><summary class="accordion__q">Раскрывающийся ответ</summary><div class="accordion__a">Нативный details: работает с клавиатуры без скриптов.</div></details></div>
+      {{ ui.empty("Пустое состояние", "Понятный текст и действие, когда показать нечего.") }}
+    </div>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 # Демо-версия вёрстки на GitHub Pages:
 #   вариант 1 (UI kit nordtech.su) — https://issergio20.github.io/nordtech-site/
-#   вариант 2 (тот же kit, улучшенная подача) — https://issergio20.github.io/nordtech-site/v2/
+#   вариант 2 (новая дизайн-система «НОРД Тёмный», шаблоны site/src-v2) — https://issergio20.github.io/nordtech-site/v2/
 # Собирается при каждом push в main. Заявки на демо никуда не отправляются (нет сервера), сайт закрыт от индексации.
 name: GitHub Pages
 on:
