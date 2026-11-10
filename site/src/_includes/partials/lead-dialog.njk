@@ -54,6 +54,11 @@
           </div>
           <button class="button button--blue modal-feedback__form-btn" type="submit"><span data-submit-label>Оставить заявку</span></button>
         </div>
+        {% if v2 %}
+        <p class="lead-alt">Удобнее в мессенджере?
+          <a class="leasing-link" href="{{ site.telegramManager }}" target="_blank" rel="noopener"><span><svg width="20" height="20" aria-hidden="true"><use href="/assets/template/img/sprites/sprite.svg#tg"></use></svg></span>Написать в Telegram</a>
+        </p>
+        {% endif %}
       </form>
     </div>
     <div class="modal__inner modal-success__inner lead-done" data-lead-done hidden tabindex="-1">

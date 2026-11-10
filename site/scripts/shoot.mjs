@@ -1,5 +1,6 @@
 // Скриншоты для replica-diff: одинаковые размеры окна, одинаковое состояние.
 //   node scripts/shoot.mjs clone      — локальная вёрстка (нужен запущенный dev-сервер на :8080)
+//   node scripts/shoot.mjs v2         — вариант 2 (npm run dev:v2 на :8081) → replica/clone-screens-v2
 //   node scripts/shoot.mjs original   — nordtech.su: 6 страниц × 2 размера, по одной, с паузой 3 с (не нагружаем сайт)
 import { chromium } from "@playwright/test";
 import fs from "node:fs";
@@ -14,8 +15,8 @@ const SCREENS = {
   S10: ["/uslug/servisnye-uslugi/lizing", "/uslug/servisnye-uslugi/lizing/"],
   S13: ["/kontakty", "/kontakty/"],
 };
-const base = which === "original" ? "https://nordtech.su" : "http://localhost:8080";
-const outDir = new URL(`../../replica/${which === "original" ? "screens" : "clone-screens"}/`, import.meta.url);
+const base = which === "original" ? "https://nordtech.su" : which === "v2" ? "http://localhost:8081" : "http://localhost:8080";
+const outDir = new URL(`../../replica/${which === "original" ? "screens" : which === "v2" ? "clone-screens-v2" : "clone-screens"}/`, import.meta.url);
 fs.mkdirSync(outDir, { recursive: true });
 
 const browser = await chromium.launch();

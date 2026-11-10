@@ -1,4 +1,6 @@
-# Демо-версия вёрстки на GitHub Pages: https://issergio20.github.io/nordtech-site/
+# Демо-версия вёрстки на GitHub Pages:
+#   вариант 1 (UI kit nordtech.su) — https://issergio20.github.io/nordtech-site/
+#   вариант 2 (тот же kit, улучшенная подача) — https://issergio20.github.io/nordtech-site/v2/
 # Собирается при каждом push в main. Заявки на демо никуда не отправляются (нет сервера), сайт закрыт от индексации.
 name: GitHub Pages
 on:
@@ -26,10 +28,17 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
-      - run: npx @11ty/eleventy
+      - name: Вариант 1
+        run: npx @11ty/eleventy
         env:
           PATH_PREFIX: /nordtech-site/
           DEMO: "1"
+      - name: Вариант 2
+        run: npx @11ty/eleventy --output=_site/v2
+        env:
+          PATH_PREFIX: /nordtech-site/v2/
+          DEMO: "1"
+          VARIANT: "2"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/_site

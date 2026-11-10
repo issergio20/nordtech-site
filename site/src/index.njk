@@ -40,6 +40,22 @@ permalink: /
   </div>
 </section>
 
+{% if v2 %}
+{# Вариант 2: доверие на главной — сертификаты дилера (были только в «О компании») #}
+<section class="trust section" id="trust" aria-labelledby="trust-title">
+  <div class="container trust__inner">
+    <div class="trust__text">
+      <h2 class="section__title" id="trust-title">Официальный дилер</h2>
+      <p>Поставляем технику SHANMON и CATch напрямую от производителей. Статус дилера подтверждён сертификатами — гарантия производителя и оригинальные запчасти идут через нас.</p>
+      {{ ui.leasingLink("о компании", "", "/o-kompanii/") }}
+    </div>
+    <ul class="trust__certs">
+      {% for i in [1, 2] %}<li><a href="/assets/template/img/general/about-company-{{ i }}.webp" data-fancybox="certificate" aria-label="Сертификат дилера {{ i }} — открыть"><img src="/assets/template/img/general/about-company-{{ i }}.webp" alt="" width="280" height="390" loading="lazy"></a></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+
 <section class="catalog section" id="catalog">
   <div class="container">
     <h2 class="section__title section__title--indent">Каталог</h2>

@@ -15,16 +15,17 @@
 {# UI kit НОРД: исходный CSS сайта (стили проекта + Swiper + Fancybox) и наши правки поверх #}
 <link rel="stylesheet" href="/assets/template/styles/nord.min.css">
 <link rel="stylesheet" href="/css/main.css">
+{% if v2 %}<link rel="stylesheet" href="/css/v2.css">{% endif %}
 <script>window.NORD_BASE = {{ base | dump | safe }};</script>
 <script src="/assets/template/js/swiper-bundle.min.js" defer></script>
 <script src="/assets/template/js/fancybox.umd.js" defer></script>
 <script type="module" src="/js/main.js"></script>
 </head>
-<body>
+<body{% if v2 %} class="v2"{% endif %}>
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 {% include "partials/header.njk" %}
 {% include "partials/header-menu.njk" %}
-{% if isHome %}{% include "partials/sidebar.njk" %}{% endif %}
+{% if isHome and not v2 %}{% include "partials/sidebar.njk" %}{% endif %}
 {% include "partials/tabbar.njk" %}
 {% include "partials/search.njk" %}
 <main id="main" class="{{ 'main-page' if isHome else 'main-secondary' }}" tabindex="-1">

@@ -1,0 +1,112 @@
+// Вариант 2: тот же UI kit НОРД (nord.min.css + main.scss), улучшенная подача.
+// Подключается только при сборке VARIANT=2. Цвета, шрифт, иконки, формы компонентов — из kit, здесь только раскладка,
+// размеры и удобство. Номера пунктов — из replica/design-alt/DESIGN.md.
+
+/* ---------- L1: секции главной по высоте контента, а не по 100vh ---------- */
+.v2 .main-page .section:not(.about) {
+  height: auto;
+  min-height: 0;
+  padding-top: clamp(64px, 6vw, 96px);
+  padding-bottom: clamp(64px, 6vw, 96px);
+}
+.v2 .main-page .about { height: min(100svh, 760px); min-height: 560px; }
+.v2 .main-page .section:not(.about) + .section:not(.about) { padding-top: 0; } // соседние секции не удваивают отступ
+
+/* ---------- L2: без боковой навигации, контейнер по центру ---------- */
+.v2 .container {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+}
+.v2 .main-secondary .container { max-width: 1320px; }
+.v2 .container-secondary { max-width: 1320px; margin-inline: auto; padding-inline: clamp(16px, 3vw, 40px); }
+
+/* ---------- T1: заголовки спокойнее, вес и прописные — как в kit ---------- */
+.v2 .section__title { font-size: clamp(28px, 2.4vw, 44px); line-height: 1.1; }
+.v2 .about__title.section__title { font-size: clamp(32px, 3.4vw, 56px); }
+.v2 .product__title { font-size: clamp(24px, 2.2vw, 36px); text-wrap: balance; }
+.v2 .section-title { font-size: clamp(24px, 2vw, 36px); }
+.v2 .section__title--indent { margin-bottom: clamp(24px, 3vw, 48px); }
+
+/* ---------- A3: кнопки крупнее и выше ---------- */
+.v2 .card-product__link { font-size: 15px; min-height: 52px; align-items: center; }
+.v2 .about__btn, .v2 .about__link { font-size: 15px; min-height: 52px; }
+.v2 .product-button { min-height: 56px; font-size: 16px; }
+.v2 .leasing-link { font-size: 15px; }
+
+/* ---------- A4: подсказка «Используйте клавиатуру» не нужна ---------- */
+.v2 .navigations__text { display: none; }
+
+/* ---------- Карточки: одна высота, пустые характеристики подписаны ---------- */
+.v2 .card-product { height: 100%; }
+.v2 .swiper-slide.card-product { height: auto; }
+.v2 .card-product__specification--empty { color: #5c5c5c; font-style: normal; justify-content: flex-start; }
+.v2 .categories__list { gap: 20px; }
+
+/* ---------- A2, F1: подпись над полем всегда, отметка обязательных ---------- */
+.v2 .modal-feedback__form-inputs { gap: 18px; }
+.v2 .ui-input { display: flex; flex-direction: column-reverse; gap: 8px; } // в разметке label после поля — показываем его сверху
+.v2 .ui-input[hidden] { display: none; } // иначе display:flex выше перебивает скрытие полей, ненужных для типа заявки
+.v2 .ui-input__label,
+.v2 .ui-input--active .ui-input__label,
+.v2 .ui-input:has(input:focus) .ui-input__label,
+.v2 .ui-input:has(textarea:focus) .ui-input__label,
+.v2 .ui-input:has(select:focus) .ui-input__label {
+  position: static;
+  transform: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-dark);
+}
+.v2 .ui-input__input { padding: 16px 20px; min-height: 56px; }
+.v2 .ui-input--textarea .ui-input__input { min-height: 96px; }
+.v2 .ui-input:has([required]) .ui-input__label::after { content: " *"; color: #c62f2f; }
+.v2 .ui-input .field__error { order: -1; } // column-reverse: ошибка остаётся под полем
+.v2 .lead-alt {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e4e6; color: #5c5c5c; font-size: 14px;
+}
+
+/* ---------- Доверие на главной ---------- */
+.v2 .trust__inner { display: grid; gap: 32px; align-items: center; }
+.v2 .trust__text { display: grid; gap: 20px; justify-items: start; max-width: 60ch; }
+.v2 .trust__text p { font-size: 16px; line-height: 1.5; }
+.v2 .trust__certs { display: flex; gap: 20px; list-style: none; padding: 0; margin: 0; }
+.v2 .trust__certs li { flex: 1 1 0; max-width: 280px; }
+.v2 .trust__certs img { width: 100%; height: auto; border: 1px solid #e5e4e6; background: var(--color-light); }
+@media (min-width: 992px) { .v2 .trust__inner { grid-template-columns: 1.1fr 1fr; } }
+
+/* ---------- L3: на телефоне главные действия видны ---------- */
+@media (max-width: 575px) {
+  .v2 .about__link { display: flex; }
+  .v2 .about__btns { flex-direction: column; gap: 12px; }
+  .v2 .about__btns > * { width: 100%; justify-content: center; }
+}
+@media (max-width: 800px) {
+  .v2 .leasing .leasing-link { display: inline-flex; }
+}
+
+/* ---------- Липкая кнопка на карточке товара (телефон) ---------- */
+.v2 .sticky-cta { display: none; }
+@media (max-width: 575px) {
+  .v2 .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: var(--nav-tab-height, 64px); z-index: 3;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px;
+    padding: 10px 16px; background: var(--color-light); border-top: 1px solid #e5e4e6;
+    box-shadow: 0 -8px 24px rgb(0 42 93 / 0.08);
+    transform: translateY(calc(100% + var(--nav-tab-height, 64px))); visibility: hidden;
+    transition: transform 0.25s ease-out, visibility 0s linear 0.25s;
+  }
+  // Появляется, только когда основные кнопки товара ушли с экрана (main.js)
+  .v2 .sticky-cta.is-visible { transform: none; visibility: visible; transition: transform 0.25s ease-out; }
+  .v2 .sticky-cta__title { font-size: 13px; font-weight: 600; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .v2 .sticky-cta .product-button { min-height: 48px; padding-left: 16px; column-gap: 16px; font-size: 14px; white-space: nowrap; }
+  .v2 .main-secondary:has(.product) { padding-bottom: 80px; } // контент не прячется под полосой
+}
+
+/* ---------- Якоря не прячутся под фиксированной шапкой ---------- */
+.v2 [id] { scroll-margin-top: calc(var(--header-height, 54px) + 16px); }
+
+/* ---------- Плавающая «Логистика» перекрывала контент при прокрутке (ссылки «подробнее» и др.) ---------- */
+// Пункт есть в меню «Услуги» шапки и в мобильном меню, поэтому плавающая кнопка не нужна
+.v2 .logistics-link--main { display: none; }

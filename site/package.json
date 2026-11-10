@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "eleventy --serve --port=8080",
     "build": "eleventy",
-    "test": "playwright test"
+    "test": "playwright test",
+    "dev:v2": "node scripts/dev-v2.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

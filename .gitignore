@@ -1,5 +1,7 @@
 node_modules/
 site/_site/
+site/_site_v2/
+site/_site_test_v2/
 .env
 .env.*
 !.env.example

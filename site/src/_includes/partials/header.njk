@@ -5,7 +5,7 @@
     <a class="header__logo" href="/" aria-label="{{ site.name }} — на главную">
       <svg width="121" height="42" aria-hidden="true"><use href="{{ S }}#logo"></use></svg>
     </a>
-    <a class="header__button" href="{{ '#catalog' if isHome else '/katalog/' }}">
+    <a class="header__button" href="{{ '#catalog' if (isHome and not v2) else '/katalog/' }}">
       <span><svg width="22" height="22" aria-hidden="true"><use href="{{ S }}#grip"></use></svg>Каталог</span>
     </a>
     <nav class="header-nav" aria-label="Основное меню">

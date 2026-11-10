@@ -38,6 +38,7 @@
     <p class="card-product__availability{% if p.availability != 'in_stock' %} card-product__availability--yellow{% endif %}">{{ "В наличии" if p.availability == "in_stock" else "Под заказ" }}</p>
     <ul class="card-product__specifications">
       {% for s in p.cardSpecs %}<li class="card-product__specification">{{ s.name }} <span>{{ s.value }}</span></li>{% endfor %}
+      {% if v2 and not p.cardSpecs.length %}<li class="card-product__specification card-product__specification--empty">Характеристики — по запросу</li>{% endif %}
     </ul>
     <button class="card-product__link modal-btn" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-label="Узнать стоимость: {{ p.title }}" aria-haspopup="dialog">
       Узнать стоимость {{ arrow() }}

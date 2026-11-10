@@ -56,3 +56,10 @@ eleventyComputed:
     </div>
   </div>
 </section>
+{% if v2 %}
+{# Вариант 2: на телефоне кнопка заявки всегда под рукой — полоса над нижней панелью #}
+<div class="sticky-cta" data-sticky-cta aria-hidden="true">
+  <p class="sticky-cta__title">{{ p.title }}</p>
+  <button class="product-button modal-btn" type="button" data-lead="price" data-product-id="{{ p.slug }}" data-product-title="{{ p.title }}" aria-haspopup="dialog" tabindex="-1">Узнать цену <span>{{ ui.icon("arrow-right") }}</span></button>
+</div>
+{% endif %}

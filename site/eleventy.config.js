@@ -20,6 +20,8 @@ export default function (cfg) {
   }
   // Демо на GitHub Pages закрываем от поисковиков, чтобы не конкурировать с настоящим nordtech.su
   cfg.addGlobalData("isDemo", !!process.env.DEMO);
+  // Вариант дизайна: 1 — оригинальный UI kit nordtech.su, 2 — тот же kit с улучшенной подачей (replica/design-alt/DESIGN.md)
+  cfg.addGlobalData("v2", process.env.VARIANT === "2");
   cfg.addPassthroughCopy({ "src/js": "js", "src/assets": "assets" });
   // Те же библиотеки, что на nordtech.su: Swiper (слайдеры) и Fancybox (галерея товара)
   cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js": "assets/template/js/swiper-bundle.min.js" });
@@ -31,7 +33,12 @@ export default function (cfg) {
     outputFileExtension: "css",
     // В выдачу попадает только main.scss → /css/main.css; партиалы (_*.scss) не публикуются
     compileOptions: {
-      permalink: (contents, inputPath) => (path.basename(inputPath) === "main.scss" ? "/css/main.css" : false),
+      permalink: (contents, inputPath) => {
+        const name = path.basename(inputPath);
+        if (name === "main.scss") return "/css/main.css";
+        if (name === "v2.scss") return process.env.VARIANT === "2" ? "/css/v2.css" : false;
+        return false;
+      },
     },
     compile(input, inputPath) {
       if (path.basename(inputPath).startsWith("_")) return;

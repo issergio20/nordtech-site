@@ -10,7 +10,12 @@ const ready = (fn) => (document.readyState === "loading" ? addEventListener("DOM
 
 /* ---------- --header-height: от неё в CSS оригинала считаются отступы крошек и меню ---------- */
 const headerEl = $("[data-header]");
-const setHeaderHeight = () => headerEl && document.documentElement.style.setProperty("--header-height", `${headerEl.offsetHeight}px`);
+const navTab = $(".nav-tab");
+const setHeaderHeight = () => {
+  if (headerEl) document.documentElement.style.setProperty("--header-height", `${headerEl.offsetHeight}px`);
+  // Вариант 2: липкая кнопка на карточке товара стоит над нижней панелью
+  if (navTab) document.documentElement.style.setProperty("--nav-tab-height", `${navTab.offsetHeight}px`);
+};
 setHeaderHeight();
 addEventListener("resize", setHeaderHeight);
 
@@ -93,7 +98,8 @@ ready(() => {
     catalog: { slidesPerView: "auto", spaceBetween: 20 },
     "special-equipment": { slidesPerView: 1.3, spaceBetween: 0, breakpoints: { 575: { slidesPerView: 2 }, 768: { slidesPerView: 3 }, 1200: { slidesPerView: 4 } } },
     escort: { slidesPerView: 1.3, spaceBetween: 15, breakpoints: { 575: { slidesPerView: 2.3, spaceBetween: 15 }, 992: { slidesPerView: 3.5, spaceBetween: 40 } } },
-    partners: { slidesPerView: 1.5, spaceBetween: 15, rewind: true, autoplay: reduced ? false : { delay: 3000, disableOnInteraction: true, pauseOnMouseEnter: true }, breakpoints: { 450: { slidesPerView: 2.2, spaceBetween: 15 }, 575: { slidesPerView: 2.5, spaceBetween: 15 }, 768: { slidesPerView: 3.3, spaceBetween: 15 }, 992: { slidesPerView: 4, spaceBetween: 20 } } },
+    // Вариант 2: без автопрокрутки (WCAG 2.2.2 — движущийся контент без кнопки паузы)
+    partners: { slidesPerView: 1.5, spaceBetween: 15, rewind: true, autoplay: reduced || document.body.classList.contains("v2") ? false : { delay: 3000, disableOnInteraction: true, pauseOnMouseEnter: true }, breakpoints: { 450: { slidesPerView: 2.2, spaceBetween: 15 }, 575: { slidesPerView: 2.5, spaceBetween: 15 }, 768: { slidesPerView: 3.3, spaceBetween: 15 }, 992: { slidesPerView: 4, spaceBetween: 20 } } },
   };
 
   $$(".partners__slider:not([data-swiper])").forEach((el) => (el.dataset.swiper = "partners")); // «О компании»
@@ -128,6 +134,18 @@ $$(".faq__item").forEach((item, i) => {
   btn.addEventListener("click", toggle);
   btn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
 });
+
+/* ---------- Вариант 2: липкая кнопка на карточке товара, когда основные кнопки ушли с экрана ---------- */
+const sticky = $("[data-sticky-cta]"), mainButtons = $(".product__buttons");
+if (sticky && mainButtons && "IntersectionObserver" in window) {
+  const btn = $("button", sticky);
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top < 0; // кнопки выше экрана
+    sticky.classList.toggle("is-visible", show);
+    sticky.setAttribute("aria-hidden", String(!show));
+    btn.tabIndex = show ? 0 : -1;
+  }).observe(mainButtons);
+}
 
 /* ---------- Уведомления ---------- */
 function toast(kind, title, text) {
