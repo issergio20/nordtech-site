@@ -25,9 +25,8 @@ export const test = base.extend({
 
 export { expect };
 
-// Контраст проверяется отдельно (e2e/contrast.spec.js): палитра оригинала nordtech.su не проходит AA,
-// и менять её или нет — решение заказчика. Остальные правила WCAG 2.2 AA — в каждом тесте.
-export async function axe(page, exclude = [], { contrast = false } = {}) {
+// WCAG 2.2 AA, включая контраст: палитра оригинала затемнена до AA (решение заказчика 2026-11-10, main.scss)
+export async function axe(page, exclude = [], { contrast = true } = {}) {
   let b = new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]);
   if (!contrast) b = b.disableRules(["color-contrast"]);
   for (const sel of exclude) b = b.exclude(sel);

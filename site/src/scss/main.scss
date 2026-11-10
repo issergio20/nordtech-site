@@ -6,6 +6,20 @@
 // --header-height используют .breadcrumbs, .header-menu и др. Значение уточняет main.js по реальной высоте шапки
 :root { --header-height: 54px; }
 
+/* ---------- Контраст WCAG AA (решение заказчика 2026-11-10: затемнить палитру оригинала) ---------- */
+// Акцент #217bc5 → #1c6db0: белый на нём 5.4:1 (было 4.46), на фоне #f8f7fa 5.1:1 (было 4.18)
+:root { --color-accent: #1c6db0; }
+// Статусы: текст темнее, рамка остаётся исходного цвета (рамка — украшение, смысл несёт текст)
+.card-product__availability, .product__availability { color: #1a7259; }                       // 5.5:1, было 2.61
+.card-product__availability--yellow, .product__availability--yellow { color: #9a5f00; }       // 4.9:1, было 2.10
+// Крошки: прозрачность 0.3 → 0.65 (≈4.9:1, было 1.91); активная — акцентом вместо #279bfa (2.74)
+.breadcrumbs__link { opacity: 0.65; }
+.breadcrumbs__item:last-child a, .breadcrumbs__link.active, .breadcrumbs__item.active .breadcrumbs__link { color: var(--color-accent); opacity: 1; }
+// Плавающая подпись поля в активном состоянии: #a4a4a4 → #6b6b6b (5.3:1 на белом, было 2.5)
+.ui-input--active .ui-input__label, .ui-input:has(input:focus) .ui-input__label, .ui-input:has(textarea:focus) .ui-input__label, .ui-input:has(select:focus) .ui-input__label { color: #6b6b6b; }
+// Ссылка «Политика конфиденциальности» в подвале: прозрачность 0.4 → 0.7 (было 3.42)
+.footer__cooperating-link { opacity: 0.7; }
+
 /* ---------- Доступность ---------- */
 // Оригинал снимает outline у кнопок и label — возвращаем видимый фокус только для клавиатуры
 :focus-visible,
@@ -48,7 +62,7 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
 .ui-input--textarea textarea[readonly] { resize: none; }
 .field__error { margin-top: 6px; font-size: 13px; line-height: 1.3; color: #c62f2f; }
 .field__error[hidden] { display: none; }
-.ui-input--error .ui-input__label { color: #c62f2f; }
+.ui-input.ui-input--error .ui-input__label { color: #c62f2f; }
 .ui-checkbox .field__error { margin-left: 42px; }
 // Оригинал прячет input (opacity 0) и рисует квадрат через label::before — фокус с клавиатуры показываем на квадрате
 .ui-checkbox__input:focus-visible ~ .ui-checkbox__label::before { outline: 2px solid var(--color-accent); outline-offset: 2px; }
@@ -96,7 +110,6 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
 
 /* ---------- Товар ---------- */
 .product__no-specs { display: grid; gap: 20px; justify-items: start; padding: 30px; background: var(--color-gray); margin-top: 30px; p { font-size: 16px; line-height: 1.5; } }
-.product__availability--yellow { color: #9a5f00; border-color: #e1a13e; }
 
 /* ---------- Услуги без аналога в оригинале ---------- */
 .services-grid {
