@@ -39,6 +39,10 @@ main:focus { outline: none; }
   font: inherit; border: 0; background: transparent; padding: 0; text-align: inherit; cursor: pointer; color: inherit;
 }
 .card-product__title a { color: inherit; text-decoration: none; }
+// Заголовки слайдов «Сервисные услуги» — ссылки на страницы услуг; цвет как у заголовка оригинала (белый), без цвета ссылки и посещённой ссылки
+.escort__slide-title a, .escort__slide-title a:visited { color: var(--color-light); text-decoration: none; }
+.escort__slide-title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.escort__slide-title a:focus-visible { outline-color: var(--color-light); }
 .card-product__title a:hover { color: var(--color-accent); }
 
 @media (prefers-reduced-motion: reduce) {
