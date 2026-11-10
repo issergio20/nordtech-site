@@ -1,6 +1,6 @@
 // Слой отправки заявок. Сигнатура одна для прототипа и для MODX:
 //   submitLead(fields: Record<string,string>) -> Promise<{ ok: true } | { ok: false, errors?: Record<string,string>, message?: string }>
-// В проде: window.NORD_LEAD_ENDPOINT = "/assets/components/fetchit/action.php" (FetchIt + хук nordLead),
+// В проде: window.NORD_LEAD_ENDPOINT = "/assets/components/nord/lead.php" (см. replica/backend.md),
 // без него — заглушка: проверяет поля так же, как сервер, и запоминает submit_token, чтобы показать защиту от дублей.
 
 const SEEN = "nord:lead-tokens";

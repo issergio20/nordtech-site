@@ -1,7 +1,25 @@
 import * as sass from "sass";
 import path from "node:path";
+import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
+
+// Префикс адресов: локально и в MODX — "/", на GitHub Pages — "/nordtech-site/" (PATH_PREFIX в .github/workflows/pages.yml).
+// Плагин сам дописывает префикс ко всем абсолютным адресам в HTML; в JS префикс берётся из window.NORD_BASE.
+const PREFIX = process.env.PATH_PREFIX || "/";
+const withPrefix = (u) => (u.startsWith("/") ? PREFIX.replace(/\/$/, "") + u : u);
 
 export default function (cfg) {
+  cfg.addPlugin(EleventyHtmlBasePlugin);
+  cfg.addGlobalData("base", PREFIX);
+  // Плагин не трогает <use href> у SVG-иконок из спрайта — дописываем префикс сами.
+  // Eleventy 3: путь выходного файла — в this.page.outputPath (не вторым аргументом)
+  if (PREFIX !== "/") {
+    cfg.addTransform("svg-use-prefix", function (content) {
+      const out = this.page?.outputPath || "";
+      return out.endsWith(".html") ? content.replace(/(<use\b[^>]*\shref=")\/(?!\/)/g, `$1${PREFIX}`) : content;
+    });
+  }
+  // Демо на GitHub Pages закрываем от поисковиков, чтобы не конкурировать с настоящим nordtech.su
+  cfg.addGlobalData("isDemo", !!process.env.DEMO);
   cfg.addPassthroughCopy({ "src/js": "js", "src/assets": "assets" });
   // Те же библиотеки, что на nordtech.su: Swiper (слайдеры) и Fancybox (галерея товара)
   cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js": "assets/template/js/swiper-bundle.min.js" });
@@ -37,12 +55,12 @@ export default function (cfg) {
   cfg.addFilter("searchIndex", (products) =>
     JSON.stringify(products.map((p) => ({
       slug: p.slug,
-      url: p.url,
+      url: withPrefix(p.url),
       title: p.title,
-      thumb: p.thumb,
+      thumb: withPrefix(p.thumb),
       text: [p.title, p.vendor, p.categoryTitle, ...p.specs.map((s) => s.value)].join(" "),
     }))).replace(/</g, "\\u003c"));
   cfg.addFilter("year", () => new Date().getFullYear());
 
-  return { dir: { input: "src", output: "_site" }, markdownTemplateEngine: "njk", htmlTemplateEngine: "njk" };
+  return { dir: { input: "src", output: "_site" }, pathPrefix: PREFIX, markdownTemplateEngine: "njk", htmlTemplateEngine: "njk" };
 }

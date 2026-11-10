@@ -1,0 +1,12 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+{% if isDemo %}# Демо-копия на GitHub Pages — не индексировать (настоящий сайт: nordtech.su)
+User-agent: *
+Disallow: /
+{% else %}User-agent: *
+Disallow: /rezultaty-poiska/
+Disallow: /ui-kit/
+Sitemap: {{ site.url }}/sitemap.xml
+{% endif %}

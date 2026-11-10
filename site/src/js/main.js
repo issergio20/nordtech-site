@@ -4,6 +4,8 @@ import { submitLead, normalizePhone } from "./lead-api.js";
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Префикс адресов: "/" локально и в MODX, "/nordtech-site/" на GitHub Pages (задаёт base.njk)
+const BASE = window.NORD_BASE || "/";
 const ready = (fn) => (document.readyState === "loading" ? addEventListener("DOMContentLoaded", fn) : fn());
 
 /* ---------- --header-height: от неё в CSS оригинала считаются отступы крошек и меню ---------- */
@@ -70,7 +72,7 @@ $("#search-input")?.addEventListener("input", (e) => {
     list.append(a);
   }
   if (!hits.length) list.innerHTML = '<p class="search-results__item">Ничего не нашли — нажмите Enter, чтобы искать по всему каталогу</p>';
-  $("[data-search-all]").href = `/rezultaty-poiska/?query=${encodeURIComponent(q)}`;
+  $("[data-search-all]").href = `${BASE}rezultaty-poiska/?query=${encodeURIComponent(q)}`;
   box.hidden = false;
 });
 

@@ -6,7 +6,7 @@
 <title>{% if isHome %}{{ site.name }} — надёжная спецтехника для больших задач{% else %}{{ metaTitle or title }} — {{ site.name }}{% endif %}</title>
 <meta name="description" content="{{ description or site.description }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-{% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
+{% if isDemo %}<meta name="robots" content="noindex, nofollow">{% elif noindex %}<meta name="robots" content="noindex, follow">{% endif %}
 <meta name="theme-color" content="#002a5d">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/template/img/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/template/img/favicons/favicon-16x16.png">
@@ -15,6 +15,7 @@
 {# UI kit НОРД: исходный CSS сайта (стили проекта + Swiper + Fancybox) и наши правки поверх #}
 <link rel="stylesheet" href="/assets/template/styles/nord.min.css">
 <link rel="stylesheet" href="/css/main.css">
+<script>window.NORD_BASE = {{ base | dump | safe }};</script>
 <script src="/assets/template/js/swiper-bundle.min.js" defer></script>
 <script src="/assets/template/js/fancybox.umd.js" defer></script>
 <script type="module" src="/js/main.js"></script>
