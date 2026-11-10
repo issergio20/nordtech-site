@@ -25,6 +25,8 @@ export default function (cfg) {
   cfg.addPassthroughCopy({ "src/js": "js", "src/assets": "assets" });
   // Те же библиотеки, что на nordtech.su: Swiper (слайдеры) и Fancybox (галерея товара)
   cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js": "assets/template/js/swiper-bundle.min.js" });
+  // Карта исходников Swiper: без неё инструменты разработчика пишут 404 в консоль
+  cfg.addPassthroughCopy({ "node_modules/swiper/swiper-bundle.min.js.map": "assets/template/js/swiper-bundle.min.js.map" });
   cfg.addPassthroughCopy({ "node_modules/@fancyapps/ui/dist/fancybox/fancybox.umd.js": "assets/template/js/fancybox.umd.js" });
   cfg.addWatchTarget("src/scss/");
 
