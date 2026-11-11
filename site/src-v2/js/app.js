@@ -1,6 +1,10 @@
 // Вариант 2 «НОРД Тёмный»: поведение сайта. Без jQuery и Swiper; Fancybox — только полноэкранное фото товара.
 // Отправка заявок — общий слой lead-api.js (тот же контракт, что в варианте 1 и в MODX).
 import { submitLead, normalizePhone } from "./lead-api.js";
+import { initCursor, heroCurtain } from "./cursor.js"; // общий с вариантом 1: src/js/cursor.js
+
+initCursor();
+heroCurtain(document.querySelector(".is-home main > .hero"), document.querySelector("[data-hero-video]"));
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];

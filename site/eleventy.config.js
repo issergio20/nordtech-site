@@ -27,7 +27,7 @@ export default function (cfg) {
   cfg.addGlobalData("v2", V2);
   cfg.addPassthroughCopy({ "src/assets": "assets" });
   if (V2) {
-    cfg.addPassthroughCopy({ "src-v2/js": "js", "src/js/lead-api.js": "js/lead-api.js" });
+    cfg.addPassthroughCopy({ "src-v2/js": "js", "src/js/lead-api.js": "js/lead-api.js", "src/js/cursor.js": "js/cursor.js" });
     // Unbounded (заголовки) — из npm-пакета, отдаётся с сайта, без запросов к Google
     for (const sub of ["cyrillic", "latin"]) cfg.addPassthroughCopy({ [`node_modules/@fontsource-variable/unbounded/files/unbounded-${sub}-wght-normal.woff2`]: `fonts/unbounded-${sub}.woff2` });
     cfg.addPassthroughCopy({ "node_modules/@fancyapps/ui/dist/fancybox/fancybox.css": "assets/vendor/fancybox.css" });

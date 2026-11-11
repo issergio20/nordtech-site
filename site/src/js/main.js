@@ -1,5 +1,9 @@
 // Поведение сайта НОРД поверх разметки и CSS оригинала. Swiper и Fancybox подключены в base.njk (те же библиотеки, что на nordtech.su).
 import { submitLead, normalizePhone } from "./lead-api.js";
+import { initCursor, heroCurtain } from "./cursor.js";
+
+initCursor();
+heroCurtain(document.querySelector(".main-page > .about"), document.querySelector("[data-hero-video]"));
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -159,10 +163,10 @@ if (sticky && mainButtons) {
   update();
 }
 
-/* ---------- Вариант 2: появление блоков при прокрутке ---------- */
+/* ---------- Появление блоков при прокрутке ---------- */
 // Карточки и пункты появляются по очереди; крупные блоки секций — целиком. Видимое при загрузке не трогаем.
-// После появления атрибут снимается: у карточек возвращаются переходы kit для наведения.
-if (document.body.classList.contains("v2") && !reduced && "IntersectionObserver" in window) {
+// После появления атрибут снимается: у карточек возвращаются переходы kit для наведения. Только transform/opacity (main.scss)
+if (!reduced && "IntersectionObserver" in window) {
   const ITEMS = [".catalog-slide", ".partners__slide", ".why-we__block", ".stages-work__item", ".trust__certs li", ".leasing__stage",
     ".card-product", ".basic-conditions__item", ".leasing-advantages__item", ".leasing-registration-process__item",
     ".leasing-registration__item", ".about-company__advantage", ".about-company__benefit", ".contacts__item", ".escort__slide"].join(",");

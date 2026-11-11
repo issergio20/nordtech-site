@@ -2,6 +2,8 @@
 // Здесь только то, чего в оригинале нет или что в нём сломано. Цвета и шрифты — из переменных оригинала:
 // --color-dark #1a1a1a, --color-accent #217bc5, --color-accent-dark #002a5d, --color-light #fff, --color-gray #f8f7fa, --transition .4s ease
 
+@use "cursor"; // необычный курсор — общий с вариантом 2
+
 /* ---------- Переменные, которые на оригинале выставляет его скрипт ---------- */
 // --header-height используют .breadcrumbs, .header-menu и др. Значение уточняет main.js по реальной высоте шапки
 :root { --header-height: 54px; }
@@ -161,3 +163,62 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
 
 /* ---------- Зона нажатия ≥ 24px (WCAG 2.5.8): почта и телефон представителя в Китае ---------- */
 .contacts-china__item a { display: inline-flex; align-items: center; min-height: 32px; }
+
+/* =====================================================================================
+   Движение (по скиллам animate / animation-performance)
+   ===================================================================================== */
+
+/* ---------- Kit анимировал всё подряд: transition: var(--transition) = «.4s ease» = transition: all ---------- */
+// Тот же ритм 0.4s, но только перечисленные свойства: наведение больше не анимирует размеры и отступы
+// (это пересчёт раскладки каждый кадр), а то, что раньше «плыло» как побочный эффект, меняется сразу.
+:root {
+  --transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, fill 0.4s ease, stroke 0.4s ease,
+    opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* ---------- Первый экран → второй: «шторка» ---------- */
+// Первый экран закреплён, следующий блок со скруглёнными углами наезжает поверх, текст первого экрана гаснет и
+// уходит вверх, видео — медленнее (параллакс). Только transform/opacity; прокрутку не перехватываем.
+// main в kit — overflow: hidden, а это контейнер прокрутки: sticky прилипал бы к нему, а не к окну. clip выглядит так же.
+.main-page { overflow: clip; }
+@media (min-width: 1100px) and (min-height: 640px) {
+  .main-page > .about { position: sticky; top: 0; z-index: 0; }
+  .main-page > .about.is-covered { visibility: hidden; } // закрыт целиком — не просвечивает сквозь прозрачные блоки ниже (app: cursor.js)
+  .main-page > .about + .section {
+    position: relative; z-index: 1; background-color: var(--color-gray);
+    border-radius: 32px 32px 0 0; box-shadow: 0 -24px 48px rgb(0 0 0 / 0.25);
+  }
+  .main-page > .about ~ .section:not(.about + .section) { position: relative; z-index: 1; }
+  .sidebar { z-index: 3; } // меню разделов остаётся поверх наезжающих блоков
+}
+@keyframes nord-hero-out { to { opacity: 0; translate: 0 -14vh; } }
+@keyframes nord-media-out { to { translate: 0 22vh; } }
+@keyframes nord-rise { from { opacity: 0; translate: 0 32px; } }
+@keyframes nord-zoom { from { scale: 1.1; } }
+@media (prefers-reduced-motion: no-preference) {
+  // Вход при загрузке: строки первого экрана поднимаются по очереди, видео мягко приближается
+  .main-page .about__inner > *, .main-page .about__btns { animation: nord-rise 0.9s cubic-bezier(0.23, 1, 0.32, 1) both; }
+  .main-page .about__inner > :nth-child(1) { animation-delay: 0.1s; }
+  .main-page .about__inner > :nth-child(2) { animation-delay: 0.25s; }
+  .main-page .about__inner > :nth-child(3) { animation-delay: 0.35s; }
+  .main-page .about__btns { animation-delay: 0.45s; }
+  .main-page .about__video { animation: nord-zoom 2.4s cubic-bezier(0.23, 1, 0.32, 1) both; }
+  // При прокрутке — уход первого экрана (где браузер умеет scroll-driven animations; иначе просто «шторка»)
+  @supports (animation-timeline: scroll()) {
+    .main-page .about > .container, .main-page .about > .section-icon {
+      animation: nord-hero-out linear both; animation-timeline: scroll(root); animation-range: 0 100vh;
+    }
+    .main-page .about__video {
+      animation: nord-zoom 2.4s cubic-bezier(0.23, 1, 0.32, 1) both, nord-media-out linear both;
+      animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh;
+    }
+  }
+
+  /* ---------- Появление блоков при прокрутке (main.js ставит data-reveal и .reveal-on) ---------- */
+  .reveal-on [data-reveal] { opacity: 0; translate: 0 28px; transition: none; }
+  .reveal-on [data-reveal].is-in {
+    opacity: 1; translate: none;
+    transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), translate 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+@media print { [data-reveal] { opacity: 1 !important; translate: none !important; } }

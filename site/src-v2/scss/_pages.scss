@@ -199,3 +199,16 @@
 }
 @keyframes vt-out { to { opacity: 0; } }
 @keyframes vt-in { from { opacity: 0; translate: 0 14px; } }
+
+/* =========================== Первый экран → второй: «шторка» =========================== */
+// Первый экран закреплён (sticky), следующий блок со скруглёнными углами наезжает поверх; текст и видео первого экрана
+// уходят scroll-driven анимацией выше (hero-out / media-out). Только transform/opacity, прокрутку не перехватываем.
+// Когда экран закрыт целиком, app.js (heroCurtain) ставит is-covered: экран скрыт, видео на паузе.
+// Только десктоп с достаточной высотой: на телефоне первый экран бывает выше окна, и sticky прятал бы его низ.
+@media (min-width: 1100px) and (min-height: 640px) {
+  .is-home main > .hero { position: sticky; top: 0; z-index: 0; }
+  .is-home main > .hero.is-covered { visibility: hidden; }
+  .is-home main > .section { position: relative; z-index: 1; }
+  .is-home main > .section:not(.section--raised) { background-color: var(--bg); }
+  .is-home main > .hero + .section { border-radius: var(--r-lg) var(--r-lg) 0 0; border-top: 1px solid var(--line-strong); box-shadow: 0 -24px 48px rgb(0 0 0 / 0.5); } // линия: на тёмном край «шторки» иначе сливается
+}
