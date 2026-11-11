@@ -1,0 +1,9 @@
+{# Левое меню разделов главной (как в варианте 1): только десктоп. Черточки; активная длиннее и синяя, название — при наведении и фокусе.
+   Плавный переход к разделу — scroll-behavior в CSS, подсветка текущего — app.js (data-sidenav) #}
+<nav class="sidenav" aria-label="Разделы главной" data-sidenav>
+  <ul>
+    {% for a in [["#about","Главная"],["#catalog","Каталог"],["#popular","Топ-10 видов спецтехники"],["#why-we","Почему мы"],["#stages-work","Как мы работаем"],["#escort","Сервисные услуги"],["#leasing","Спецтехника в лизинг"],["#partners","Партнёры"]] %}
+    <li><a class="sidenav__link" href="{{ a[0] }}"{% if loop.first %} aria-current="true"{% endif %}><span class="sidenav__label">{{ a[1] }}</span></a></li>
+    {% endfor %}
+  </ul>
+</nav>

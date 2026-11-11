@@ -347,6 +347,19 @@ if (results) {
   }
 }
 
+/* ---------- Левое меню главной: подсветка раздела, который сейчас в середине экрана ---------- */
+const sidenav = $("[data-sidenav]");
+if (sidenav && "IntersectionObserver" in window) {
+  const links = new Map($$("a", sidenav).map((a) => [a.getAttribute("href").slice(1), a]));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((a, id) => (id === e.target.id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" }); // «текущий» — тот, что пересекает середину экрана
+  links.forEach((_, id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+}
+
 /* ---------- Появление блоков при прокрутке ---------- */
 // Карточки ([data-reveal-item]) — «лесенкой», секционные блоки — целиком. Видимое при загрузке не трогаем.
 if (!reduced && "IntersectionObserver" in window) {

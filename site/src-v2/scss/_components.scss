@@ -1,19 +1,24 @@
 // Компоненты UI kit «НОРД Тёмный». Каждый — самостоятельный блок; витрина всех состояний — /ui-kit/
 
 /* =========================== Кнопки =========================== */
+// Один размер для всех кнопок сайта: телефон — 56 px и на всю ширину, десктоп — 64 px и шире.
+// Модификаторы --sm / --lg оставлены в разметке для совместимости, но размер не меняют (кроме шапки)
+:root { --btn-h: 56px; --btn-pl: 24px; --btn-pr: 8px; --btn-icon: 40px; --btn-fs: var(--fs-sm); --btn-minw: 0px; }
+@media (min-width: 1100px) { :root { --btn-h: 64px; --btn-pl: 32px; --btn-pr: 12px; --btn-icon: 44px; --btn-fs: var(--fs-body); --btn-minw: 280px; } }
 .btn {
   --btn-bg: var(--accent); --btn-fg: #fff; --btn-line: transparent;
-  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
-  min-height: 56px; padding: 8px 10px 8px 28px;
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: var(--btn-h); min-width: var(--btn-minw); padding: 0 var(--btn-pr) 0 var(--btn-pl);
+  font-size: var(--btn-fs) !important;
   border-radius: var(--r-pill); border: 1px solid var(--btn-line);
   background: var(--btn-bg); color: var(--btn-fg);
-  font-weight: 600; font-size: var(--fs-sm); letter-spacing: 0.01em; line-height: 1.2; text-align: left; white-space: nowrap;
+  font-weight: 600; letter-spacing: 0.01em; line-height: 1.2; text-align: left; white-space: nowrap;
   transition: background-color var(--t-fast) ease, border-color var(--t-fast) ease, color var(--t-fast) ease, box-shadow var(--t-base) var(--ease-out), scale var(--t-fast) ease;
   touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { scale: 0.97; }
 .btn__icon {
-  display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; flex: none; width: var(--btn-icon); height: var(--btn-icon); border-radius: 50%;
   background: rgb(255 255 255 / 0.16);
   transition: translate var(--t-base) var(--ease-out), background-color var(--t-fast) ease;
 }
@@ -25,15 +30,19 @@
 .btn--light { --btn-bg: var(--text); --btn-fg: var(--on-paper); }
 .btn--light .btn__icon { background: var(--accent); color: #fff; }
 .btn--light:hover { --btn-bg: #fff; }
-.btn--plain { padding-inline: 28px; }
-.btn--block { width: 100%; justify-content: space-between; }
-.btn--lg { min-height: 64px; padding: 10px 12px 10px 32px; gap: 18px; font-size: var(--fs-body); }
-.btn--lg .btn__icon { width: 44px; height: 44px; }
-.btn--sm { min-height: 44px; padding: 6px 6px 6px 20px; gap: 10px; }
-.btn--sm .btn__icon { width: 32px; height: 32px; }
-.btn--sm.btn--plain { padding-inline: 20px; }
+.btn--plain { padding-inline: var(--btn-pl); justify-content: center; }
+.btn--block { width: 100%; }
 .btn[disabled], .btn[aria-busy="true"] { opacity: 0.6; cursor: progress; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+// Телефон и планшет: все кнопки одной ширины — на всю доступную
+@media (max-width: 767px) {
+  .btn { width: 100%; }
+  .btn-row > * { flex: 1 1 100%; }
+}
+// Шапка — единственное исключение: компактная кнопка, чтобы не раздувать высоту шапки
+.header .btn { --btn-h: 48px; --btn-pl: 22px; --btn-minw: 0px; font-size: var(--fs-sm) !important; width: auto; }
+// Липкая полоса товара на телефоне: кнопка рядом с названием, по содержимому
+.sticky-cta .btn { width: auto; }
 
 .icon-btn {
   display: grid; place-items: center; width: 48px; height: 48px; flex: none;
@@ -123,7 +132,7 @@ label.chip { position: relative; }
 @media (min-width: 1100px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .tile {
   position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  aspect-ratio: 4 / 3; min-height: 260px; padding: var(--pad);
+  aspect-ratio: 4 / 3; min-width: 0; padding: var(--pad); // без min-height: иначе плитка шире колонки и наезжает на соседнюю
   border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line);
 }
 .tile__img { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; transition: scale 600ms var(--ease-out); }
@@ -181,7 +190,8 @@ label.chip { position: relative; }
 .p-card__specs li { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 6px; border-bottom: 1px dashed var(--line); }
 .p-card__specs li span:last-child { color: var(--text); text-align: right; font-variant-numeric: tabular-nums; }
 .p-card__specs--empty { color: var(--text-3); }
-.p-card__foot { margin-top: auto; position: relative; z-index: 1; } // кнопка заявки — поверх ссылки карточки
+.p-card__foot { margin-top: auto; position: relative; z-index: 1; }
+.p-card__foot .btn { width: 100%; min-width: 0; --btn-fs: var(--fs-sm); --btn-pl: 18px; --btn-pr: 6px; --btn-icon: 36px; gap: 10px; } // высота общая, шрифт и поле — под узкую карточку // кнопка заявки — поверх ссылки карточки
 
 /* =========================== Карточка услуги =========================== */
 .s-card {
@@ -230,14 +240,18 @@ label.chip { position: relative; }
 /* =========================== Карусель (прокрутка с привязкой, без библиотек) =========================== */
 .carousel { position: relative; }
 .carousel__track {
-  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(min(82vw, 320px), calc((100% - var(--gap) * 3) / 4));
+  // Видно N целых карточек и половина следующей — подсказка, что ряд листается: 4,5 на десктопе, 3,5 / 2,5 / 1,2 уже
+  --cols: 4.5;
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - var(--gap) * (var(--cols) - 0.5)) / var(--cols));
   gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
   scrollbar-width: none; padding-bottom: 4px;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 .carousel__track > * { scroll-snap-align: start; }
-@media (max-width: 1279px) { .carousel__track { grid-auto-columns: minmax(min(82vw, 320px), calc((100% - var(--gap) * 2) / 3)); } }
-@media (max-width: 767px) { .carousel__track { grid-auto-columns: 82%; } }
+// Карточке нужно ≥ 270 px, чтобы кнопка «Узнать стоимость» не вылезала: число карточек — по реальной ширине (на главной её съедает колонка меню)
+@media (max-width: 1799px) { .carousel__track { --cols: 3.5; } }
+@media (max-width: 1439px) { .carousel__track { --cols: 2.5; } }
+@media (max-width: 639px) { .carousel__track { --cols: 1.2; } }
 .carousel__nav { display: flex; gap: 8px; }
 
 /* =========================== Поля формы =========================== */

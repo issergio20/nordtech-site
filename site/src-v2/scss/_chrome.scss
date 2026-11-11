@@ -141,3 +141,43 @@
 .footer__dev { gap: 12px; }
 .footer__dev svg { width: 147px; height: 32px; flex: none; }
 @media (min-width: 1100px) { .footer__dev { justify-self: start; } }
+
+/* =========================== Левое меню разделов главной (десктоп), как в варианте 1 =========================== */
+// ≥1280 px: подписи разделов видны всегда, под меню на главной зарезервирована колонка слева (контент сдвинут на её ширину).
+// 1100–1279 px: места под подписи нет — черточки, название при наведении и фокусе. Телефон и планшет: меню нет (нижняя панель).
+.sidenav { display: none; }
+@media (min-width: 1100px) {
+  .sidenav { display: block; position: fixed; left: clamp(10px, 1.2vw, 28px); top: 50%; translate: 0 -50%; z-index: calc(var(--z-header) - 2); }
+  .sidenav ul { display: grid; gap: 4px; }
+  .sidenav__link { position: relative; display: flex; align-items: center; gap: 12px; min-height: 28px; width: 24px; color: var(--text-3); }
+  // Черточка занимает постоянные 22 px и растёт масштабом внутри них — подпись рядом не сдвигается
+  // Квадратик 4 px: серый, у текущего раздела — синий; при наведении синими становятся квадратик и подпись
+  .sidenav__link::before {
+    content: ""; flex: none; width: 4px; height: 4px; background: currentColor;
+    transition: background-color 200ms ease;
+  }
+  .sidenav__link { transition: color 200ms ease; }
+  .sidenav__link[aria-current="true"] { color: var(--text); }
+  .sidenav__link[aria-current="true"]::before { background: var(--accent-ink); }
+  .sidenav__link:hover, .sidenav__link:focus-visible { color: var(--accent-ink); }
+  .sidenav__label {
+    position: absolute; left: 36px; top: 50%; translate: -6px -50%; white-space: nowrap; pointer-events: none;
+    padding: 6px 12px; border-radius: var(--r-pill); background: rgb(22 26 32 / 0.92); border: 1px solid var(--line-strong);
+    font-size: var(--fs-sm); color: var(--text); opacity: 0; transition: opacity 150ms ease, translate 200ms var(--ease-out);
+  }
+  .sidenav__link:is(:hover, :focus-visible) .sidenav__label { opacity: 1; translate: 0 -50%; }
+}
+@media (min-width: 1280px) {
+  :root { --sidenav-w: 300px; } // подписи ~200 px + воздух до блоков
+  .sidenav { left: var(--gutter); }
+  .sidenav ul { gap: 2px; }
+  .sidenav__link { width: auto; min-height: 32px; }
+  .sidenav__label {
+    position: static; translate: none; opacity: 1; pointer-events: auto; padding: 0; border: 0; background: none;
+    font-size: var(--fs-sm); color: inherit; transition: color 200ms ease;
+  }
+  // Подписи всегда на месте: при наведении и фокусе меняется только цвет (правило подсказки выше здесь не действует)
+  .sidenav__link:is(:hover, :focus-visible) .sidenav__label { translate: none; }
+  // Колонка под меню: контент главной начинается правее подписей
+  .is-home main .wrap, .is-home .cta-band .wrap, .is-home .footer .wrap { padding-left: calc(var(--gutter) + var(--sidenav-w)); }
+}
