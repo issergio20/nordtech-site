@@ -25,7 +25,7 @@
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 {% include "partials/header.njk" %}
 {% include "partials/header-menu.njk" %}
-{% if isHome and not v2 %}{% include "partials/sidebar.njk" %}{% endif %}
+{% if isHome %}{% include "partials/sidebar.njk" %}{% else %}<nav class="sidebar" aria-label="Разделы страницы" data-sidebar-auto hidden></nav>{% endif %}
 {% include "partials/tabbar.njk" %}
 {% include "partials/search.njk" %}
 <main id="main" class="{{ 'main-page' if isHome else 'main-secondary' }}" tabindex="-1">

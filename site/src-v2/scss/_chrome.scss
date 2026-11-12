@@ -181,3 +181,12 @@
   // Колонка под меню: контент главной начинается правее подписей
   .is-home main .wrap, .is-home .cta-band .wrap, .is-home .footer .wrap { padding-left: calc(var(--gutter) + var(--sidenav-w)); }
 }
+
+/* =========================== Главная: шапка по сетке первого экрана =========================== */
+// Меню начинается по левому краю заголовка «Надёжная спецтехника…», поиск — по левому краю текста «Мы — гарант…» и кнопок.
+// Ширины колонок меряет app.js (--hdr-c1, --hdr-c2) и включает header--aligned, только если блок справа помещается
+.header--aligned .header__bar { grid-template-columns: var(--hdr-c1) var(--hdr-c2) minmax(0, 1fr); column-gap: 0; }
+.header--aligned .nav, .header--aligned .header__actions { justify-self: start; }
+.header--aligned .nav { margin-left: -14px; } // у пунктов поле 14px — по краю заголовка встаёт сам текст «Каталог»
+.header--aligned .header__actions { margin-left: 0; } // база — margin-left: auto, в сетке он прижимал блок к правому краю
+.header--compact .header__cta { display: none; }

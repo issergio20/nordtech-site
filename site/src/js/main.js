@@ -196,6 +196,83 @@ if (!reduced && "IntersectionObserver" in window) {
   addEventListener("beforeprint", () => targets.forEach(done));
 }
 
+/* ---------- Меню разделов слева: на внутренних страницах собирается из заголовков ---------- */
+// Пункты — H1 страницы и видимые H2 (скрытые для экранных читалок пропускаем). Меньше двух пунктов — меню не показываем.
+const autoSidebar = $("[data-sidebar-auto]");
+if (autoSidebar) {
+  // Заголовки карточек товаров (тоже H2 в разделах каталога) — не разделы страницы
+  const heads = $$("main h1, main h2").filter((h) => !h.closest(".visually-hidden, dialog, [hidden], .card-product, .search-card") && !h.classList.contains("visually-hidden") && h.offsetParent);
+  if (heads.length >= 2) {
+    const icon = `<svg width="7" height="7" aria-hidden="true"><use href="${BASE}assets/template/img/sprites/sprite.svg#arrow-sidebar"></use></svg>`;
+    heads.forEach((h, i) => {
+      const block = h.closest("section, header, .block") || h;
+      block.id ||= `razdel-${i + 1}`;
+      const a = document.createElement("a");
+      a.className = "sidebar__link";
+      a.href = `#${block.id}`;
+      a.textContent = h.textContent.trim().replace(/\s+/g, " ");
+      a.insertAdjacentHTML("beforeend", icon);
+      autoSidebar.append(a);
+    });
+    autoSidebar.hidden = false;
+  }
+}
+
+// Подсветка текущего раздела (kit-класс .active) — тот, что пересекает середину экрана
+const sidebarEl = $(".sidebar:not([hidden])");
+if (sidebarEl && "IntersectionObserver" in window) {
+  const links = $$(".sidebar__link", sidebarEl);
+  const byId = new Map(links.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((a) => a.classList.toggle("active", a === byId.get(e.target.id)));
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  byId.forEach((_, id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+
+  // Над синими и тёмными блоками подписи светлые (.sidebar--white из kit), над светлыми — тёмные.
+  // Только блоки, которые тянутся во всю ширину и действительно лежат под меню (замер пикселей 2026-11-11):
+  // синие шапки раздела каталога и блок «Представитель в Китае» начинаются правее меню — под ним там светлый фон
+  const DARK = ".main-page > .about, .service-header, .about-company__header, .leasing-advantages, .footer";
+  let ticking = false;
+  // Сравниваем по высоте, а не по точке: тёмные шапки начинаются правее меню, под самим меню — фон страницы
+  const darkBlocks = $$(DARK);
+  const tone = () => {
+    ticking = false;
+    const r = sidebarEl.getBoundingClientRect(), y = r.top + r.height / 2;
+    const heroGone = scrollY > innerHeight * 1.02; // то же условие, что у «шторки» (cursor.js) — не зависим от порядка обработчиков
+    const hit = darkBlocks.find((el) => {
+      if (heroGone && el.matches(".main-page > .about")) return false;
+      const b = el.getBoundingClientRect();
+      return b.height && getComputedStyle(el).visibility !== "hidden" && b.top <= y && b.bottom >= y;
+    });
+    sidebarEl.classList.toggle("sidebar--white", !!hit);
+  };
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(tone); } }, { passive: true });
+  addEventListener("resize", tone);
+  tone();
+}
+
+/* ---------- «Каталог» в шапке — по одной вертикали с контентом ---------- */
+// Шапка kit — flex с отступами, и левый край кнопки зависит от логотипа и ширины окна. От 1440px двигаем кнопку
+// к краю контента; уже — отдаём её край в --catalog-left, и по нему выравнивается текст первого экрана (main.scss)
+const catalogBtn = $(".header__button");
+if (catalogBtn) {
+  const alignCatalog = () => {
+    catalogBtn.style.marginLeft = "";
+    const content = $(".main-page > .about > .container, main .container, main .container-secondary");
+    if (innerWidth >= 1440 && content) {
+      const target = content.getBoundingClientRect().left + parseFloat(getComputedStyle(content).paddingLeft);
+      const d = Math.round(target - catalogBtn.getBoundingClientRect().left);
+      if (d > 0) catalogBtn.style.marginLeft = `${d}px`;
+    }
+    document.documentElement.style.setProperty("--catalog-left", `${Math.round(catalogBtn.getBoundingClientRect().left)}px`);
+  };
+  alignCatalog();
+  addEventListener("resize", alignCatalog);
+}
+
 /* ---------- Уведомления ---------- */
 function toast(kind, title, text) {
   const box = $("#toasts");

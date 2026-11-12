@@ -18,6 +18,32 @@ const setHeaderH = () => header && root.style.setProperty("--header-h", `${heade
 setHeaderH();
 addEventListener("resize", setHeaderH);
 
+/* ---------- Главная: шапка по сетке первого экрана ---------- */
+// Меню — по левому краю заголовка, поиск — по левому краю текста «Мы — гарант…». Только если блок справа
+// (поиск, телефон, заявка) помещается до правого поля; иначе остаётся обычная раскладка шапки
+const heroTitle = $(".is-home .hero__title"), heroLead = $(".is-home .hero__lead");
+if (header && heroTitle && heroLead) {
+  const bar = $(".header__bar", header), actions = $(".header__actions", header), logo = $(".header__logo", header);
+  const alignHeader = () => {
+    header.classList.remove("header--aligned", "header--compact");
+    if (innerWidth < 1100) return;
+    const bs = getComputedStyle(bar), br = bar.getBoundingClientRect();
+    const left = br.left + parseFloat(bs.paddingLeft), right = br.right - parseFloat(bs.paddingRight);
+    const t = heroTitle.getBoundingClientRect().left, a = heroLead.getBoundingClientRect().left;
+    const logoW = ($("svg", logo) || logo).getBoundingClientRect().width; // сам знак, не ячейка сетки
+    if (t - left < logoW + 24) return;
+    // Не помещается — на главной убираем «Оставить заявку» из шапки: та же заявка стоит прямо под ней на первом экране
+    if (right - a < actions.scrollWidth) header.classList.add("header--compact");
+    if (right - a < actions.scrollWidth) { header.classList.remove("header--compact"); return; }
+    root.style.setProperty("--hdr-c1", `${Math.round(t - left)}px`);
+    root.style.setProperty("--hdr-c2", `${Math.round(a - t)}px`);
+    header.classList.add("header--aligned");
+  };
+  alignHeader();
+  addEventListener("resize", alignHeader);
+  document.fonts?.ready.then(alignHeader);
+}
+
 /* ---------- Шапка: на главной прозрачная до прокрутки ---------- */
 if (header) {
   const onScroll = () => header.classList.toggle("is-scrolled", scrollY > 24);
@@ -353,15 +379,23 @@ if (results) {
 
 /* ---------- Левое меню главной: подсветка раздела, который сейчас в середине экрана ---------- */
 const sidenav = $("[data-sidenav]");
-if (sidenav && "IntersectionObserver" in window) {
-  const links = new Map($$("a", sidenav).map((a) => [a.getAttribute("href").slice(1), a]));
-  const spy = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      links.forEach((a, id) => (id === e.target.id ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
-    });
-  }, { rootMargin: "-45% 0px -50% 0px" }); // «текущий» — тот, что пересекает середину экрана
-  links.forEach((_, id) => { const s = document.getElementById(id); if (s) spy.observe(s); });
+if (sidenav) {
+  // Текущий — последний раздел, чей верх уже поднялся выше середины экрана. Не IntersectionObserver: первый экран
+  // закреплён «шторкой» и всё время пересекает середину — при возврате наверх наблюдатель не получал события
+  const items = $$("a", sidenav).map((a) => ({ a, el: document.getElementById(a.getAttribute("href").slice(1)) })).filter((x) => x.el);
+  let ticking = false, current = null;
+  const spy = () => {
+    ticking = false;
+    const mid = innerHeight * 0.5;
+    let found = items[0];
+    for (const it of items) if (it.el.getBoundingClientRect().top <= mid) found = it;
+    if (found === current) return;
+    current = found;
+    items.forEach((it) => (it === found ? it.a.setAttribute("aria-current", "true") : it.a.removeAttribute("aria-current")));
+  };
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+  addEventListener("resize", spy);
+  spy();
 }
 
 /* ---------- Появление блоков при прокрутке ---------- */

@@ -176,21 +176,10 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
     opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* ---------- Первый экран → второй: «шторка» ---------- */
-// Первый экран закреплён, следующий блок со скруглёнными углами наезжает поверх, текст первого экрана гаснет и
-// уходит вверх, видео — медленнее (параллакс). Только transform/opacity; прокрутку не перехватываем.
-// main в kit — overflow: hidden, а это контейнер прокрутки: sticky прилипал бы к нему, а не к окну. clip выглядит так же.
-.main-page { overflow: clip; }
-@media (min-width: 1100px) and (min-height: 640px) {
-  .main-page > .about { position: sticky; top: 0; z-index: 0; }
-  .main-page > .about.is-covered { visibility: hidden; } // закрыт целиком — не просвечивает сквозь прозрачные блоки ниже (app: cursor.js)
-  .main-page > .about + .section {
-    position: relative; z-index: 1; background-color: var(--color-gray);
-    border-radius: 32px 32px 0 0; box-shadow: 0 -24px 48px rgb(0 0 0 / 0.25);
-  }
-  .main-page > .about ~ .section:not(.about + .section) { position: relative; z-index: 1; }
-  .sidebar { z-index: 3; } // меню разделов остаётся поверх наезжающих блоков
-}
+/* ---------- Первый экран: обычная прокрутка, без «шторки» ---------- */
+// «Шторка» (закреплённый первый экран под наезжающим блоком) убрана по решению заказчика: блоки kit прозрачные,
+// и видео первого экрана просвечивало под каталогом. Остались вход строк при загрузке и затухание текста при прокрутке.
+.main-page { overflow: clip; } // kit: overflow: hidden — clip выглядит так же и не мешает анимациям по прокрутке
 @keyframes nord-hero-out { to { opacity: 0; translate: 0 -14vh; } }
 @keyframes nord-media-out { to { translate: 0 22vh; } }
 @keyframes nord-rise { from { opacity: 0; translate: 0 32px; } }
@@ -203,7 +192,7 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
   .main-page .about__inner > :nth-child(3) { animation-delay: 0.35s; }
   .main-page .about__btns { animation-delay: 0.45s; }
   .main-page .about__video { animation: nord-zoom 2.4s cubic-bezier(0.23, 1, 0.32, 1) both; }
-  // При прокрутке — уход первого экрана (где браузер умеет scroll-driven animations; иначе просто «шторка»)
+  // При прокрутке текст первого экрана мягко гаснет и уходит вверх, видео — медленнее (где браузер умеет scroll-driven animations)
   @supports (animation-timeline: scroll()) {
     .main-page .about > .container, .main-page .about > .section-icon {
       animation: nord-hero-out linear both; animation-timeline: scroll(root); animation-range: 0 100vh;
@@ -222,3 +211,96 @@ body:has(dialog.lead-dialog[open]) { overflow: hidden; }
   }
 }
 @media print { [data-reveal] { opacity: 1 !important; translate: none !important; } }
+
+/* =====================================================================================
+   Ритм, фото каталога, меню разделов на всех страницах (вариант 1)
+   ===================================================================================== */
+
+/* ---------- Один отступ между блоками на всех страницах ---------- */
+// Kit: секции главной по 100vh + padding-top до 172px, плюс margin-bottom 80–150px у .section--indent/.block--indent/.catalog —
+// расстояния выходили разными и большими. Теперь один шаг --nord-gap везде, и блоки главной — по высоте содержимого.
+:root { --nord-gap: clamp(56px, 5vw, 104px); }
+.block--indent, .section--indent, .main-secondary .catalog { margin-bottom: var(--nord-gap) !important; }
+.main-page > .section:not(.about) {
+  height: auto !important; min-height: 0; padding-top: var(--nord-gap) !important; padding-bottom: 0; margin-bottom: 0 !important;
+}
+.main-page > .section:not(.about).block--indent, .main-page .catalog { margin-bottom: 0 !important; }
+.main-page > .section:not(.about) .section__title--indent { margin-bottom: clamp(32px, 3vw, 56px); }
+main + .footer { margin-top: var(--nord-gap) !important; } // подвал — сосед main, а не потомок: отступ от последнего блока (партнёры и др.)
+
+/* ---------- Фото каталога: на больших экранах выше ---------- */
+// Kit ограничивал плитку 340px (31.5vh) — на широком мониторе фото выглядели приплюснутыми
+@media (min-width: 1440px) {
+  .catalog-slide { min-height: clamp(340px, 25vw, 560px); }
+  // «Сервисные услуги»: kit — max-height 548/428px, по факту ~370px; «Почему мы» — 43vh. Выше и в одной пропорции с каталогом
+  .escort__slide { max-height: none; min-height: clamp(440px, 31vw, 640px); }
+  .why-we__slider { height: clamp(440px, 30vw, 620px); }
+}
+
+/* ---------- Серые вертикальные линии — по ширине контентной части ---------- */
+// Kit ставил линии в процентах от ширины окна (17.6%, 33%…), а контент на главной и внутренних страницах сдвинут
+// под колонку меню — линии не совпадали с краями контента. Теперь сетка — блок по границам контента, линии внутри него.
+.site-grid { position: fixed; top: 0; bottom: 0; left: 20px; right: 20px; z-index: -1; pointer-events: none; }
+.site-grid::before, .site-grid::after, .site-grid .line { position: absolute !important; top: 0; height: 100%; }
+.site-grid::before { left: 0 !important; }
+.site-grid::after { right: 0 !important; }
+.site-grid .line--1 { left: 16.6667% !important; }
+.site-grid .line--2 { left: 33.3333% !important; }
+.site-grid .line--3 { left: 50% !important; }
+.site-grid .line--4 { left: 66.6667% !important; }
+.site-grid .line--5 { left: 83.3333% !important; }
+@media (max-width: 575px) { .site-grid { left: 15px; right: 15px; } }
+@media (min-width: 1440px) { .site-grid { left: calc(242px + 20px); } } // как max-width: calc(100% - 242px) у .container
+@media (min-width: 1601px) { .site-grid { left: calc(319px + 20px); } } // как calc(100% - 319px)
+
+/* ---------- Стрелка вниз на первом экране: плавно ко второму блоку ---------- */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+html { scroll-padding-top: calc(var(--header-height, 54px) + 16px); }
+@media (min-width: 1100px) { .about__next { display: flex !important; } } // kit прятал стрелку до 1440px
+
+/* ---------- Меню разделов на всех страницах (≥1440px, как на главной kit) ---------- */
+// На главной место под меню kit уже оставлял сдвигом контейнера; на внутренних страницах — тот же сдвиг,
+// чтобы меню не наезжало на текст и левый край контента совпадал на всех страницах.
+@media (min-width: 1440px) {
+  .main-secondary .container, .main-secondary .container-secondary, .main-secondary .policy-container {
+    max-width: calc(100% - 242px); margin-left: auto; margin-right: 0;
+  }
+}
+@media (min-width: 1601px) {
+  .main-secondary .container, .main-secondary .container-secondary, .main-secondary .policy-container { max-width: calc(100% - 319px); }
+}
+.sidebar[hidden] { display: none !important; }
+// Меню не заходит на контент: ширина — до левого края контейнера, длинные названия переносятся на вторую строку
+@media (min-width: 1440px) { .sidebar { width: 190px; } .sidebar__link { white-space: normal; line-height: 1.3; } }
+@media (min-width: 1601px) { .sidebar { width: 240px; } }
+// Над тёмными блоками (первый экран, синие шапки страниц) подписи меню белые — kit-модификатор, переключает main.js
+// Kit: неактивные пункты с opacity .2 — контраст ~1.6:1, ниже WCAG AA. 0.64 даёт ≈5:1 на светлом фоне; текущий — 1
+.sidebar__link { opacity: 0.64; }
+.sidebar__link.active { opacity: 1; }
+// Над синим и тёмным (первый экран, тёмные шапки во всю ширину, синие блоки, подвал) — светлые подписи, без подложки:
+// треугольник и текст. Что под меню действительно тёмный фон, проверяет e2e/sidebar-tone.spec.js по пикселям
+.sidebar--white .sidebar__link { opacity: 1; color: rgb(255 255 255 / 0.88); }
+.sidebar--white .sidebar__link.active, .sidebar--white .sidebar__link:hover { color: #fff; }
+.sidebar--white .sidebar__link.active, .sidebar--white .sidebar__link:hover { opacity: 1; }
+.sidebar__link { transition: opacity 0.3s ease, color 0.3s ease; } // kit: transition .3s (= all)
+
+
+
+/* ---------- Заголовки и кнопки растут и уменьшаются вместе с экраном, без потолка и скачков ---------- */
+// Kit: .section__title clamp(32px, 3.23vw, 62px) — после 1920px переставал расти; кнопки на 1440px прыгали 16px → 12px.
+.section__title { font-size: clamp(28px, 0.9rem + 2.7vw, 104px); }                       // 28 → 68 (2000) → 83 (2560)
+.about__title.section__title { font-size: clamp(32px, 1rem + 3.3vw, 120px); max-width: 15em; } // первый экран крупнее
+.section-title { font-size: clamp(22px, 0.7rem + 1.9vw, 76px); }
+.about__btn, .about__link, .product-button, .card-product__link, .button {
+  font-size: clamp(12px, 0.5rem + 0.45vw, 20px) !important;
+}
+.about__btn, .about__link { padding-block: clamp(14px, 0.6rem + 0.8vw, 30px) !important; }
+.about__btns { max-width: clamp(477px, 22rem + 18vw, 860px) !important; }
+.product-button, .card-product__link { min-height: clamp(44px, 2rem + 1.2vw, 72px); }
+
+/* ---------- «Каталог» в шапке и текст первого экрана — по одной вертикали ---------- */
+// main.js выставляет --catalog-left (левый край кнопки «Каталог»). От 1440px кнопку сдвигает к краю контента сам скрипт;
+// уже, где меню разделов нет и контент от края окна, текст первого экрана выравнивается по кнопке
+@media (min-width: 901px) and (max-width: 1439px) {
+  .main-page > .about > .container { padding-left: var(--catalog-left, 20px); }
+}

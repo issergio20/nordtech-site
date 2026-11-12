@@ -244,7 +244,9 @@ label.chip { position: relative; }
   --cols: 4.5;
   display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - var(--gap) * (var(--cols) - 0.5)) / var(--cols));
   gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
-  scrollbar-width: none; padding-bottom: 4px;
+  // Запас сверху и снизу: при наведении карточка поднимается на 4px, а лента с overflow обрезала бы её скруглённые углы
+  padding-block: 10px 14px; margin-block: -10px -14px;
+  scrollbar-width: none;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 .carousel__track > * { scroll-snap-align: start; }
